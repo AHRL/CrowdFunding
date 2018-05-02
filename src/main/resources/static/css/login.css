@@ -1,0 +1,21 @@
+body {
+    background: rgb(242, 244, 245);
+}
+
+.login {
+    margin-top: 50px;
+    border: 1px solid rgb(189, 191, 192);
+    padding: 40px;
+    background: #fff;
+}
+
+.tab-pane {
+    padding-top: 20px;
+}
+
+.footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
