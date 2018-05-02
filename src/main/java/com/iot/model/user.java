@@ -6,4 +6,7 @@ package com.iot.model;
  * Time:19:24
  */
 public class user {
+	public static void main(String[] args) {
+
+	}
 }
