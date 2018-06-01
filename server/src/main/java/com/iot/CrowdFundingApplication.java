@@ -1,8 +1,8 @@
 package com.iot;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Created by xiongxiaoyu
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
  * Time:20:31
  */
 
-@ComponentScan
 @SpringBootApplication
+@EnableAutoConfiguration
 public class CrowdFundingApplication {
 
 	public static void main(String[] args) {
