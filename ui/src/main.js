@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
+import 'element-ui/lib/theme-chalk/display.css'
 import {
     Row,
     Col,
@@ -15,7 +16,14 @@ import {
     Submenu,
     MenuItem,
     Input,
-    Button
+    Button,
+    Tabs,
+    TabPane,
+    Form,
+    FormItem,
+    Switch,
+    Steps,
+    Step
 } from 'element-ui'
 Vue.use(Vuex)
 Vue.use(Row)
@@ -29,6 +37,13 @@ Vue.use(Submenu)
 Vue.use(MenuItem)
 Vue.use(Input)
 Vue.use(Button)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Switch)
+Vue.use(Steps)
+Vue.use(Step)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

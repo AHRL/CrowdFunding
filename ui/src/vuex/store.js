@@ -5,7 +5,9 @@ Vue.use(Vuex)
 
 const state = {
     //共用数据
-    username: ''
+    username: '',
+    authority: '',
+    search: ''
 }
 
 const mutations = {

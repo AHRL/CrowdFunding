@@ -1,32 +1,34 @@
 <template>
     <header class="header-nav">
         <el-row>
-            <el-col :span="2" :offset="1">
+            <el-col :xs="3" :sm="3" :md="2" :lg="2" :offset="1">
                 <div class="header">
                     <img src="../assets/icon.png" alt="">
                     <h1>众筹</h1>
                 </div>
             </el-col>
-            <el-col :span="14">
-                <el-menu :default-active="activeIndex" router class="el-menu-demo" mode="horizontal" 
-                text-color="#2f6761" active-text-color="#000">
-                    <el-menu-item v-for="(item,i) in navList" :key="i" :index="i">
-                        <router-link :to="item.name">{{ item.navItem }}</router-link>
+            <el-col :xs="16" :sm="14" :md="12" :lg="9">
+                <el-menu :default-active="activeIndex" mode="horizontal">
+                    <el-menu-item v-for="(item,i) in navList" :key="i" :index="(i+1).toString()" @click="pathTo(item.name)">
+                        {{ item.navItem }}
                     </el-menu-item>
                 </el-menu>
             </el-col>
-            <el-col :span="5" class="rightNav">
-                <el-input placeholder="search" suffix-icon="el-icon-search" v-model="search"></el-input>
+            <el-col :xs="5" :sm="5" :md="6" :lg="5" class="rightNav">
+                <div>
+                    <el-input placeholder="search" suffix-icon="el-icon-search" v-model="search"></el-input>
+                </div>
                 <div class="lo-re-box">
-                    <a href="javascrit:;">登录</a>
-                    <span>|</span>
-                    <a href="javascrit:;">注册</a>
+                    <router-link to="login">登录</router-link>
+                    <!-- <span>|</span>
+                    <a href="javascrit:;">注册</a> -->
                 </div>
             </el-col>
         </el-row>
     </header>
 </template>
 <script>
+// import {mapState,mapGetters,mapActions,mapMutations} from '../vuex'
 export default {
     data() {
       return {
@@ -42,10 +44,9 @@ export default {
       };
     },
     methods: {
-
-        print(){
-            console.log(this.activeIndex)
-        }
+       pathTo (url) {
+           this.$router.push(url)
+       }
     }
 }
 </script>
@@ -53,19 +54,18 @@ export default {
 header{
     border-bottom: 1px solid #ccc;
 }
-.header,.lo-re-box{
+.header,.lo-re-box,.rightNav{
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 .header img{
-    width: 50px;
-    cursor:pointer;
+    width:40px;
 }
 header h1{
+    width: 60px;
     font-size: 22px;
     color: rgb(119, 111, 111);
-    cursor:pointer;
 }
 .el-menu{
     border:none;
@@ -76,19 +76,18 @@ header h1{
     text-decoration: none;
 }
 .rightNav{
-    display:flex;
-    flex-direction: row;
-    align-items: center;
+    position: absolute;
+    right: 20px;
     height: 60px;
+    text-align:right;
 }
 .lo-re-box{
-    margin-left: 10px;
+    margin-left: 20px;
 }
 .rightNav a{
     font-size: 14px;
+    width: 30px;
     text-decoration: none;
-    width: 33px;
-    margin-left: 5px;
     color: rgb(4, 61, 168);
 }
 .rightNav a:hover{

@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <my-header></my-header>
-    <transition name="bounce">
-      <router-view></router-view>
-    </transition>
+    <router-view></router-view>
     <my-footer></my-footer>
   </div>
 </template>
