@@ -147,7 +147,7 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             axios.post(url,{
-                data: _this.formName
+                data: myData
             }).then(response => {
                 console.log(response)
             }).catch(error => {
