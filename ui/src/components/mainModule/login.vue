@@ -52,7 +52,7 @@ export default {
     data() {
       var checkPhone = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('用户名不能为空'));
+          return callback(new Error('手机号不能为空'));
         }
         setTimeout(() => {
           if (!value.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)) {
@@ -110,7 +110,7 @@ export default {
           password: ''
         },
         loginRules: {
-          username: [
+          phone: [
             { validator: checkPhone, trigger: 'blur' }
           ],
           password: [
@@ -142,10 +142,12 @@ export default {
     },
     methods: {
       submitForm(formName,url) {
+        let myData = formName == 'loginForm'?this.loginForm:this.registerForm
+        console.log(myData)
         this.$refs[formName].validate((valid) => {
           if (valid) {
             axios.post(url,{
-                data: formName
+                data: _this.formName
             }).then(response => {
                 console.log(response)
             }).catch(error => {
