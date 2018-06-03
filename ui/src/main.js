@@ -23,7 +23,9 @@ import {
     FormItem,
     Switch,
     Steps,
-    Step
+    Step,
+    Carousel,
+    CarouselItem
 } from 'element-ui'
 Vue.use(Vuex)
 Vue.use(Row)
@@ -44,6 +46,8 @@ Vue.use(FormItem)
 Vue.use(Switch)
 Vue.use(Steps)
 Vue.use(Step)
+Vue.use(Carousel)
+Vue.use(CarouselItem)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

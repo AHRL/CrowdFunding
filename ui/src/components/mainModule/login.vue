@@ -35,7 +35,7 @@
                     <el-col :span="6" class="identifyingImg">
                         <img src="" alt="">
                     </el-col>
-                    <el-col :span="3">
+                    <el-col :span="5">
                         <a href="javascript:;">换一张</a>
                     </el-col>
                 </el-form-item>
@@ -166,19 +166,21 @@ export default {
 }
 </script>
 <style scoped>
-    .el-tabs{
-        width: 40%;
-        margin:50px auto;
-    }
-    .el-tab-pane{
-        padding-right:30px;
-        padding-top: 20px;
-    }
-    input.identifyCode{
-        width: 50%;
-    }
-    .identifyingImg{
-        margin-left: 10px;
-        margin-right: 20px;
-    }
+.el-tabs{
+    font-size: 18px;
+    width: 40%;
+    margin:100px auto;
+    margin-bottom: 150px;
+}
+.el-tab-pane{
+    padding-right:50px;
+    padding-top: 30px;
+}
+input.identifyCode{
+    width: 50%;
+}
+.identifyingImg{
+    margin-left: 10px;
+    margin-right: 20px;
+}
 </style>

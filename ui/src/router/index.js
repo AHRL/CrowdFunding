@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
 import findProject from '../components/mainModule/findProject'
 import communityActivity from '../components/mainModule/communityActivity'
 import publishProject from '../components/mainModule/publishProject'

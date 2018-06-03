@@ -7,7 +7,7 @@
                     <h1>众筹</h1>
                 </div>
             </el-col>
-            <el-col :xs="16" :sm="14" :md="12" :lg="9">
+            <el-col :xs="16" :sm="14" :md="12" :lg="10">
                 <el-menu :default-active="activeIndex" mode="horizontal">
                     <el-menu-item v-for="(item,i) in navList" :key="i" :index="(i+1).toString()" @click="pathTo(item.name)">
                         {{ item.navItem }}
@@ -53,6 +53,10 @@ export default {
 <style scoped>
 header{
     border-bottom: 1px solid #ccc;
+    background: white;
+    width: 100%;
+    position: fixed;
+    z-index:999;
 }
 .header,.lo-re-box,.rightNav{
     display: flex;

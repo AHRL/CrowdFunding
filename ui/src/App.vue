@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <my-header></my-header>
-    <router-view></router-view>
+    <router-view id="main"></router-view>
     <my-footer></my-footer>
   </div>
 </template>
@@ -22,5 +22,14 @@ export default {
 body{
   margin:0;
   padding:0;
+}
+#app{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+#main{
+  flex-grow:1;
+  margin-bottom: 100px;
 }
 </style>
