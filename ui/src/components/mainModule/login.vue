@@ -3,7 +3,7 @@
         <el-tab-pane label="登录">
             <el-form :model="loginForm" status-icon :rules="loginRules" ref="loginForm" label-width="100px">
                 <el-form-item label="手机号" prop="phone">
-                    <el-input type="phone" v-model="loginForm.username" auto-complete="off"></el-input>
+                    <el-input type="phone" v-model="loginForm.phone" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
                     <el-input type="password" v-model="loginForm.password" auto-complete="off"></el-input>
@@ -12,7 +12,7 @@
                     <el-switch v-model="rememberPass" active-text="记住密码" active-color="#ff4949" inactive-color="#ccc"> </el-switch>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('loginForm','')">登录</el-button>
+                    <el-button type="primary" @click="submitForm('loginForm','post')">登录</el-button>
                     <el-button @click="resetLoginForm('loginForm')">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -40,7 +40,7 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('registerForm','')">注册</el-button>
+                    <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
                     <el-button @click="resetLoginForm('registerForm')">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -48,9 +48,11 @@
     </el-tabs>
 </template>
 <script>
+import axios from 'axios'
 export default {
     data() {
       var checkPhone = (rule, value, callback) => {
+          console.log(value+','+value.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/))
         if (!value) {
           return callback(new Error('手机号不能为空'));
         }
@@ -141,12 +143,12 @@ export default {
       };
     },
     methods: {
-      submitForm(formName,url) {
+      submitForm(formName) {
         let myData = formName == 'loginForm'?this.loginForm:this.registerForm
         console.log(myData)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            axios.post(url,{
+            axios.post('post',{
                 data: myData
             }).then(response => {
                 console.log(response)

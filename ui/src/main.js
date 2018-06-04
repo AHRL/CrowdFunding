@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
+import axios from 'axios'
 import 'element-ui/lib/theme-chalk/display.css'
 import {
     Row,
@@ -27,7 +28,10 @@ import {
     Carousel,
     CarouselItem
 } from 'element-ui'
+
 Vue.use(Vuex)
+Vue.prototype.$ajax = axios
+
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Container)
@@ -48,7 +52,17 @@ Vue.use(Steps)
 Vue.use(Step)
 Vue.use(Carousel)
 Vue.use(CarouselItem)
-Vue.config.productionTip = false
+
+// 设置http拦截器
+// axios.interceptors.request.use(function(config) {
+//     // 在发送请求之前做些什么
+//     config.url = 'http://127.0.0.1:7070/' + config.url
+//     return config;
+// }, function(error) {
+//     // 对请求错误做些什么
+//     return Promise.reject(error);
+// });
+// Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({

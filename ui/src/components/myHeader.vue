@@ -19,7 +19,7 @@
                     <el-input placeholder="search" suffix-icon="el-icon-search" v-model="search"></el-input>
                 </div>
                 <div class="lo-re-box">
-                    <router-link to="login">登录</router-link>
+                    <router-link to="/login">登录</router-link>
                     <!-- <span>|</span>
                     <a href="javascrit:;">注册</a> -->
                 </div>
