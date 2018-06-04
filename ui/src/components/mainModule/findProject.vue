@@ -11,24 +11,9 @@
           <el-row>
             <el-col :span="15">
                 <el-col :span="2">
-                    <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-                        <el-menu-item index="1">
-                            <i>1</i>
-                            <span slot="title">导航二</span>
-                        </el-menu-item>
-                        <el-menu-item index="2">
-                            <i>2</i>
-                            <span slot="title">导航二</span>
-                        </el-menu-item>
-                        <el-menu-item index="3">
-                            <i>3</i>
-                            <span slot="title">导航三</span>
-                        </el-menu-item>
-                        <el-menu-item index="4">
-                            <i>4</i>
-                            <span slot="title">导航四</span>
-                        </el-menu-item>
-                    </el-menu>
+                    <ul>
+                        <li></li>
+                    </ul>
                 </el-col>
             </el-col>
             <el-col :span="6">
@@ -50,8 +35,7 @@ export default {
                 require('../../assets/2.jpg'),
                 require('../../assets/2.jpg'),
                 require('../../assets/2.jpg')
-            ],
-        isCollapse: true
+            ]
       };
     },
     methods: {
