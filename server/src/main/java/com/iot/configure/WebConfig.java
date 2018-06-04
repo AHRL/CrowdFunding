@@ -25,9 +25,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @RestController
-public class WebConfiguration extends WebMvcConfigurerAdapter {
+public class WebConfig extends WebMvcConfigurerAdapter {
 
-	@Value("classpath:/index.html")
+	@Value("classpath:/dist/index.html")
 //	@Value("classpath:../controller/index.html")
 	private Resource indexHtml;
 
