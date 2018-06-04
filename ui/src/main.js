@@ -30,6 +30,7 @@ import {
 } from 'element-ui'
 
 Vue.use(Vuex)
+Vue.prototype.router = router
 Vue.prototype.$ajax = axios
 
 Vue.use(Row)
