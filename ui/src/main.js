@@ -26,7 +26,11 @@ import {
     Steps,
     Step,
     Carousel,
-    CarouselItem
+    CarouselItem,
+    Progress,
+    Collapse,
+    CollapseItem,
+    Card
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -53,17 +57,20 @@ Vue.use(Steps)
 Vue.use(Step)
 Vue.use(Carousel)
 Vue.use(CarouselItem)
-
-// 设置http拦截器
-// axios.interceptors.request.use(function(config) {
-//     // 在发送请求之前做些什么
-//     config.url = 'http://127.0.0.1:7070/' + config.url
-//     return config;
-// }, function(error) {
-//     // 对请求错误做些什么
-//     return Promise.reject(error);
-// });
-// Vue.config.productionTip = false
+Vue.use(Progress)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
+Vue.use(Card)
+    // 设置http拦截器
+    // axios.interceptors.request.use(function(config) {
+    //     // 在发送请求之前做些什么
+    //     config.url = 'http://127.0.0.1:7070/' + config.url
+    //     return config;
+    // }, function(error) {
+    //     // 对请求错误做些什么
+    //     return Promise.reject(error);
+    // });
+    // Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({

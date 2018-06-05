@@ -19,17 +19,40 @@ export default {
 </script>
 
 <style>
-body{
-  margin:0;
-  padding:0;
+  body {
+    margin: 0;
+    padding: 0;
+    color: rgb(151, 151, 151);
+    /* min-width: 1200px; */
 }
-#app{
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
-#main{
-  flex-grow:1;
-  margin-bottom: 100px;
+
+#main {
+    flex-grow: 1;
+    margin-bottom: 100px;
+}
+.el-collapse-item__header{
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+}
+.el-collapse-item__arrow{
+  line-height: 40px;
+}
+.el-collapse-item__header.is-active{
+  font-weight: 600;
+}
+.el-collapse-item__content{
+  padding-top: 5px;
+  padding-bottom:5px;
+}
+.el-card__body{
+  padding: 0;
 }
 </style>
+

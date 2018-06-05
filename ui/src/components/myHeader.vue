@@ -1,13 +1,13 @@
 <template>
     <header class="header-nav">
         <el-row>
-            <el-col :xs="3" :sm="3" :md="2" :lg="2" :offset="1">
+            <el-col :xs="3" :sm="3" :md="3" :lg="2" :offset="1">
                 <div class="header">
                     <img src="../assets/icon.png" alt="">
                     <h1>众筹</h1>
                 </div>
             </el-col>
-            <el-col :xs="16" :sm="14" :md="12" :lg="10">
+            <el-col :sm="15" :md="14" :lg="11">
                 <el-menu :default-active="activeIndex" mode="horizontal">
                     <el-menu-item v-for="(item,i) in navList" :key="i" :index="(i+1).toString()" @click="pathTo(item.name)">
                         {{ item.navItem }}
