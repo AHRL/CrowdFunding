@@ -23,14 +23,16 @@ import {
     Form,
     FormItem,
     Switch,
-    Steps,
-    Step,
     Carousel,
     CarouselItem,
     Progress,
     Collapse,
     CollapseItem,
-    Card
+    Card,
+    Pagination,
+    Dropdown,
+    DropdownMenu,
+    DropdownItem
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -53,14 +55,16 @@ Vue.use(TabPane)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Switch)
-Vue.use(Steps)
-Vue.use(Step)
 Vue.use(Carousel)
 Vue.use(CarouselItem)
 Vue.use(Progress)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
 Vue.use(Card)
+Vue.use(Pagination)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
     // 设置http拦截器
     // axios.interceptors.request.use(function(config) {
     //     // 在发送请求之前做些什么

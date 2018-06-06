@@ -171,8 +171,7 @@ export default {
 .el-tabs{
     font-size: 18px;
     width: 40%;
-    margin:100px auto;
-    margin-bottom: 150px;
+    margin: 200px auto;
 }
 .el-tab-pane{
     padding-right:50px;

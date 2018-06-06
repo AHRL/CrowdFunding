@@ -34,7 +34,7 @@ export default {
 
 #main {
     flex-grow: 1;
-    margin-bottom: 100px;
+    /* margin-bottom: 200px; */
 }
 .el-collapse-item__header{
     font-size: 16px;
