@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import findProject from '../components/mainModule/findProject'
-import communityActivity from '../components/mainModule/communityActivity'
-import publishProject from '../components/mainModule/publishProject'
-import personalCenter from '../components/mainModule/personalCenter'
-import manageCenter from '../components/mainModule/manageCenter'
-import login from '../components/mainModule/login'
+import findProject from '../components/mainModule/findProject/findProject'
+import communityActivity from '../components/mainModule/communityActivity/communityActivity'
+import publishProject from '../components/mainModule/publishProject/publishProject'
+import personalCenter from '../components/mainModule/personalCenter/personalCenter'
+import manageCenter from '../components/mainModule/manageCenter/manageCenter'
+import login from '../components/mainModule/login/login'
 
 Vue.use(Router)
 

@@ -8,8 +8,8 @@
                 </div>
             </el-col>
             <el-col :sm="15" :md="14" :lg="11">
-                <el-menu :default-active="activeIndex" mode="horizontal">
-                    <el-menu-item v-for="(item,i) in navList" :key="i" :index="(i+1).toString()" @click="pathTo(item.name)">
+                <el-menu :default-active="this.$route.path" router mode="horizontal">
+                    <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
                         {{ item.navItem }}
                     </el-menu-item>
                 </el-menu>
@@ -33,13 +33,12 @@ export default {
     data() {
       return {
         navList:[
-            {name:'findProject',navItem:'发现项目'},
-            {name:'communityActivity',navItem:'社区动态'},
-            {name:'publishProject',navItem:'发布项目'},
-            {name:'personalCenter',navItem:'个人中心'},
-            {name:'manageCenter',navItem:'管理员中心'},
+            {name:'/findProject',navItem:'发现项目'},
+            {name:'/communityActivity',navItem:'社区动态'},
+            {name:'/publishProject',navItem:'发布项目'},
+            {name:'/personalCenter',navItem:'个人中心'},
+            {name:'/manageCenter',navItem:'管理员中心'},
         ],
-        activeIndex: '1',
         search:''
       };
     },
