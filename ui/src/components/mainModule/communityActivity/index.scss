@@ -1,0 +1,60 @@
+$black:black;
+@mixin flex-style {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container {
+    width: 85%;
+    margin: 100px auto;
+    >.el-row {
+        >.el-col {
+            background: rgb(245, 247, 248);
+        }
+        &>:first-child {
+            padding: 10px 20px;
+        }
+    }
+}
+
+h1 {
+    color: $black;
+}
+
+.pubHeader {
+    @include flex-style;
+    position: relative;
+    >p {
+        position: absolute;
+        right: 0;
+    }
+}
+
+.publishText {
+    font-size: 15px;
+    position: relative;
+    >span {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+    }
+}
+
+.pubBottom>div {
+    @include flex-style;
+    position: relative;
+    >div {
+        margin: 20px 20px 0 0;
+        font-size: 16px;
+        cursor: pointer;
+        >i {
+            color: rgb(31, 99, 167);
+        }
+    }
+    >.el-button {
+        position: absolute;
+        right: 0;
+        top: 5px;
+    }
+}
