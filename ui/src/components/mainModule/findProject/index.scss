@@ -1,0 +1,189 @@
+$black:black;
+@mixin flex-style {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+@mixin no-style {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    @include no-style;
+}
+
+h2 {
+    color: $black;
+}
+
+h3 {
+    @include no-style;
+    font-size: 18px;
+    font-weight: 600;
+    color: $black;
+}
+
+.carousel {
+    margin-top: 60px;
+    .el-carousel__item {
+        img {
+            width: 100%;
+        }
+    }
+}
+
+
+/*container*/
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+    .top {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+}
+
+
+/*24小时金额榜*/
+
+.moneyTop {
+    height: 250px;
+    overflow: hidden;
+    .moneyTopOrder {
+        @include no-style;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        border-left: 1px solid rgb(240, 240, 240);
+        li {
+            font-size: 18px;
+            font-weight: bolder;
+            list-style: none;
+            padding: 4px 22px;
+            margin: 9px 0;
+            &:hover {
+                box-shadow: -5px 0px 0px black;
+                color: #000;
+            }
+        }
+    }
+}
+
+.moneyTopImg {
+    img {
+        width: 100%;
+    }
+}
+
+@mixin author-style {
+    .author {
+        @include flex-style;
+        img {
+            width: 20px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    }
+}
+
+@mixin money-style {
+    .moneyData {
+        @include flex-style;
+        justify-content: space-between;
+        .money {
+            font-weight: 700;
+            font-size: 20px;
+            color: rgb(80, 145, 175);
+        }
+    }
+}
+
+.moneyTopContent {
+    font-size: 14px;
+    @include author-style;
+    .moneyTopDescription {
+        height: 76px;
+        overflow: hidden;
+    }
+    @include money-style;
+    .el-progress {
+        margin: 6px 0;
+    }
+    .moneyTopFol {
+        margin-top: 10px;
+    }
+}
+
+
+/*24小时创意榜*/
+
+.ideaItem {
+    @include flex-style;
+    justify-content: space-around;
+}
+
+.ideaItem {
+    >div {
+        @include flex-style;
+        >img {
+            margin-right: 5px;
+        }
+    }
+    >img {
+        width: 80px;
+    }
+}
+
+
+/* 在线项目 */
+
+.onlineProject {
+    padding: 100px 20px;
+    background: rgb(249, 250, 250);
+    .classify {
+        @include flex-style;
+        .el-dropdown {
+            margin-right: 30px;
+            font-size: 16px;
+        }
+    }
+}
+
+.items {
+    border-top: 1px solid rgb(240, 239, 239);
+    padding-top: 20px;
+    @include author-style;
+    @include money-style;
+    .itemImg {
+        width: 100%;
+    }
+    .itemContent {
+        padding: 10px;
+        color: rgb(151, 151, 151);
+        .money {
+            font-size: 16px;
+        }
+    }
+    .author,
+    .moneyTopFol {
+        font-size: 14px;
+    }
+    >.el-col {
+        padding: 10px;
+    }
+    +.pages {
+        margin-top: 30px;
+        .el-pagination {
+            text-align: center;
+        }
+    }
+}
+
+.projectCharts {
+    margin-top: 50px;
+}

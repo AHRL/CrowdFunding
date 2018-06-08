@@ -38,11 +38,11 @@ export default {
 }
 .el-collapse-item__header{
     font-size: 16px;
-    height: 40px;
-    line-height: 40px;
+    height: 45px;
+    line-height: 45px;
 }
 .el-collapse-item__arrow{
-  line-height: 40px;
+  line-height: 45px;
 }
 .el-collapse-item__header.is-active{
   font-weight: 600;

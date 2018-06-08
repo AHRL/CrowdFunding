@@ -17,26 +17,26 @@ export default new Router({
     }, {
         path: '/findProject',
         name: 'findProject',
-        component: findProject
+        component: resolve => require(['../components/mainModule/findProject/findProject'], resolve)
     }, {
         path: '/communityActivity',
         name: 'communityActivity',
-        component: communityActivity
+        component: resolve => require(['../components/mainModule/communityActivity/communityActivity'], resolve)
     }, {
         path: '/publishProject',
         name: 'publishProject',
-        component: publishProject
+        component: resolve => require(['../components/mainModule/publishProject/publishProject'], resolve)
     }, {
         path: '/personalCenter',
         name: 'personalCenter',
-        component: personalCenter
+        component: resolve => require(['../components/mainModule/personalCenter/personalCenter'], resolve)
     }, {
         path: '/manageCenter',
         name: 'manageCenter',
-        component: manageCenter
+        component: resolve => require(['../components/mainModule/manageCenter/manageCenter'], resolve)
     }, {
         path: '/login',
         name: 'login',
-        component: login
+        component: resolve => require(['../components/mainModule/login/login'], resolve)
     }]
 })
