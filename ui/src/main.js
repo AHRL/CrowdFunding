@@ -35,6 +35,8 @@ import {
     Dropdown,
     DropdownMenu,
     DropdownItem,
+    Steps,
+    Step
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -68,6 +70,8 @@ Vue.use(Pagination)
 Vue.use(Dropdown)
 Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
+Vue.use(Steps)
+Vue.use(Step)
     // 设置http拦截器
     // axios.interceptors.request.use(function(config) {
     //     // 在发送请求之前做些什么
