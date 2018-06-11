@@ -36,7 +36,12 @@ import {
     DropdownMenu,
     DropdownItem,
     Steps,
-    Step
+    Step,
+    Alert,
+    Checkbox,
+    Radio,
+    Upload,
+    Autocomplete
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -72,6 +77,11 @@ Vue.use(DropdownMenu)
 Vue.use(DropdownItem)
 Vue.use(Steps)
 Vue.use(Step)
+Vue.use(Alert)
+Vue.use(Checkbox)
+Vue.use(Radio)
+Vue.use(Upload)
+Vue.use(Autocomplete)
     // 设置http拦截器
     // axios.interceptors.request.use(function(config) {
     //     // 在发送请求之前做些什么
