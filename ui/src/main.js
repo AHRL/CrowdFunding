@@ -41,7 +41,8 @@ import {
     Checkbox,
     Radio,
     Upload,
-    Autocomplete
+    Autocomplete,
+    DatePicker
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -82,6 +83,7 @@ Vue.use(Checkbox)
 Vue.use(Radio)
 Vue.use(Upload)
 Vue.use(Autocomplete)
+Vue.use(DatePicker)
     // 设置http拦截器
     // axios.interceptors.request.use(function(config) {
     //     // 在发送请求之前做些什么

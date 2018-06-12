@@ -60,5 +60,11 @@ export default {
     cursor: pointer;
     padding-right: 5px;
 }
+.el-upload{
+    display: block;
+}
+.w-e-text-container{
+    min-height:400px;
+}
 </style>
 

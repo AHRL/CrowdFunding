@@ -55,7 +55,7 @@ header{
     background: white;
     width: 100%;
     position: fixed;
-    z-index:999;
+    z-index:99999;
 }
 .header,.lo-re-box,.rightNav{
     display: flex;

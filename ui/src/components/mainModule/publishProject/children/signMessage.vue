@@ -62,12 +62,55 @@
                 </template>
             </el-autocomplete>
         </div>
-        <div class="city">
-            <input type="text">
+        <div class="address">
+            <h4>发起城市</h4>
+            <el-row>
+                <el-col :span="11">
+                    <el-input
+                        placeholder="请输入省/直辖市"
+                        suffix-icon="el-icon-location"
+                        v-model="province">
+                    </el-input>
+                </el-col>
+                <el-col :span="11" :offset="2">
+                    <el-input
+                        placeholder="请输入市/区"
+                        suffix-icon="el-icon-location-outline"
+                        v-model="city">
+                    </el-input>
+                </el-col>
+            </el-row>
         </div>
-        <div class="wrap">
-            <div class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos labore sit vel itaque delectus atque quos magnam assumenda quod architecto perspiciatis animi.</div>
+        <div class="interval">
+            <h4>众筹时长</h4>
+            <div class="block">
+                <span class="demonstration">时间段：</span>
+                <el-date-picker
+                v-model="value4"
+                type="datetimerange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期">
+                </el-date-picker>
+            </div>
+            <div class="small-font tips">众筹时间不超过60天，建议众筹周期30-45天</div>
         </div>
+        <div class="targetMoney">
+            <h4>目标金额</h4>
+            <div>
+                <el-input v-model="money" placeholder="2元起，项目通过审核后将不能修改，谨慎填写"></el-input>
+            </div>
+            <div class="small-font tips">制定金额目标，众筹结束后，如达到或超出将由摩点网在扣除相应费率后结算给你，如未达到将全额退款给支持者。</div>
+        </div>
+         <div class="next">
+             <el-alert
+                title="请再次核查项目信息，确认后进行下一步"
+                type="warning"
+                show-icon>
+            </el-alert>
+            <el-button class="preBtn">上一步</el-button>
+            <el-button class="nextBtn" type="danger">下一步</el-button>
+         </div>
     </div>
 </template>
 <script>
@@ -79,7 +122,8 @@ export default {
         shortTitle:'',
         intro:'',
         restaurants:[],
-        state3:''
+        state3:'',
+        value4: [new Date(), new Date()]
       };
     },
     methods: {
@@ -134,6 +178,7 @@ export default {
 <style lang="scss" scoped>
 .signMessage{
     margin: 50px 0;
+    position: relative;
     h4{
         color:black;
     }
@@ -184,44 +229,15 @@ export default {
             }
         }
     }
-    .wrap {
-        width:200px;
-  height: 60px;
-  line-height: 20px;
-  overflow: hidden;
-}
-.wrap .text {
-  float: right;
-  margin-left: -5px;
-  width: 100%;
-  word-break:break-all;
-}
-.wrap::before {
-  float: left;
-  width: 5px;
-  content: '';
-  height: 40px;
-}
-.wrap::after {
-  float: right;
-  content: "...";
-  height: 20px;
-  line-height: 20px;
-  padding-right: 5px;
-  text-align: right;
-  width: 3em;
-  margin-left: -3em;
-  position: relative;
-  left: 100%;
-  top: -20px;
-  padding-right: 5px;
-  /* 显示更好的效果 */
-  background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), to(white), color-stop(50%, white));
-  background: -moz-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
-  background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
-  background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
-  background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
-}
-
+    .next{
+        margin-top: 20px;
+        .el-button{
+            position: absolute;
+            margin-top: 20px;
+        }
+        .nextBtn{
+            right:0;
+        }
+    }
 }
 </style>

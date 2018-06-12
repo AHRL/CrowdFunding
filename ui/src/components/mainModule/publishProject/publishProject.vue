@@ -13,15 +13,15 @@
                 <el-step title="注意事项" icon="el-icon-success"></el-step>
                 <el-step title="填写信息" icon="el-icon-success"></el-step>
                 <el-step title="详情编辑" icon="el-icon-success"></el-step>
-                <el-step title="等待认证" icon="el-icon-success"></el-step>
                 <el-step title="团队成员" icon="el-icon-success"></el-step>
+                <el-step title="等待认证" icon="el-icon-success"></el-step>
             </el-steps>
             <div class="steps">
                 <contract v-if="activeIndex === 0"></contract>
                 <signMessage v-if="activeIndex === 1"></signMessage>
                 <editMore v-if="activeIndex === 2"></editMore>
-                <wait v-if="activeIndex === 3"></wait>
-                <team v-if="activeIndex === 4"></team>
+                <team v-if="activeIndex === 3"></team>
+                <wait v-if="activeIndex === 4"></wait>
             </div>
         </div>
     </div>
