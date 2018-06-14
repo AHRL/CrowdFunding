@@ -7,7 +7,7 @@ export default {
     name: 'publishProject',
     data() {
         return {
-            activeIndex: 3
+            activeIndex: 4
         }
     },
     methods: {
