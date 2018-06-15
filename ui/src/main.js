@@ -6,8 +6,9 @@ import router from './router'
 import Vuex from 'vuex'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/display.css'
-import { Notification } from 'element-ui';
+import { Notification } from 'element-ui'
 import 'font-awesome/css/font-awesome.css'
+import 'babel-polyfill'
 import {
     Row,
     Col,
