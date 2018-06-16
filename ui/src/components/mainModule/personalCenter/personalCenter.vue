@@ -1,7 +1,8 @@
 <template>
     <div class="container">
-        <div class="wrap">
-            <el-menu
+        <el-row class="wrap">
+            <el-col :span="5">
+                <el-menu
                 default-active="2"
                 class="el-menu-vertical-demo"
                 @open="handleOpen"
@@ -40,7 +41,8 @@
                     <span slot="title">导航四</span>
                 </el-menu-item>
             </el-menu>
-        </div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 <script>
