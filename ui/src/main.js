@@ -45,7 +45,8 @@ import {
     Autocomplete,
     DatePicker,
     RadioGroup,
-    RadioButton
+    RadioButton,
+    TimePicker,
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -89,6 +90,7 @@ Vue.use(Autocomplete)
 Vue.use(DatePicker)
 Vue.use(RadioGroup)
 Vue.use(RadioButton)
+Vue.use(TimePicker)
     // 设置http拦截器
     // axios.interceptors.request.use(function(config) {
     //     // 在发送请求之前做些什么

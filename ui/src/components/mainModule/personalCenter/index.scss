@@ -16,6 +16,8 @@
             left: 0;
             top: 0;
             .personMenu {
+                box-sizing: border-box;
+                padding-top: 20px;
                 height: 100%;
                 .el-menu-vertical-demo:not(.el-menu--collapse) {
                     width: 200px;
@@ -41,9 +43,19 @@
                 }
             }
             +.el-col {
-                margin: 20px 0;
-                padding-top: 40px;
+                margin: 40px 0;
+                padding-top: 60px;
+                border-top: 1px solid #eceaea;
                 position: relative;
+                .el-form {
+                    margin-bottom: 50px;
+                    position: relative;
+                    .el-form-item:last-child {
+                        position: absolute;
+                        right: 0;
+                        bottom: -80px;
+                    }
+                }
                 &::after {
                     content: attr(data-content);
                     display: block;
@@ -57,6 +69,40 @@
                     text-align: right;
                     color: rgba(255, 255, 255, .9);
                     background: linear-gradient(45deg, transparent 0%, transparent 30%, #e5645e 30%, #e5645e 100%)
+                }
+                .changeHeadImg {
+                    text-align: center;
+                    .headImg {
+                        background: #000;
+                        font-size: 0;
+                        img {
+                            width: 100%;
+                            cursor: pointer;
+                            &:hover {
+                                opacity: 0.6;
+                                filter: alpha(opacity=60);
+                            }
+                        }
+                        +div {
+                            color: rgb(129, 125, 125);
+                            margin-top: 10px;
+                            a {
+                                text-decoration: none;
+                                color: black;
+                                font-weight: 600;
+                                display: block;
+                            }
+                            >div {
+                                font-size: 14px;
+                                display: inline-block;
+                                &:first-child {
+                                    padding-right: 20px;
+                                    margin-right: 20px;
+                                    border-right: 1px solid rgb(233, 230, 230);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
