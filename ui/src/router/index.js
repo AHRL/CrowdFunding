@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import findProject from '../components/mainModule/findProject/findProject'
-import communityActivity from '../components/mainModule/communityActivity/communityActivity'
-import publishProject from '../components/mainModule/publishProject/publishProject'
-import personalCenter from '../components/mainModule/personalCenter/personalCenter'
-import manageCenter from '../components/mainModule/manageCenter/manageCenter'
-import login from '../components/mainModule/login/login'
+import personalRoute from '../components/mainModule/personalCenter/router'
 
 Vue.use(Router)
 
@@ -29,7 +24,8 @@ export default new Router({
     }, {
         path: '/personalCenter',
         name: 'personalCenter',
-        component: resolve => require(['../components/mainModule/personalCenter/personalCenter'], resolve)
+        component: resolve => require(['../components/mainModule/personalCenter/personalCenter'], resolve),
+        children: personalRoute
     }, {
         path: '/manageCenter',
         name: 'manageCenter',

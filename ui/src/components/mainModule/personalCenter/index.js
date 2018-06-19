@@ -22,7 +22,10 @@ export default {
             console.log(key, keyPath);
         },
         onSubmit() {
-            console.log('submit!');
+            // console.log(this.$route.options.routers)
         }
+    },
+    mounted() {
+        this.onSubmit()
     }
 }
