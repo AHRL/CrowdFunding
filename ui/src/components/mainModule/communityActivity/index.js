@@ -1,3 +1,4 @@
+import publish from './children/publish'
 export default {
     name: 'communityActivity',
     data() {
@@ -17,5 +18,8 @@ export default {
                 require('../../../assets/2.jpg'),
             ]
         }
+    },
+    components: {
+        publish
     }
-} 
+}

@@ -22,43 +22,6 @@ h2 {
     color: $black;
 }
 
-.pubHeader {
-    @include flex-style;
-    position: relative;
-    >p {
-        position: absolute;
-        right: 0;
-    }
-}
-
-.publishText {
-    font-size: 15px;
-    position: relative;
-    >span {
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
-    }
-}
-
-.pubBottom>div {
-    @include flex-style;
-    position: relative;
-    >div {
-        margin: 20px 20px 0 0;
-        font-size: 16px;
-        cursor: pointer;
-        >i {
-            color: rgb(31, 99, 167);
-        }
-    }
-    >.el-button {
-        position: absolute;
-        right: 0;
-        top: 5px;
-    }
-}
-
 .activity {
     margin: 30px 0;
     .options {

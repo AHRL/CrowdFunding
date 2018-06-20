@@ -31,7 +31,7 @@
                     </el-menu-item>
                 </el-menu>
             </div>
-            <el-col :span="22">
+            <el-col class="allContent" :span="22">
                 <router-view></router-view>
             </el-col>
         </el-row>

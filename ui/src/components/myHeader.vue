@@ -8,7 +8,7 @@
                 </div>
             </el-col>
             <el-col :sm="15" :md="14" :lg="11">
-                <el-menu :default-active="this.$route.path" router mode="horizontal">
+                <el-menu :default-active="this.$route.path.replace(/([/][^/]+)$/, '')" router mode="horizontal">
                     <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
                         {{ item.navItem }}
                     </el-menu-item>

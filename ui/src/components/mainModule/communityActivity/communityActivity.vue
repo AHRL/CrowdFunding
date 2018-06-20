@@ -2,31 +2,7 @@
 <div class="container">
     <el-row>
         <el-col :span="16">
-            <el-row class="pubHeader">
-                <h2>发布动态</h2>
-                <p>做一个有趣的人，分享有趣的事儿</p>
-            </el-row>
-            <el-row class="publishText">
-                <el-input type="textarea" v-model="pubText" :maxlength="500" :rows="5" resize="none" placeholder="请输入内容..."></el-input>
-                <span>{{ pubText.length }}/500</span>
-            </el-row>
-            <el-row class="pubBottom">
-                <div>
-                    <div>
-                        <i class="fa fa-photo"></i>
-                        <span>图片</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-bar-chart"></i>
-                        <span>投票</span>
-                    </div>
-                    <div>
-                        <i class="fa fa-file-text-o"></i>
-                        <span>长文</span>
-                    </div>
-                    <el-button type="primary">发表</el-button>
-                </div>
-            </el-row>
+            <publish></publish>
             <div class="activity">
                 <el-row>
                     <h2>创作者动态</h2>
