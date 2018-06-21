@@ -47,6 +47,8 @@ import {
     RadioGroup,
     RadioButton,
     TimePicker,
+    Table,
+    TableColumn
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -91,6 +93,8 @@ Vue.use(DatePicker)
 Vue.use(RadioGroup)
 Vue.use(RadioButton)
 Vue.use(TimePicker)
+Vue.use(Table)
+Vue.use(TableColumn)
     // 设置http拦截器
     // axios.interceptors.request.use(function(config) {
     //     // 在发送请求之前做些什么
