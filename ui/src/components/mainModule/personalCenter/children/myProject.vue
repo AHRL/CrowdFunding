@@ -7,21 +7,35 @@
                     <div class="imgs">
                         <img :src="require('@/assets/2.jpg')" alt="">
                     </div>
-                    <div class="content">
-                        <h4>摩擦大会</h4>
-                        <p>的说法大三第三方士大夫的撒范德萨范德萨发水电费第三方的说法撒地方撒旦第三方士大夫的撒</p>
-                        <!-- <div class="moneyBox">
-                            <span>预期金额：<span class="money">34535</span></span>
-                            <span>已筹金额：<span class="money">43534</span></span>
-                        </div> -->
-                        <!-- <el-progress :percentage="70" color="#ea606b"></el-progress> -->
+                    <el-col class="content" :xs="11" :sm="14" :md="15" :lg="16" :xl="16">
+                        <h4>摩擦大会<a href="javascript:;"><img :src="require('../../../../assets/link.png')" alt=""></a><span>2018-4-3</span></h4>
+                        <p>的说法大三第三方士大夫的撒范德萨范德萨发水的说法大三第三方士大夫的撒范德萨范德萨发水的说法大三第三方士大夫的撒范德萨范德萨发水的说法大三第三方士大夫的撒范德萨范德萨发水的说法大三第三方士大夫的撒范德萨范德萨发水的方式发多少的身份的身份电费第三方的说法撒地方撒旦第三方士大夫的撒</p>
+                        <el-progress :percentage="70" color="#ea606b"></el-progress>
                         <div class="tags">
                             <el-tag size="mini">2 · 评论</el-tag>
                             <el-tag size="mini">2 · 赞</el-tag>
-                            <el-button type="primary" plain><i class="el-icon-more"></i></el-button>
                         </div>
-                    </div>
+                    </el-col>
                 </div>
+            </div>
+        </div>
+        <div class="myFocus">
+            <h2>我关注的项目</h2>
+            <div class="all">
+                <el-row class="one">
+                    <el-col :span="8">
+                        <el-card>
+                            <img class="attach" :src="require('../../../../assets/attachment.png')" alt="">
+                            <img :src="require('../../../../assets/2.jpg')" class="image">
+                            <div style="padding: 14px;">
+                                <span>好吃的汉堡</span>
+                                <div class="bottom clearfix">
+                                <el-button type="text" class="button">操作按钮</el-button>
+                                </div>
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
             </div>
         </div>
     </div>
@@ -34,58 +48,84 @@ export default {
 <style lang="scss" scoped>
     .myProject{
         color: black;
-        @mixin blur-style($size) {
-            -webkit-filter: blur($size);
-            -moz-filter: blur($size);
-            -ms-filter: blur($size);
-            -o-filter: blur($size);
-            filter: blur($size); 
-        }
         .mine{
             .all{
                 margin-top: 20px;
+                overflow: hidden;
                 h4{
                     margin: 0;
                     padding:0;
+                    position: relative;
+                    img{
+                        width:25px;
+                        position: relative;
+                        top: 5px;
+                        left: 5px;
+                    }
+                    span{
+                        position: absolute;
+                        right: 10px;
+                        bottom: 0;
+                        font-size: 0.8rem;
+                        font-weight: 500;
+                    }
                 }
-                &>.one{
-                    // position: relative;
+                .one{
                     &>div{
                         float: left;
                     }
                     .imgs{
                         margin-right: 20px;
+                        font-size: 0;
                         img{
-                            // width:100%;
                             height: 150px;
                         }
                     }
                     .content{
+                        height: 150px;
+                        position: relative;
                         >p{
-                            height:30px;
+                            height:55px;
+                            overflow: hidden;
+                            margin: 5px 0;
+                            font-size: 0.8rem;
+                            line-height: 1.5;
                         }
                         .tags{
-                            // position: absolute;
-                            // bottom: 0;
-                            margin-top: 10px;
-                            position: relative;
                             width: 100%;
                             /deep/ .el-tag{
                                 margin-top: 15px;
                                 color:#fff;
                                 &:first-child{
-                                    background: #909399;
+                                    background: #6c6d6e;
                                 }
                                 &:nth-child(2){
-                                    background: #E6A23C;
+                                    background: rgb(245, 119, 46);
                                 }
-                            }
-                            .el-button{
-                                position:absolute;
-                                right: 0;
                             }
                         }
                     }
+                }
+            }
+        }
+        .myFocus{
+            margin-top: 30px;
+            clear: both;
+            .one{
+                .el-col{
+                    position: relative;
+                    img:not(.attach){
+                        width: 100%;
+                        margin-top: 40px;
+                    }
+                    .attach{
+                        $attachWid:40px;
+                        position: absolute;
+                        right: -$attachWid/2+10;
+                        top: -$attachWid/2+10;
+                        width: $attachWid;
+                    }
+
                 }
             }
         }
