@@ -49,6 +49,10 @@
                 <el-row class="btnBox">
                     <el-button type="primary" plain>标为已读</el-button>
                     <el-button type="danger" plain>批量删除</el-button>
+                    <el-button-group>
+                        <el-button type="button" icon="el-icon-arrow-left">上一页</el-button>
+                        <el-button type="button">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+                    </el-button-group>
                 </el-row>
             </div>
         </div>
@@ -161,6 +165,12 @@ export default {
             }
             .btnBox{
                 margin-top: 10px;
+                position: relative;
+                /deep/ .el-button-group{
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
             }
         }
     }
