@@ -28,8 +28,50 @@
                         <div class="wordTip">
                             绑定手机后，您即可享受丰富的手机服务，如手机找回密码、开通手机动态密码等。
                         </div>
-                        <el-button plain>修改手机号</el-button>
+                        <el-button plain @click="dialogChangePhoneVisible = true">修改手机号</el-button>
                     </el-alert>
+                    <el-dialog title="修改手机号" :visible.sync="dialogChangePhoneVisible">
+                        <el-form :model="changePhone" status-icon :rules="changePhoneRules" ref="changePhone">
+                            <el-form-item label="新手机号码" :label-width="formLabelWidth" prop="newPhone">
+                                <el-input v-model="changePhone.newPhone" auto-complete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="验证码" :label-width="formLabelWidth">
+                                <el-col :sm="13" :md="14" :lg="16" :xl="16">
+                                    <el-input v-model="changePhone.vertifyCode" auto-complete="off"></el-input>
+                                </el-col>
+                                <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
+                            </el-form-item>
+                        </el-form>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="dialogChangePhoneVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogChangePhoneVisible = false">修 改</el-button>
+                        </div>
+                    </el-dialog>
+                    <el-alert
+                        :closable="false"
+                        title="邮箱绑定"
+                        type="warning"
+                        show-icon>
+                        <div class="wordTip">绑定邮箱后，可获取最新消息推送，以及项目消息提醒。</div>
+                        <el-button plain>立即认证</el-button>
+                    </el-alert>
+                    <!-- <el-dialog title="邮箱绑定" :visible.sync="dialogChangePhoneVisible">
+                        <el-form :model="changePhone">
+                            <el-form-item label="邮箱" :label-width="formLabelWidth">
+                                <el-input v-model="changePhone.newPhone" auto-complete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="验证码" :label-width="formLabelWidth">
+                                <el-col :sm="13" :md="14" :lg="16" :xl="16">
+                                    <el-input v-model="changePhone.vertifyCode" class="narrowInput" auto-complete="off"></el-input>
+                                </el-col>
+                                <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
+                            </el-form-item>
+                        </el-form>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="dialogChangePhoneVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogChangePhoneVisible = false">修 改</el-button>
+                        </div>
+                    </el-dialog> -->
                     <el-alert
                         :closable="false"
                         title="身份认证"
@@ -38,23 +80,90 @@
                         <div class="wordTip">身份认证后，将立即增加您的信任度。</div>
                         <el-button plain>立即认证</el-button>
                     </el-alert>
+                    <el-alert
+                        :closable="false"
+                        title="企业认证"
+                        type="warning"
+                        show-icon>
+                        <div class="wordTip">企业认证后，可发布带有企业标识的众筹项目。</div>
+                        <el-button plain>立即认证</el-button>
+                    </el-alert>
                 </div>
             </el-collapse-item>
-            <el-collapse-item title="账号验证" name="2">
-                <div>
-                    <span>当前安全等级：</span>
-                    <el-rate
-                        disabled
-                        v-model="value2"
-                        :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-                    </el-rate>
-                </div>
+            <el-collapse-item title="账号安全" name="2">
+                <el-alert
+                    :closable="false"
+                    title=""
+                    type="info">
+                    <div>
+                        <span>当前账号安全等级：</span>
+                        <el-rate
+                            disabled
+                            v-model="value2"
+                            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                        </el-rate>
+                        <p class="password">密码：<span>*********</span></p>
+                        <el-button type="danger" plain>修改密码</el-button>
+                    </div>
+                </el-alert>
             </el-collapse-item>
             <el-collapse-item title="消息通知" name="3">
-                
+                <el-alert
+                    class="msg"
+                    title=""
+                    :closable="false"
+                    type="info">
+                    <div>
+                        <i class="el-icon-info"></i>
+                        <span>是否开启系统通知：</span>
+                        <el-switch v-model="phoneMsg"></el-switch>
+                    </div>
+                    <div>
+                        <i class="el-icon-info"></i>
+                        <span>是否开启短信推送：</span>
+                        <el-switch v-model="phoneMsg"></el-switch>
+                    </div>
+                    <div>
+                        <i class="el-icon-info"></i>
+                        <span>是否开启邮件推送：</span>
+                        <el-switch v-model="phoneMsg"></el-switch>
+                    </div>
+                </el-alert>
             </el-collapse-item>
             <el-collapse-item title="权限查看" name="4">
-                
+                <el-table
+                    :header-cell-style="{background:'rgb(230, 234, 235)'}"
+                    :data="tableData"
+                    border
+                    style="width: 100%">
+                    <el-table-column
+                    label="类型"
+                    width="180">
+                    <template slot-scope="scope">
+                        <span style="margin-left: 10px">{{ scope.row.option }}</span>
+                    </template>
+                    </el-table-column>
+                    <el-table-column
+                    label="未认证"
+                    width="180">
+                    <template slot-scope="scope">
+                        <i class="el-icon-circle-check" v-if="scope.row.everyCan"></i>
+                    </template>
+                    </el-table-column>
+                    <el-table-column
+                    label="个人认证"
+                    width="180">
+                    <template slot-scope="scope">
+                        <i class="el-icon-circle-check" v-if="scope.row.personCan"></i>
+                    </template>
+                    </el-table-column>
+                    <el-table-column
+                    label="企业认证">
+                    <template slot-scope="scope">
+                        <i class="el-icon-circle-check" v-if="scope.row.companyCan"></i>
+                    </template>
+                    </el-table-column>
+                </el-table>
             </el-collapse-item>
         </el-collapse>
     </div>
@@ -62,44 +171,78 @@
 <script>
  export default {
     data() {
-      return {
-        activeNames: ['1','2','3','4'],
-        value2:3
-      };
+        let checkPhone = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error('手机号码不能为空'));
+            }
+            setTimeout(() => {
+                if (/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(value)) {
+                    callback(new Error('请输入正确的手机号'));
+                } else {
+                    callback();
+                }
+            }, 1000);
+        };
+        return {
+            activeNames: ['1','2','3','4'],
+            value2:3,
+            phoneMsg:'',
+            dialogChangePhoneVisible:false,
+            changePhone:{
+                newPhone:'',
+                vertifyCode:''
+            },
+            changePhoneRules:{
+                newPhone:[
+                    {validator:checkPhone,trigger:'blur'}
+                ]
+            },
+            formLabelWidth:'100px',
+            tableData:[{
+                option:'发布众筹',
+                everyCan:true,
+                personCan:true,
+                companyCan:true
+            },{
+                option:'私信粉丝',
+                everyCan:true,
+                personCan:true,
+                companyCan:true
+            },{
+                option:'发布评论',
+                everyCan:true,
+                personCan:true,
+                companyCan:true
+            },{
+                option:'众筹结算',
+                everyCan:true,
+                personCan:true,
+                companyCan:true
+            },{
+                option:'认证标识',
+                everyCan:true,
+                personCan:true,
+                companyCan:true
+            }]
+        }
     },
     methods: {
-      handleChange(val) {
-        console.log(val);
-      }
+        handleChange(val) {
+            console.log(val);
+        },
+        cellStyle({row, column, rowIndex, columnIndex}){
+                if(rowIndex === 1 && columnIndex === 2){
+                    return 'background:pink'
+                }else{
+                    return ''
+                }
+        }
     }
   }
-
 </script>
 <style lang="scss" scoped>
     .mySetting{
         color: black;
-        // .step{
-        //     padding-left: 10px;
-        //     background: rgb(235, 243, 243);
-        //     position: relative;
-        //     width: 100%;
-        //     border-radius: 5px;
-        //     border-left:5px solid rgb(252, 140, 88);
-        //     &:after{
-        //         content: attr(data-content);
-        //         display: block;
-        //         position: absolute;
-        //         top: 0;
-        //         right: 0;
-        //         font-size: 18px;
-        //         width: 7rem;
-        //         padding: 0 1rem;
-        //         overflow: hidden;
-        //         text-align: right;
-        //         color: rgba(255, 255, 255, .9);
-        //         background: linear-gradient(45deg, transparent 0%, transparent 30%, #e5645e 30%, #e5645e 100%)
-        //     }
-        // }
         .el-alert{
             padding: 20px;
             margin-bottom: 10px;
@@ -110,6 +253,31 @@
                 right: 10px;
                 bottom: 25px;
             }
+            /deep/ .el-rate{
+                display: inline-block;
+                position: relative;
+                top: -3px;
+                .el-rate__icon{
+                    font-size: 28px;
+                }
+            }
+            .password{
+                &>span{
+                    position: relative;
+                    top:3px;
+                }
+            }
+        }
+        .msg{
+            i{
+                color: orange;
+            }
+        }
+        .el-icon-circle-check{
+            color:#67C23A
+        }
+        .sendPhoneCode{
+            margin-left: 20px;
         }
     }
 </style>

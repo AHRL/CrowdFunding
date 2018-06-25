@@ -51,7 +51,8 @@ import {
     TableColumn,
     Tag,
     ButtonGroup,
-    Rate
+    Rate,
+    Dialog
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -101,6 +102,7 @@ Vue.use(TableColumn)
 Vue.use(Tag)
 Vue.use(ButtonGroup)
 Vue.use(Rate)
+Vue.use(Dialog)
     // 设置http拦截器
     // axios.interceptors.request.use(function(config) {
     //     // 在发送请求之前做些什么
