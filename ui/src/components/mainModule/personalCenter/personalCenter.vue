@@ -3,9 +3,8 @@
         <el-row class="wrap">
             <div class="sideBar">
                 <el-menu class="personMenu" router :default-active="this.$route.path.replace(/.*\/([^\/]+)$/, '$1')" background-color="#5eadc7" text-color="#fff" active-text-color="#ffd04b" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-                    <el-radio-group v-model="isCollapse">
-                        <el-radio-button :label="isCollapse?false:true"><i class="fa fa-list-ul"></i></el-radio-button>
-                        <!-- <el-radio-button :label="true">收起</el-radio-button> -->
+                    <el-radio-group>
+                        <el-radio-button><i class="fa fa-list-ul"></i></el-radio-button>
                     </el-radio-group>
                     <div class="personMsg">
                         <img :src="require('../../../assets/head.jpeg')">

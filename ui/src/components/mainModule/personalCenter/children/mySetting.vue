@@ -33,11 +33,11 @@
                     <el-dialog title="修改手机号" :visible.sync="dialogChangePhoneVisible">
                         <el-form :model="changePhone" status-icon :rules="changePhoneRules" ref="changePhone">
                             <el-form-item label="新手机号码" :label-width="formLabelWidth" prop="newPhone">
-                                <el-input v-model="changePhone.newPhone" auto-complete="off"></el-input>
+                                <el-input clearable="true" v-model="changePhone.newPhone" auto-complete="off"></el-input>
                             </el-form-item>
                             <el-form-item label="验证码" :label-width="formLabelWidth">
                                 <el-col :sm="13" :md="14" :lg="16" :xl="16">
-                                    <el-input v-model="changePhone.vertifyCode" auto-complete="off"></el-input>
+                                    <el-input clearable="true" v-model="changePhone.vertifyCode" auto-complete="off"></el-input>
                                 </el-col>
                                 <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
                             </el-form-item>
@@ -53,41 +53,103 @@
                         type="warning"
                         show-icon>
                         <div class="wordTip">绑定邮箱后，可获取最新消息推送，以及项目消息提醒。</div>
-                        <el-button plain>立即认证</el-button>
+                        <el-button plain @click="dialogEmailVisible = true">立即认证</el-button>
                     </el-alert>
-                    <!-- <el-dialog title="邮箱绑定" :visible.sync="dialogChangePhoneVisible">
-                        <el-form :model="changePhone">
-                            <el-form-item label="邮箱" :label-width="formLabelWidth">
-                                <el-input v-model="changePhone.newPhone" auto-complete="off"></el-input>
+                    <el-dialog title="邮箱绑定" :visible.sync="dialogEmailVisible" width="40%">
+                        <el-form :model="addEmail">
+                            <el-form-item label="请输入邮箱" :label-width="formLabelWidth">
+                                <el-input clearable="true" v-model="addEmail.email" auto-complete="off"></el-input>
                             </el-form-item>
-                            <el-form-item label="验证码" :label-width="formLabelWidth">
-                                <el-col :sm="13" :md="14" :lg="16" :xl="16">
-                                    <el-input v-model="changePhone.vertifyCode" class="narrowInput" auto-complete="off"></el-input>
-                                </el-col>
-                                <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
+                            <el-form-item label="" :label-width="formLabelWidth">
+                                <el-switch
+                                    v-model="addEmail.openNotice"
+                                    active-text="开启消息通知">
+                                </el-switch>
                             </el-form-item>
                         </el-form>
                         <div slot="footer" class="dialog-footer">
-                            <el-button @click="dialogChangePhoneVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="dialogChangePhoneVisible = false">修 改</el-button>
+                            <el-button @click="dialogEmailVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogEmailVisible = false">绑 定</el-button>
                         </div>
-                    </el-dialog> -->
+                    </el-dialog>
                     <el-alert
                         :closable="false"
                         title="身份认证"
                         type="warning"
                         show-icon>
                         <div class="wordTip">身份认证后，将立即增加您的信任度。</div>
-                        <el-button plain>立即认证</el-button>
+                        <el-button plain @click="dialogIdentityVisible=true">立即认证</el-button>
                     </el-alert>
+                    <el-dialog title="身份认证" :visible.sync="dialogIdentityVisible">
+                        <el-form class="upload">
+                            <el-form-item label="">
+                                <span>请上传本人与身份证正面同框照</span>
+                                <el-upload
+                                    class="avatar-uploader"
+                                    action="https://jsonplaceholder.typicode.com/posts/"
+                                    :show-file-list="false"
+                                    :on-success="handleAvatarSuccess"
+                                    :before-upload="beforeAvatarUpload">
+                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </el-form-item>
+                            <el-form-item label="">
+                                <span>请上传本人与身份证反面同框照</span>
+                                <el-upload
+                                    class="avatar-uploader"
+                                    action="https://jsonplaceholder.typicode.com/posts/"
+                                    :show-file-list="false"
+                                    :on-success="handleAvatarSuccess"
+                                    :before-upload="beforeAvatarUpload">
+                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </el-form-item>
+                        </el-form>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="dialogIdentityVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogwaitIdentityVisible = true">认 证</el-button>
+                        </div>
+                    </el-dialog>
+                    <el-dialog title="上传成功" :visible.sync="dialogwaitIdentityVisible">
+                        <el-alert
+                            title="上传成功，我们将在3-5个工作日给予回复，可在动态管理->最新消息处查看。"
+                            type="success"
+                            show-icon>
+                        </el-alert>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="dialogwaitIdentityVisible = false,dialogIdentityVisible = false,dialogCompanyIdentityVisible=false">确 定</el-button>
+                        </div>
+                    </el-dialog>
                     <el-alert
                         :closable="false"
                         title="企业认证"
                         type="warning"
                         show-icon>
                         <div class="wordTip">企业认证后，可发布带有企业标识的众筹项目。</div>
-                        <el-button plain>立即认证</el-button>
+                        <el-button plain @click="dialogCompanyIdentityVisible=true">立即认证</el-button>
                     </el-alert>
+                    <el-dialog title="企业认证" :visible.sync="dialogCompanyIdentityVisible">
+                        <el-form class="upload">
+                            <el-form-item label="">
+                                <span>请上传营业执照</span>
+                                <el-upload
+                                    class="avatar-uploader"
+                                    action="https://jsonplaceholder.typicode.com/posts/"
+                                    :show-file-list="false"
+                                    :on-success="handleAvatarSuccess"
+                                    :before-upload="beforeAvatarUpload">
+                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload>
+                            </el-form-item>
+                        </el-form>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="dialogIdentityVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="dialogwaitIdentityVisible = true">认 证</el-button>
+                        </div>
+                    </el-dialog>
                 </div>
             </el-collapse-item>
             <el-collapse-item title="账号安全" name="2">
@@ -103,9 +165,26 @@
                             :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                         </el-rate>
                         <p class="password">密码：<span>*********</span></p>
-                        <el-button type="danger" plain>修改密码</el-button>
+                        <el-button type="danger" plain @click="dialogChangePWVisible=true">修改密码</el-button>
                     </div>
                 </el-alert>
+                <el-dialog title="修改密码" :visible.sync="dialogChangePWVisible">
+                    <el-form :model="changePassword">
+                        <el-form-item label="输入新密码" :label-width="formLabelWidth">
+                            <el-input clearable="true" v-model="changePassword.newPassword" auto-complete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="验证码" :label-width="formLabelWidth">
+                            <el-col :sm="13" :md="14" :lg="16" :xl="16">
+                                <el-input clearable="true" v-model="changePassword.vertifyCode" auto-complete="off"></el-input>
+                            </el-col>
+                            <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogChangePWVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="dialogChangePWVisible = true">认 证</el-button>
+                    </div>
+                </el-dialog>
             </el-collapse-item>
             <el-collapse-item title="消息通知" name="3">
                 <el-alert
@@ -132,7 +211,8 @@
             </el-collapse-item>
             <el-collapse-item title="权限查看" name="4">
                 <el-table
-                    :header-cell-style="{background:'rgb(230, 234, 235)'}"
+                    :header-cell-style="{background:'rgb(230, 234, 235)',textAlign:'center'}"
+                    :cell-style="{textAlign:'center'}"
                     :data="tableData"
                     border
                     style="width: 100%">
@@ -197,6 +277,20 @@
                     {validator:checkPhone,trigger:'blur'}
                 ]
             },
+            dialogEmailVisible:false,
+            addEmail:{
+                email:'',
+                openNotice:''
+            },
+            dialogIdentityVisible:false,
+            imageUrl: '',
+            dialogwaitIdentityVisible:false,
+            dialogCompanyIdentityVisible:false,
+            dialogChangePWVisible:false,
+            changePassword:{
+                newPassword:'',
+                identifyCode:''
+            },
             formLabelWidth:'100px',
             tableData:[{
                 option:'发布众筹',
@@ -227,15 +321,23 @@
         }
     },
     methods: {
-        handleChange(val) {
-            console.log(val);
+        handleChange(){
+
         },
-        cellStyle({row, column, rowIndex, columnIndex}){
-                if(rowIndex === 1 && columnIndex === 2){
-                    return 'background:pink'
-                }else{
-                    return ''
-                }
+         handleAvatarSuccess(res, file) {
+            this.imageUrl = URL.createObjectURL(file.raw);
+        },
+        beforeAvatarUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isLt2M = file.size / 1024 / 1024 < 2;
+
+            if (!isJPG) {
+            this.$message.error('上传头像图片只能是 JPG 格式!');
+            }
+            if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 2MB!');
+            }
+            return isJPG && isLt2M;
         }
     }
   }
@@ -243,6 +345,7 @@
 <style lang="scss" scoped>
     .mySetting{
         color: black;
+        padding-bottom: 20px;
         .el-alert{
             padding: 20px;
             margin-bottom: 10px;
@@ -278,6 +381,33 @@
         }
         .sendPhoneCode{
             margin-left: 20px;
+        }
+        .upload{
+            /deep/ .avatar-uploader .el-upload {
+                margin:0 auto;
+                width: 300px;
+                border: 1px dashed #d9d9d9;
+                border-radius: 6px;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+            }
+            /deep/ .avatar-uploader .el-upload:hover {
+                border-color: #409EFF;
+            }
+            /deep/ .avatar-uploader-icon {
+                font-size: 28px;
+                color: #8c939d;
+                width: 178px;
+                height: 178px;
+                line-height: 178px;
+                text-align: center;
+            }
+            /deep/ .avatar {
+                width: 300px;
+                height: 178px;
+                display: block;
+            }
         }
     }
 </style>

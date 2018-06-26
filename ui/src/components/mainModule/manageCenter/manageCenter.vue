@@ -1,11 +1,12 @@
 <template>
-    
+    <div>
+        
+    </div>
 </template>
 <script>
-export default {
-    
-}
+import manageCenter from './index'
+export default manageCenter
 </script>
 <style scoped>
-
+@import "./index.scss";
 </style>
