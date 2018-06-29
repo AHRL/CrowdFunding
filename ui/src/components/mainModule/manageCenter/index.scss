@@ -1,17 +1,36 @@
 .manageCenter {
-    background: rgb(245, 248, 252);
+    $bg-color: rgb(245, 248, 252);
+    background: white;
     padding: 0 30px;
     padding-top: 100px;
-    .manager {
-        background: rgb(84, 127, 184);
-        padding: 10px 30px;
-        color: #fff;
-        img {
-            width: 50px;
-            border-radius: 50%;
-            border: 1px solid #fff;
-            vertical-align: middle;
-            margin-right: 20px;
+    .main {
+        background: $bg-color;
+        .el-menu {
+            border-right: none;
+            .el-menu-item.is-active {
+                background-color: $bg-color !important;
+            }
+            .manager {
+                box-sizing: border-box;
+                background: #5eadc7;
+                padding: 10px 30px;
+                color: #fff;
+                display: flex;
+                flex-direction: row;
+                justify-items: center;
+                align-items: center;
+                img {
+                    width: 100%;
+                    border-radius: 50%;
+                    border: 1px solid #fff;
+                }
+                .username {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    height: 25px;
+                }
+            }
         }
     }
 }
