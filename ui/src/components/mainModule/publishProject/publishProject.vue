@@ -27,9 +27,62 @@
     </div>
 </template>
 <script>
-import publishProject from './index.js'
-export default publishProject
+import contract from './children/contract'
+import signMessage from './children/signMessage'
+import editMore from './children/editMore'
+import wait from './children/wait'
+import team from './children/team'
+export default {
+    name: 'publishProject',
+    data() {
+        return {
+            activeIndex: 1
+        }
+    },
+    methods: {
+        changeIndex: () => {
+
+        }
+    },
+    components: {
+        contract,
+        signMessage,
+        editMore,
+        wait,
+        team
+    }
+}
 </script>
 <style lang="scss" scoped>
-    @import './index.scss' 
+.main {
+    margin: 60px 0;
+    >header {
+        position: relative;
+        >img {
+            width: 100%;
+        }
+        >div {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            color: white;
+            .el-button {
+                font-size: 16px;
+                padding: 15px 30px;
+            }
+        }
+    }
+}
+
+.container {
+    width: 70%;
+    margin: 50px auto;
+    h2 {
+        color: black;
+    }
+    .steps {
+        margin: 0 auto;
+        width: 80%;
+    }
+}
 </style>

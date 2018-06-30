@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <el-menu-item index="myMessage">
-                        <i class="el-icon-menu"></i>
+                        <i class="el-icon-edit-outline"></i>
                         <span slot="title">个人资料</span>
                     </el-menu-item>
                     <el-menu-item index="myActivity">
@@ -37,9 +37,88 @@
     </div>
 </template>
 <script>
-import personalCenter from './index.js'
-export default personalCenter
+export default {
+    data() {
+        return {
+            isCollapse: false,
+            form: {
+                name: '',
+                region: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: ''
+            }
+        }
+    },
+    methods: {
+        handleOpen(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        handleClose(key, keyPath) {
+            console.log(key, keyPath);
+        },
+        onSubmit() {
+            // console.log(this.$route.options.routers)
+        }
+    },
+    mounted() {
+        this.onSubmit()
+    }
+}
 </script>
 <style lang="scss" scoped>
-@import './index.scss'
+.container {
+    padding: 60px 0;
+    background: rgb(237, 241, 243);
+    color: white;
+    .wrap {
+        width: 80%;
+        margin: 40px auto;
+        background: #ffffff;
+        // padding: 30px 0;
+        position: relative;
+        padding-left: 220px;
+        min-height: 500px;
+        .sideBar {
+            width: 200px;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            .personMenu {
+                box-sizing: border-box;
+                padding-top: 20px;
+                height: 100%;
+                .el-menu-vertical-demo:not(.el-menu--collapse) {
+                    width: 200px;
+                    min-height: 400px;
+                }
+                .el-menu-item i {
+                    color: #fff;
+                }
+                /deep/ .el-radio-button__inner {
+                    background: none;
+                    border: none;
+                    color: white;
+                }
+                .personMsg {
+                    // padding: 20px;
+                    text-align: center;
+                    img {
+                        width: 50%;
+                        border-radius: 50%;
+                        border: 2px solid #ffffff;
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+        .allContent {
+            padding-top: 10px;
+        }
+    }
+}
 </style>
