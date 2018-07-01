@@ -55,7 +55,20 @@
                 <!-- 消息列表 -->
                 <!-- 我的设置 -->
                 <div class="topBar">
-                    <el-input></el-input>
+                    <el-input placeholder="请输入想要查看的项目名" prefix-icon="el-icon-search"></el-input>
+                    <div class="topBarRight">
+                        <el-badge is-dot class="item"><i class="fa fa-envelope-o"></i></el-badge>
+                        <!-- <i class="fa fa-envelope-o"></i> -->
+                        <!-- <i class="el-icon-setting"></i> -->
+                        <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                welcome admin<i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>注销</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
                 </div>
                 <survey v-if="activeIndex==='1'"></survey>
                 <day-top v-if="activeIndex==='2'"></day-top>
@@ -150,12 +163,30 @@ export default {
         width: 100%;
         height: 60px;
         box-sizing: border-box;
-        padding: 10px 20px;
+        padding: 15px 20px;
         background: #fff;
+        position: relative;
         .el-input{
             width: 50%;
-            input{
-                border-radius: 10px;
+            /deep/ .el-input__inner{
+                border-radius: 20px;
+                height: 30px;
+            }
+            /deep/ .el-input__icon{
+                line-height:30px;
+            }
+        }
+        .topBarRight{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            i{
+                cursor: pointer;
+                margin-right: 3px;
+            }
+            span{
+                display: inline-block;
+                margin-left: 20px;
             }
         }
     }
