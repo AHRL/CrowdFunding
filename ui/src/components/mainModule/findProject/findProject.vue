@@ -170,23 +170,15 @@
                 </el-row>
           </div>
           <div class="projectCharts">
-              <el-row>
-                  <el-col :span="24">
-                      <el-row>
-                          <el-col>
-                              <h2>项目实况统计</h2>
-                          </el-col>
-                      </el-row>
-                      <el-row>
-                          <el-col :span="14">
-                              <div id="myChart" :style="{width:'600px',height:'400px'}"></div>
-                          </el-col>
-                          <el-col :span="8">
-                              <div id="myChartPie" :style="{width:'400px',height:'400px'}"></div>
-                          </el-col>
-                      </el-row>
-                  </el-col>
-              </el-row>
+                <h2>项目实况统计</h2>
+                <el-row>
+                    <el-col :span="15" :offset="1">
+                        <div id="myChart" :style="{width:'100%',height:'400px'}"></div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div id="myChartPie" :style="{width:'100%',height:'400px'}"></div>
+                    </el-col>
+                </el-row>
           </div>
       </div>
   </div>

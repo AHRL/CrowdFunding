@@ -69,13 +69,26 @@ export default {
                 followerNum: 1773,
                 commentNum: 157
             }],
-            activeName: '1'
+            activeName: '1',
+            windowSize: 0,
+            myChart: echarts.init(document.getElementById('myChart')),
+            myChartPie: echarts.init(document.getElementById('myChartPie')),
         };
     },
+    watch: {
+        // windowSize: val => {
+        //     this.myChart.resize()
+        //     this.myChartPie.resize()
+        // }
+    },
     mounted() {
-        this.drawChart()
+        this.drawChart(),
+            this.windowSizeChange()
     },
     methods: {
+        windowSizeChange() {
+            this.windowSize = document.body.clientWidth
+        },
         drawChart() {
             let idx = 1
             let myChart = echarts.init(document.getElementById('myChart'))

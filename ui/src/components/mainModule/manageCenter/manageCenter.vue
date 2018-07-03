@@ -4,9 +4,7 @@
             <el-col>
                 <el-menu
                     :default-active="activeIndex"
-                    class="el-menu-vertical-demo"
-                    @open="handleOpen"
-                    @close="handleClose"
+                    @select="handleSelect"
                     background-color="rgb(238, 240, 243)"
                     text-color="#5eadc7"
                     active-text-color="rgb(90, 87, 87)">
@@ -15,7 +13,7 @@
                             <img :src="require('../../../assets/head.jpeg')" alt="">
                         </el-col>
                         <el-col class="username" :span="16" :offset="2">
-                            的说法是否水电费第三方
+                            dfgfgfdgfsdgsgfsdytj
                         </el-col>
                     </el-row>
                     <el-menu-item index="1">
@@ -99,6 +97,11 @@ export default {
         },
         handleClose(key, keyPath) {
             console.log(key, keyPath);
+        },
+        handleSelect(key,keyPath){
+            console.log(key,keyPath)
+            this.activeIndex = key;
+            console.log(this.activeIndex)
         }
     },
     components: {
