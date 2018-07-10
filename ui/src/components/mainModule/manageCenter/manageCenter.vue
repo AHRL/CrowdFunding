@@ -22,21 +22,13 @@
                     </el-menu-item>
                     <el-menu-item index="2">
                         <i class="el-icon-more"></i>
-                        <span slot="title">日榜</span>
+                        <span slot="title">榜单</span>
                     </el-menu-item>
                     <el-menu-item index="3">
-                        <i class="el-icon-more"></i>
-                        <span slot="title">月榜</span>
-                    </el-menu-item>
-                    <el-menu-item index="4">
-                        <i class="el-icon-more"></i>
-                        <span slot="title">总榜</span>
-                    </el-menu-item>
-                    <el-menu-item index="5">
                         <i class="el-icon-star-on"></i>
                         <span slot="title">消息列表</span>
                     </el-menu-item>
-                    <el-menu-item index="6">
+                    <el-menu-item index="4">
                         <i class="el-icon-setting"></i>
                         <span slot="title">我的设置</span>
                     </el-menu-item>
@@ -69,20 +61,16 @@
                     </div>
                 </div>
                 <survey v-if="activeIndex==='1'"></survey>
-                <day-top v-if="activeIndex==='2'"></day-top>
-                <month-top v-if="activeIndex==='3'"></month-top>
-                <total-top v-if="activeIndex==='4'"></total-top>
-                <message-list v-if="activeIndex==='5'"></message-list>
-                <setting v-if="activeIndex==='6'"></setting>
+                <top v-if="activeIndex==='2'"></top>
+                <message-list v-if="activeIndex==='3'"></message-list>
+                <setting v-if="activeIndex==='4'"></setting>
             </el-col>
         </el-row>
     </div>
 </template>
 <script>
 import survey from './children/survey'
-import dayTop from './children/dayTop.vue'
-import monthTop from './children/monthTop'
-import totalTop from './children/totalTop'
+import top from './children/top.vue'
 import messageList from './children/messageList'
 import setting from './children/setting'
 export default {
@@ -106,9 +94,7 @@ export default {
     },
     components: {
         survey,
-        dayTop,
-        monthTop,
-        totalTop,
+        top,
         messageList,
         setting
     }

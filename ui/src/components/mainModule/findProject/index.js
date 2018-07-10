@@ -70,25 +70,20 @@ export default {
                 commentNum: 157
             }],
             activeName: '1',
-            windowSize: 0,
-            myChart: echarts.init(document.getElementById('myChart')),
-            myChartPie: echarts.init(document.getElementById('myChartPie')),
+            myChart: {},
+            myChartPie: {},
         };
     },
-    watch: {
-        // windowSize: val => {
-        //     this.myChart.resize()
-        //     this.myChartPie.resize()
-        // }
-    },
     mounted() {
-        this.drawChart(),
-            this.windowSizeChange()
+        let echarts = this.drawChart()
+        this.myChart = echarts.myChart
+        this.myChartPie = echarts.myChartPie
+        window.onresize = () => {
+            this.myChart.resize()
+            this.myChartPie.resize()
+        }
     },
     methods: {
-        windowSizeChange() {
-            this.windowSize = document.body.clientWidth
-        },
         drawChart() {
             let idx = 1
             let myChart = echarts.init(document.getElementById('myChart'))
@@ -225,6 +220,7 @@ export default {
                     ]
                 }]
             })
+            return { myChart: myChart, myChartPie: myChartPie }
         }
     }
 }
