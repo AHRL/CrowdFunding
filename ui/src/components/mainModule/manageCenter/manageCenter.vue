@@ -28,10 +28,6 @@
                         <i class="el-icon-star-on"></i>
                         <span slot="title">消息列表</span>
                     </el-menu-item>
-                    <el-menu-item index="4">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">我的设置</span>
-                    </el-menu-item>
                 </el-menu>
             </el-col>
             <el-col class="leftContent" style="height:800px">
@@ -63,7 +59,6 @@
                 <survey v-if="activeIndex==='1'"></survey>
                 <top v-if="activeIndex==='2'"></top>
                 <message-list v-if="activeIndex==='3'"></message-list>
-                <setting v-if="activeIndex==='4'"></setting>
             </el-col>
         </el-row>
     </div>
@@ -72,7 +67,6 @@
 import survey from './children/survey'
 import top from './children/top.vue'
 import messageList from './children/messageList'
-import setting from './children/setting'
 export default {
     data() {
         return {
@@ -95,8 +89,7 @@ export default {
     components: {
         survey,
         top,
-        messageList,
-        setting
+        messageList
     }
 }
 </script>

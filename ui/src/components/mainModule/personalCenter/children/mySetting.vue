@@ -33,11 +33,11 @@
                     <el-dialog title="修改手机号" :visible.sync="dialogChangePhoneVisible">
                         <el-form :model="changePhone" status-icon :rules="changePhoneRules" ref="changePhone">
                             <el-form-item label="新手机号码" :label-width="formLabelWidth" prop="newPhone">
-                                <el-input clearable="true" v-model="changePhone.newPhone" auto-complete="off"></el-input>
+                                <el-input :clearable=true v-model="changePhone.newPhone" auto-complete="off"></el-input>
                             </el-form-item>
                             <el-form-item label="验证码" :label-width="formLabelWidth">
                                 <el-col :sm="13" :md="14" :lg="16" :xl="16">
-                                    <el-input clearable="true" v-model="changePhone.vertifyCode" auto-complete="off"></el-input>
+                                    <el-input :clearable=true v-model="changePhone.vertifyCode" auto-complete="off"></el-input>
                                 </el-col>
                                 <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
                             </el-form-item>
@@ -58,7 +58,7 @@
                     <el-dialog title="邮箱绑定" :visible.sync="dialogEmailVisible" width="40%">
                         <el-form :model="addEmail">
                             <el-form-item label="请输入邮箱" :label-width="formLabelWidth">
-                                <el-input clearable="true" v-model="addEmail.email" auto-complete="off"></el-input>
+                                <el-input :clearable=true v-model="addEmail.email" auto-complete="off"></el-input>
                             </el-form-item>
                             <el-form-item label="" :label-width="formLabelWidth">
                                 <el-switch
@@ -171,11 +171,11 @@
                 <el-dialog title="修改密码" :visible.sync="dialogChangePWVisible">
                     <el-form :model="changePassword">
                         <el-form-item label="输入新密码" :label-width="formLabelWidth">
-                            <el-input clearable="true" v-model="changePassword.newPassword" auto-complete="off"></el-input>
+                            <el-input :clearable=true v-model="changePassword.newPassword" auto-complete="off"></el-input>
                         </el-form-item>
                         <el-form-item label="验证码" :label-width="formLabelWidth">
                             <el-col :sm="13" :md="14" :lg="16" :xl="16">
-                                <el-input clearable="true" v-model="changePassword.vertifyCode" auto-complete="off"></el-input>
+                                <el-input :clearable=true v-model="changePassword.vertifyCode" auto-complete="off"></el-input>
                             </el-col>
                             <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
                         </el-form-item>
