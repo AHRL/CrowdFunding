@@ -66,5 +66,34 @@ export default {
 .w-e-text-container{
     min-height:400px;
 }
+.enlarge{
+    background: rgba(32,14,54,0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 8888888;
+}
+.closeImg{
+	position: absolute;
+	right: 0;
+	top: 0;
+	color: white;
+	font-weight: 600;
+	font-size: 25px;
+	z-index: 8888888;
+	cursor: pointer;
+}
+.closeImg:hover{
+	-webkit-transform:rotate(360deg);
+    transform:rotate(360deg);
+    -webkit-transition:-webkit-transform 1s linear;
+    transition:transform 1s linear;
+}
+.enlargeImage{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+}
 </style>
 
