@@ -34,5 +34,11 @@ export default new Router({
         path: '/login',
         name: 'login',
         component: resolve => require(['../components/mainModule/login/login'], resolve)
+    }, {
+        path: '/user/:id',
+        component: resolve => require(['../components/user/user'], resolve)
+    }, {
+        path: '/project/:id',
+        component: resolve => require(['../components/project/project'], resolve)
     }]
 })
