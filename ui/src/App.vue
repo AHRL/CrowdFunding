@@ -95,5 +95,8 @@ export default {
 	top: 50%;
 	transform: translate(-50%,-50%);
 }
+.el-tabs__item{
+    font-size: 18px;
+  }
 </style>
 
