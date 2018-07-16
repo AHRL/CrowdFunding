@@ -79,18 +79,31 @@
         <el-row>
             <el-col :span="24">
                 <el-tabs v-model="activeName">
-                    <el-tab-pane label="项目详情" name="first">项目详情</el-tab-pane>
-                    <el-tab-pane label="评论" name="second">评论</el-tab-pane>
-                    <el-tab-pane label="支持者" name="third">支持者</el-tab-pane>
+                    <el-tab-pane label="项目详情" name="first"></el-tab-pane>
+                    <el-tab-pane label="评论" name="second"></el-tab-pane>
+                    <el-tab-pane label="支持者" name="third"></el-tab-pane>
                 </el-tabs>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="15">
-
+                <p>dafsafsd</p>
             </el-col>
             <el-col :span="8" :offset="1">
-
+                <div>
+                    <h2>风险提示</h2>
+                    <p>1. 您参与众筹是支持将创意变为现实的过程，而不是直接的商品交易，因此存在一定风险。请您根据自己的判断选择、支持众筹项目。</p>
+                    <p>2. 众筹存在于发起人与支持者之间，摩点作为第三方平台，只提供网络空间、技术支持等服务。众筹的回报产品和承诺由发起人提供和作出，摩点不参与和担保众筹</p>
+                </div>
+                <div class="otherProject">
+                    <h2>团队其他项目</h2>
+                    <div>
+                        <h3>最萌全家福~</h3>
+                        <img src="@/assets/2.jpg">
+                        <p>您参与众筹是支持将创意变为现实的过程，而不是直接的商品交易，因此存在一定风险。请您根据自己的判断选择、支持众筹项目。</p>
+                        <el-button type="primary">查看详情</el-button>
+                    </div>
+                </div>
             </el-col>
         </el-row>
     </el-row>
@@ -113,7 +126,6 @@ export default {
     }
     .project>.el-row{
         width: 85%;
-        height: 500px;
         margin: 100px auto;
     }
     .headBox h2{
@@ -212,5 +224,15 @@ export default {
     }
     .el-tabs{
         margin-top: 30px;
+    }
+    h2{
+        border-bottom: 1px solid rgb(226, 226, 226);
+        padding: 10px 0;
+    }
+    .otherProject img{
+        width:50%;
+    }
+    .otherProject p{
+        color: rgb(92, 91, 91);
     }
 </style>
