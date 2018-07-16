@@ -48,7 +48,7 @@
     </el-tabs>
 </template>
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 export default {
     data() {
       var checkPhone = (rule, value, callback) => {
@@ -148,7 +148,7 @@ export default {
         console.log(myData)
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            axios.post('post',{
+            this.$axios.post('post',{
                 data: myData
             }).then(response => {
                 console.log(response)

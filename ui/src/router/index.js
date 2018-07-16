@@ -40,5 +40,8 @@ export default new Router({
     }, {
         path: '/project/:id',
         component: resolve => require(['../components/project/project'], resolve)
+    }, {
+        path: '/search',
+        component: resolve => require(['../components/search/search'], resolve)
     }]
 })

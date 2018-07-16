@@ -60,7 +60,7 @@ import {
 
 Vue.use(Vuex)
 Vue.prototype.router = router
-Vue.prototype.$ajax = axios
+Vue.prototype.$axios = axios
 Vue.prototype.$notify = Notification
 
 Vue.use(Row)
