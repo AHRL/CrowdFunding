@@ -55,7 +55,8 @@ import {
     Dialog,
     MenuItemGroup,
     Badge,
-    Scrollbar
+    Scrollbar,
+    Loading
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -109,6 +110,7 @@ Vue.use(Dialog)
 Vue.use(MenuItemGroup)
 Vue.use(Badge)
 Vue.use(Scrollbar)
+Vue.use(Loading)
     // 设置http拦截器
     // axios.interceptors.request.use(function(config) {
     //     // 在发送请求之前做些什么

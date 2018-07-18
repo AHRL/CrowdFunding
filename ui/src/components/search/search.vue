@@ -2,7 +2,8 @@
   <div class="search">
     <h1><i class="el-icon-search"></i>搜索结果</h1>
     <div>
-      <h3></h3>
+      <h3>相关项目</h3>
+      
     </div>
   </div>
 </template>

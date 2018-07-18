@@ -1,0 +1,2 @@
+webpackJsonp([0],{"2Bxi":function(p,t,i){p.exports=i.p+"static/img/2.ff71b20.jpg"},N4Ir:function(p,t,i){p.exports=i.p+"static/img/head.5df8311.jpeg"}});
+//# sourceMappingURL=0.0bdbcb6d7f4b474c4a31.js.map

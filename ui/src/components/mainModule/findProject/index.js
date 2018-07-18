@@ -1,4 +1,6 @@
 //引入基本模板
+import item from '../../children/item'
+import $ from '@/api/axios.init'
 let echarts = require('echarts/lib/echarts')
     //引入柱状图组件
 require('echarts/lib/chart/bar')
@@ -73,6 +75,11 @@ export default {
             myChart: {},
             myChartPie: {},
         };
+    },
+    beforeCreate () {
+        $.get('/findProject').then(data => {
+            this.carouselImgUrl = data.data
+          })
     },
     mounted() {
         let echarts = this.drawChart()
@@ -222,5 +229,8 @@ export default {
             })
             return { myChart: myChart, myChartPie: myChartPie }
         }
+    },
+    components: {
+        item
     }
 }

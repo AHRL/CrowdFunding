@@ -140,28 +140,7 @@
                             </el-col>
                         </el-row>
                         <el-row class="items">
-                            <el-col v-for="(item,i) in moneyTop" :key="i" :span="6">
-                                <el-card shadow="hover">
-                                    <div>
-                                        <img class="itemImg" :src="require('../../../assets/2.jpg')" />
-                                    </div>
-                                    <div class="itemContent">
-                                        <h3>{{ item.header }}</h3>
-                                        <p class="author">
-                                            <img :src="item.authorHeadUrl" alt="">
-                                            <span>{{ item.authorName }}</span>
-                                        </p>
-                                        <div>
-                                            <div class="moneyData">
-                                                <span class="money">￥{{ item.money }}</span>
-                                                <span>{{ item.progress }}%</span>
-                                            </div>
-                                            <el-progress :percentage="item.progress" :show-text=false></el-progress>
-                                        </div>
-                                        <p class="moneyTopFol">{{ item.followerNum }} 支持者</p>
-                                    </div>
-                                </el-card>
-                            </el-col>
+                            <item></item>
                         </el-row>
                         <el-row class="pages">
                             <el-pagination background layout="total,prev, pager, next,jumper" :page-size="12" :total="100"></el-pagination>

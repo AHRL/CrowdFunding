@@ -11,6 +11,11 @@ import myHeader from './components/myHeader'
 import myFooter from './components/myFooter'
 export default {
   name: 'App',
+  data () {
+    return {
+      
+    }
+  },
   components: {
     myHeader,
     myFooter
