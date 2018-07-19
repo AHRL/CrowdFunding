@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import Vuex from 'vuex'
 import axios from 'axios'
+import store from './vuex/store'
 import 'element-ui/lib/theme-chalk/display.css'
 import { Notification } from 'element-ui'
 import 'font-awesome/css/font-awesome.css'
@@ -126,6 +127,7 @@ Vue.use(Loading)
 new Vue({
     el: '#app',
     router,
+    store,
     components: { App },
     template: '<App/>'
 })

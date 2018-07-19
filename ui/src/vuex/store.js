@@ -8,31 +8,18 @@ const state = {
     user: {
         name: '',
         img: ''
-    },
-    search: ''
+    }
 }
 
 const mutations = {
     //方法 第一个参数为state
-    LOGIN_IN({ user }, name, img) {
-        user.name = name
-        user.img = img
+    LOGIN_IN({ user }, data) {
+        user.name = data.name
+        user.img = data.img
     },
     LOGIN_OUT({ user }) {
         user.name = ''
         user.img = ''
-    },
-    SEARCH({ search }) {
-        this.$axios.post('', {
-            search: search
-        }).then((response) => {
-            this.$router.push({
-                path: '/search',
-                params: {
-                    response
-                }
-            })
-        })
     }
 }
 
@@ -45,17 +32,11 @@ const getters = {
     //对数据进行监听，count:function(){}监听count数据，变化就执行函数
 }
 
-const common = {
+const store = new Vuex.Store({
     state,
     mutations,
     getters,
     actions
-}
-
-const store = new Vuex.Store({
-    modules: {
-        common: common
-    }
 })
 
 export default store

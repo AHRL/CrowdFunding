@@ -14,12 +14,23 @@
                     </el-menu-item>
                 </el-menu>
             </el-col>
-            <el-col :xs="5" :sm="5" :md="6" :lg="5" class="rightNav">
+            <el-col :xs="8" :sm="8" :md="9" :lg="7" class="rightNav">
                 <div>
-                    <el-input placeholder="search" suffix-icon="el-icon-search" v-model="search"></el-input>
+                    <el-input placeholder="search" suffix-icon="el-icon-search"></el-input>
                 </div>
                 <div class="lo-re-box">
-                    <router-link to="/login">登录</router-link>
+                    <router-link to="/login" v-if="!this.$store.state.user.name">登录</router-link>
+                    <div class="isLogin" v-else>
+                        <img :src="this.$store.state.user.img" >
+                        <el-dropdown trigger="click">
+                            <span class="el-dropdown-link">
+                                <span class="username">{{ this.$store.state.user.name }}</span> <i class="el-icon-arrow-down el-icon--right"></i>
+                            </span>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item><span @click="loginOut">注销</span></el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </div>
                     <!-- <span>|</span>
                     <a href="javascrit:;">注册</a> -->
                 </div>
@@ -38,14 +49,17 @@ export default {
             {name:'/publishProject',navItem:'发布项目'},
             {name:'/personalCenter',navItem:'个人中心'},
             {name:'/manageCenter',navItem:'管理员中心'},
-        ],
-        search:''
+        ]
       };
     },
     methods: {
-       pathTo (url) {
-           this.$router.push(url)
-       }
+        pathTo (url) {
+            this.$router.push(url)
+        },
+        loginOut(){
+            console.log('loginout')
+            this.$store.commit('LOGIN_OUT')
+        }
     }
 }
 </script>
@@ -55,7 +69,7 @@ header{
     background: white;
     width: 100%;
     position: fixed;
-    z-index:99999;
+    z-index:999;
 }
 .header,.lo-re-box,.rightNav{
     display: flex;
@@ -82,7 +96,6 @@ header h1{
     position: absolute;
     right: 20px;
     height: 60px;
-    text-align:right;
 }
 .lo-re-box{
     margin-left: 20px;
@@ -92,8 +105,28 @@ header h1{
     width: 30px;
     text-decoration: none;
     color: rgb(4, 61, 168);
+    margin-left: 20px;
 }
 .rightNav a:hover{
     text-decoration: underline blue;
+}
+.isLogin{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.isLogin img{
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.el-dropdown .username{
+    display: inline-block;
+    width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+
 }
 </style>

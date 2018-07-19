@@ -12,7 +12,7 @@
                     <el-switch v-model="rememberPass" active-text="记住密码" active-color="#ff4949" inactive-color="#ccc"> </el-switch>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('loginForm','post')">登录</el-button>
+                    <el-button type="primary" @click="login">登录</el-button>
                     <el-button @click="resetLoginForm('loginForm')">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -20,7 +20,7 @@
         <el-tab-pane label="注册">
             <el-form :model="registerForm" status-icon :rules="registerRules" ref="registerForm" label-width="100px">
                 <el-form-item label="手机号" prop="phone">
-                    <el-input type="phone" v-model="registerForm.username" auto-complete="off"></el-input>
+                    <el-input type="phone" v-model="registerForm.phone" auto-complete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
                     <el-input type="password" v-model="registerForm.password" auto-complete="off"></el-input>
@@ -40,7 +40,7 @@
                     </el-col>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
+                    <el-button type="primary" @click="register">注册</el-button>
                     <el-button @click="resetLoginForm('registerForm')">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -48,7 +48,8 @@
     </el-tabs>
 </template>
 <script>
-// import axios from 'axios'
+import { Message } from 'element-ui'
+import $ from '@/api/axios.init'
 export default {
     data() {
       var checkPhone = (rule, value, callback) => {
@@ -92,7 +93,7 @@ export default {
                 callback(new Error('请再次输入密码'))
             }
             setTimeout(() => {
-                if(value !== this.$refs.registerForm.password){
+                if(value !== this.registerForm.password){
                     callback(new Error('该密码与上面密码不一致'))
                 }else{
                     callback()
@@ -143,16 +144,31 @@ export default {
       };
     },
     methods: {
-      submitForm(formName) {
-        let myData = formName == 'loginForm'?this.loginForm:this.registerForm
-        console.log(myData)
-        this.$refs[formName].validate((valid) => {
+      login() {
+        let myData = this.loginForm
+        this.$refs.loginForm.validate((valid) => {
           if (valid) {
-            this.$axios.post('post',{
+            $.post('/login',{
                 data: myData
-            }).then(response => {
-                console.log(response)
+            }).then(res => {
+                if(res.data.name){
+                    Message({
+                        message: '登录成功！',
+                        type: 'success'
+										})
+										this.$store.commit('LOGIN_IN',res.data)
+                    this.$router.push('/findProject')
+                }else{
+                    Message({
+                        message: '密码错误',
+                        type: 'danger'
+                    })
+                }
             }).catch(error => {
+                Message({
+                    message: '登录异常',
+                    type: 'danger'
+                })
                 console.log(error)
             })
           } else {
@@ -161,6 +177,36 @@ export default {
           }
         });
       },
+      register(){
+          let myData = this.registerForm
+					this.$refs.registerForm.validate((valid) => {
+					if (valid) {
+							$.post('/register',{
+									data: myData
+							}).then(res => {
+									if(res.data.info === 'suc'){
+										Message({
+											message: '注册成功,赶快去登录吧'
+										})
+									}else{
+										Message({
+											message: '注册失败',
+											type: 'danger'
+										})
+									}
+							}).catch(error => {
+									Message({
+										message: '注册异常',
+										type: 'danger'
+									})
+									console.log(error)
+							})
+					} else {
+            console.log('error submit!!');
+            return false;
+          }
+				})
+			},
       resetLoginForm(formName) {
         this.$refs[formName].resetFields();
       }
