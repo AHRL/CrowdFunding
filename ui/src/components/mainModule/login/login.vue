@@ -48,7 +48,7 @@
     </el-tabs>
 </template>
 <script>
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 import $ from '@/api/axios.init'
 export default {
     data() {
@@ -152,22 +152,22 @@ export default {
                 data: myData
             }).then(res => {
                 if(res.data.name){
-                    Message({
+                    this.$message({
                         message: '登录成功！',
                         type: 'success'
-										})
-										this.$store.commit('LOGIN_IN',res.data)
+					})
+					this.$store.commit('LOGIN_IN',res.data)
                     this.$router.push('/findProject')
                 }else{
-                    Message({
+                    this.$message({
                         message: '密码错误',
-                        type: 'danger'
+                        type: 'warning'
                     })
                 }
             }).catch(error => {
-                Message({
+                this.$message({
                     message: '登录异常',
-                    type: 'danger'
+                    type: 'warning'
                 })
                 console.log(error)
             })
@@ -181,30 +181,30 @@ export default {
           let myData = this.registerForm
 					this.$refs.registerForm.validate((valid) => {
 					if (valid) {
-							$.post('/register',{
-									data: myData
-							}).then(res => {
-									if(res.data.info === 'suc'){
-										Message({
-											message: '注册成功,赶快去登录吧'
-										})
-									}else{
-										Message({
-											message: '注册失败',
-											type: 'danger'
-										})
-									}
-							}).catch(error => {
-									Message({
-										message: '注册异常',
-										type: 'danger'
+									$.post('/register',{
+										data: myData
+									}).then(res => {
+													if(res.data.info === 'suc'){
+															Message({
+																	message: '注册成功,赶快去登录吧'
+															})
+													}else{
+															Message({
+																	message: '注册失败',
+																	type: 'danger'
+															})
+													}
+									}).catch(error => {
+													Message({
+															message: '注册异常',
+															type: 'danger'
+													})
+													console.log(error)
 									})
-									console.log(error)
-							})
 					} else {
-            console.log('error submit!!');
-            return false;
-          }
+						console.log('error submit!!');
+						return false;
+					}
 				})
 			},
       resetLoginForm(formName) {

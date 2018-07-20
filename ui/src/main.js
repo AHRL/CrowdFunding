@@ -8,8 +8,10 @@ import axios from 'axios'
 import store from './vuex/store'
 import 'element-ui/lib/theme-chalk/display.css'
 import { Notification } from 'element-ui'
+import { Message } from 'element-ui'
 import 'font-awesome/css/font-awesome.css'
 import 'babel-polyfill'
+import common from '../static/common'
 import {
     Row,
     Col,
@@ -60,10 +62,12 @@ import {
     Loading
 } from 'element-ui'
 
+Vue.use(common)
 Vue.use(Vuex)
 Vue.prototype.router = router
 Vue.prototype.$axios = axios
 Vue.prototype.$notify = Notification
+Vue.prototype.$message = Message
 
 Vue.use(Row)
 Vue.use(Col)

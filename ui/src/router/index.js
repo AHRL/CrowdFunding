@@ -5,7 +5,7 @@ import personalRoute from '../components/mainModule/personalCenter/router'
 Vue.use(Router)
 
 export default new Router({
-    // mode: 'history',
+    // mode: 'hash',
     routes: [{
         path: '*',
         redirect: '/findProject'

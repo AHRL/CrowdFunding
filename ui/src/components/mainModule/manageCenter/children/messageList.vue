@@ -95,7 +95,7 @@
                             </el-form-item>
                             <el-form-item label="相关信息">
                                 <div class="imgList" v-for="(item,i) in props.row.img" :key="i">
-                                    <img @click="enlargeImg(item)" :src="item"/>
+                                    <img @click="this.enlargeImg(item)" :src="item"/>
                                     <!-- {{item}} -->
                                 </div>
                             </el-form-item>
@@ -209,26 +209,6 @@ export default {
         },
         handleDelete(index, row) {
             console.log(index, row);
-        },
-        enlargeImg(url){
-            console.log('a')
-            const body = document.getElementsByTagName('body')[0]
-            const cover = document.createElement('div')
-            cover.className = "enlarge"
-            cover.style.width = document.body.clientWidth+'px'
-            cover.style.height = document.body.clientHeight+'px'
-            body.appendChild(cover)
-            const close = document.createElement('i')
-            close.className = 'closeImg el-icon-close'
-            cover.appendChild(close)
-            const img = document.createElement('img')
-            img.className = 'enlargeImage'
-            img.src = url
-            cover.appendChild(img)
-            close.onclick = () => {
-                console.log('a')
-                body.removeChild(cover)
-            }
         }
     }
 }

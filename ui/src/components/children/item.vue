@@ -2,7 +2,7 @@
   <el-col :span="6">
     <el-card shadow="hover">
         <div>
-            <img class="itemImg" :src="require('@/assets/2.jpg')" />
+            <img class="itemImg" :src="item.imgUrl" />
         </div>
         <div class="itemContent">
             <h3>{{ item.header }}</h3>
@@ -24,21 +24,35 @@
 </template>
 <script>
 export default {
+  props:{
+		imgUrl: String,
+		header: String,
+		authorHeadUrl: String,
+		authorName: String,
+		description: String,
+		money: Number,
+		progress: Number,
+		followerNum: Number,
+		commentNum: Number
+	},
   data () {
     return {
       item:{
-            imgUrl: require('@/assets/2.jpg'),
-            header: '支持神仙创业，非人哉「三好国漫计划」周边众筹启动！',
-            authorHeadUrl: require('@/assets/head.jpeg'),
-            authorName: 'tianyu',
-            description: '漫画好，动画好，周边也要好！新时代神仙好不好？全面发展很重要！ 《非人哉》漫画连载三年来微博阅读高达30亿，今年上线的《非人哉》动画播放量也已破亿！ 此次非人哉工作室新好周边',
-            money: 220657.46,
-            progress: 40,
-            followerNum: 1773,
-            commentNum: 157
+            imgUrl: this.imgUrl,
+            header: this.header,
+            authorHeadUrl: this.authorHeadUrl,
+            authorName: this.authorName,
+            description: this.description,
+            money: this.money,
+            progress: this.progress,
+            followerNum: this.followerNum,
+            commentNum: this.commentNum
         }
     }
-  }
+	},
+	mounted () {
+		console.log(this.item)
+	}
 }
 </script>
 <style lang="scss" scoped>
@@ -79,7 +93,7 @@ export default {
     }
     .itemContent {
         padding: 10px;
-        color: rgb(151, 151, 151);
+        color: rgb(97, 96, 96);
         .money {
             font-size: 16px;
         }

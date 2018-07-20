@@ -66,12 +66,18 @@ h3 {
             list-style: none;
             padding: 4px 22px;
             margin: 9px 0;
-            &:hover {
-                box-shadow: -5px 0px 0px black;
-                color: #000;
-            }
+            cursor: pointer;
         }
     }
+}
+
+.moneyTopActive{
+    box-shadow: -5px 0px 0px black;
+    color: #000;
+}
+
+.hide{
+    display: none;
 }
 
 .moneyTopImg {
@@ -145,6 +151,9 @@ h3 {
 .onlineProject {
     padding: 100px 20px;
     background: rgb(249, 250, 250);
+    .el-dropdown{
+        cursor: pointer;
+    }
     .classify {
         @include flex-style;
         .el-dropdown {
@@ -155,27 +164,6 @@ h3 {
 }
 
 .items {
-    border-top: 1px solid rgb(240, 239, 239);
-    padding-top: 20px;
-    @include author-style;
-    @include money-style;
-    .itemImg {
-        width: 100%;
-    }
-    .itemContent {
-        padding: 10px;
-        color: rgb(151, 151, 151);
-        .money {
-            font-size: 16px;
-        }
-    }
-    .author,
-    .moneyTopFol {
-        font-size: 14px;
-    }
-    >.el-col {
-        padding: 10px;
-    }
     +.pages {
         margin-top: 30px;
         .el-pagination {
