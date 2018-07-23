@@ -1,22 +1,6 @@
 <template>
     <div class="mySetting">
         <h2>我的设置</h2>
-        <!-- <div class="step" data-content="实名认证">
-            <h4>实名认证</h4>
-            <div>
-                <span>手机号码：</span>
-                <span>15198262157</span>
-                <a href="javascript:;">修改手机号</a>
-            </div>
-            <div>
-                <span>身份证号码：</span>
-                <span>511621199711074644</span>
-            </div>
-            <div>
-                <span>手机号码：</span>
-                <span>15198262157</span>
-            </div>
-        </div> -->
         <el-collapse v-model="activeNames" @change="handleChange">
             <el-collapse-item title="实名认证" name="1">
                 <div>

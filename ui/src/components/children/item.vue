@@ -2,22 +2,22 @@
   <el-col :span="6">
     <el-card shadow="hover">
         <div>
-            <img class="itemImg" :src="item.imgUrl" />
+            <img class="itemImg" :src="project.imgUrl" />
         </div>
         <div class="itemContent">
-            <h3>{{ item.header }}</h3>
+            <h3>{{ project.header }}</h3>
             <p class="author">
-                <img :src="item.authorHeadUrl" alt="">
-                <span>{{ item.authorName }}</span>
+                <img :src="project.authorHeadUrl" alt="">
+                <span>{{ project.authorName }}</span>
             </p>
             <div>
                 <div class="moneyData">
-                    <span class="money">￥{{ item.money }}</span>
-                    <span>{{ item.progress }}%</span>
+                    <span class="money">￥{{ project.money }}</span>
+                    <span>{{ project.progress }}%</span>
                 </div>
-                <el-progress :percentage="item.progress" :show-text=false></el-progress>
+                <el-progress :percentage="project.progress" :show-text=false></el-progress>
             </div>
-            <p class="moneyTopFol">{{ item.followerNum }} 支持者</p>
+            <p class="moneyTopFol">{{ project.followerNum }} 支持者</p>
         </div>
     </el-card>
 </el-col>
@@ -25,33 +25,15 @@
 <script>
 export default {
   props:{
-		imgUrl: String,
-		header: String,
-		authorHeadUrl: String,
-		authorName: String,
-		description: String,
-		money: Number,
-		progress: Number,
-		followerNum: Number,
-		commentNum: Number
+		project:Object
 	},
   data () {
     return {
-      item:{
-            imgUrl: this.imgUrl,
-            header: this.header,
-            authorHeadUrl: this.authorHeadUrl,
-            authorName: this.authorName,
-            description: this.description,
-            money: this.money,
-            progress: this.progress,
-            followerNum: this.followerNum,
-            commentNum: this.commentNum
-        }
-    }
-	},
+        
+      }
+    },
 	mounted () {
-		console.log(this.item)
+		console.log(this.project)
 	}
 }
 </script>

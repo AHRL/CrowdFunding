@@ -103,7 +103,10 @@ export default {
 	transform: translate(-50%,-50%);
 }
 .el-tabs__item{
-    font-size: 18px;
-  }
+  font-size: 18px;
+}
+.el-message{
+  z-index: 30000!important;
+}
 </style>
 

@@ -2,7 +2,7 @@
 <div class="container">
     <el-row>
         <el-col :span="16">
-            <publish></publish>
+            <publish @theLastest="getLastest"></publish>
             <div class="activity">
                 <el-row>
                     <h2>创作者动态</h2>
@@ -16,74 +16,7 @@
                     <router-link to="">长文</router-link>
                 </el-row>
                 <div class="allActivity">
-                    <el-row class="one">
-                        <el-row>
-                            <el-col class="authorBox">
-                                <img :src="require('../../../assets/head.jpeg')" alt="">
-                                <div>
-                                    <span>小周动漫</span>
-                                    <span>今天07:50 · 发布长文</span>
-                                </div>
-                            </el-col>
-                        </el-row>
-                        <el-row>
-                            <p>
-                                今天天气很好...
-                            </p>
-                            <div v-if="img.length>0" class="photoWall">
-                                <el-row v-if="img.length == 1">
-                                    <el-col :span="24">
-                                        <img :src="img[0]" />
-                                    </el-col>
-                                </el-row>
-                                <el-row v-else-if="img.length > 1&&img.length<=4">
-                                    <el-col :span="12" v-for="(item,i) in img" :key="i">
-                                        <img :src="item" alt="">
-                                    </el-col>
-                                </el-row>
-                                <el-row v-else-if="img.length > 4 && img.length <= 9">
-                                    <el-col :span="8" v-for="(item,i) in img" :key="i">
-                                        <img :src="item" alt="">
-                                    </el-col>
-                                </el-row>
-                                <el-row v-else-if="img.length > 9">
-                                    <el-col :span="8" v-for="(item,i) in img" :key="i" v-if="i < 8">
-                                        <img :src="item" alt="">
-                                    </el-col>
-                                </el-row>
-                            </div>
-                        </el-row>
-                        <el-row class="operations">
-                            <span><i class="fa fa-share"></i>分享</span>
-                            <span><i class="fa fa-comment"></i>3条评论</span>
-                            <span><i class="fa fa-thumbs-up"></i>11赞</span>
-                        </el-row>
-                        <el-row class="comment">
-                            <el-row>
-                                <el-col :span="1">
-                                    <img class="headImg" :src="require('../../../assets/head.jpeg')" alt="">
-                                </el-col>
-                                <el-col :span="19">
-                                    <span class="commentName">艾米 · 40分钟前</span>
-                                    <span>全色系上一套会怎么样</span>
-                                </el-col>
-                                <el-col :span="3">
-                                    <i class="fa fa-comment"></i>
-                                    <span><i class="fa fa-thumbs-up"></i>1</span>
-                                </el-col>
-                            </el-row>
-                            <el-row class="moreComment">
-                                <router-link to="">查看全部7条评论<i class="el-icon-caret-right"></i></router-link>
-                            </el-row>
-                            <el-row class="myCom">
-                                <el-col :span="23">
-                                    <img class="headImg" :src="require('../../../assets/head.jpeg')" alt="">
-                                    <el-input placeholder="请登录后发表评论" suffix-icon="el-icon-picture"></el-input>
-                                    <i class="fa fa-arrow-right"></i>
-                                </el-col>
-                            </el-row>
-                        </el-row>
-                    </el-row>
+                    <activity v-for="(item,i) in lastestAct" :key="i" :item="item"></activity>
                     <el-row class="more">
                         <el-button type="danger" plain>查看更多</el-button>
                     </el-row>

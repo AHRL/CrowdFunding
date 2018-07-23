@@ -43,5 +43,8 @@ export default new Router({
     }, {
         path: '/search',
         component: resolve => require(['../components/search/search'], resolve)
+    },{
+        path: '/writeArticle',
+        component: resolve => require(['../components/writeArticle/writeArticle'], resolve)
     }]
 })

@@ -104,7 +104,7 @@
                             </el-col>
                         </el-row>
                         <el-row class="items">
-                            <item v-for="(item,i) in projects" :key="i" v-bind="item"></item>
+                            <item v-for="(item,i) in projects" :key="i" v-bind:project="item"></item>
                         </el-row>
                         <el-row class="pages">
                             <el-pagination @current-change="currentChange" background layout="total,prev, pager, next,jumper" :page-size="12" :total="100"></el-pagination>

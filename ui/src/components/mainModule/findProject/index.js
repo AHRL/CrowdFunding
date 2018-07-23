@@ -148,13 +148,16 @@ export default {
     },
     beforeCreate () {
         $.get('/findProject').then(res => {
+            console.log(res.data)
             this.carouselImgUrl = res.data.carouselImgUrl
             this.moneyTop = res.data.moneyTop
+            this.ideaTop = res.data.ideaTop
             this.projects = res.data.projects
             this.projectsNum = res.data.projectsNum
             this.chartDate = res.data.chartDate
             this.chartMoney = res.data.chartMoney
             this.categoryPercent = res.data.categoryPercent
+            console.log(this.projects)
           }).catch(err => {
               console.log(err)
               this.$message({

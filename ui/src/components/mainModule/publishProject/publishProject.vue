@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <header>
-            <img :src="require('../../../assets/bg2.jpg')" alt="">
+            <img :src="require('@/assets/bg2.jpg')" alt="">
             <div>
                 <h1>建立属于自己的项目页面，<br>将您的精彩创意和更多人分享吧！</h1>
                 <el-button type="danger">发布项目</el-button>
@@ -36,7 +36,7 @@ export default {
     name: 'publishProject',
     data() {
         return {
-            activeIndex: 1
+            activeIndex: 2
         }
     },
     methods: {

@@ -59,7 +59,7 @@
     </el-col>
 </template>
 <script>
-import publish from '../../communityActivity/children/publish'
+import publish from '@/components/children/publish'
 export default {
     data(){
         return {

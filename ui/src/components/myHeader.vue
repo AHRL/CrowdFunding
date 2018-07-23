@@ -69,7 +69,7 @@ header{
     background: white;
     width: 100%;
     position: fixed;
-    z-index:999;
+    z-index:10002;
 }
 .header,.lo-re-box,.rightNav{
     display: flex;

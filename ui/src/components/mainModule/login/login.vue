@@ -181,26 +181,26 @@ export default {
           let myData = this.registerForm
 					this.$refs.registerForm.validate((valid) => {
 					if (valid) {
-									$.post('/register',{
-										data: myData
-									}).then(res => {
-													if(res.data.info === 'suc'){
-															Message({
-																	message: '注册成功,赶快去登录吧'
-															})
-													}else{
-															Message({
-																	message: '注册失败',
-																	type: 'danger'
-															})
-													}
-									}).catch(error => {
-													Message({
-															message: '注册异常',
-															type: 'danger'
-													})
-													console.log(error)
-									})
+                        $.post('/register',{
+                            data: myData
+                        }).then(res => {
+                            if(res.data.info === 'suc'){
+                                Message({
+                                    message: '注册成功,赶快去登录吧'
+                                })
+                            }else{
+                                Message({
+                                    message: '注册失败',
+                                    type: 'danger'
+                                })
+                            }
+                        }).catch(error => {
+                            Message({
+                                message: '注册异常',
+                                type: 'danger'
+                            })
+                            console.log(error)
+                        })
 					} else {
 						console.log('error submit!!');
 						return false;
