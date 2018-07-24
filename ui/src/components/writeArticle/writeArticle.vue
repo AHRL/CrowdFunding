@@ -46,11 +46,11 @@ export default {
           message:'请输入文章正文'
         })
       }else{
-        this.$axios.post('',{
+        this.$axios.post('/pubArticle',{
           title:this.title,
           content:editor.txt.text()
         }).then((res) => {
-
+          this.$router.push('/communityActivity')
         })
       }
     }

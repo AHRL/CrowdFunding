@@ -14,7 +14,7 @@
                     <i class="fa fa-bar-chart"></i>
                     <span>投票</span>
                 </div>
-                <div @click="articleDialogVisible=true">
+                <div @click="writeArticle">
                     <i class="fa fa-file-text-o"></i>
                     <span>长文</span>
                 </div>
@@ -42,11 +42,11 @@
             <p>投票内容</p>
             <el-input type="textarea" row="3" v-model="voteText" resize="none" placeholder="请输入内容..."></el-input>
             <p>结果选项个数</p>
-            <el-input v-model="resultNum" @change="handleChange" placeholder="请输入数字或者任意"></el-input>
+            <el-input v-model="resultNum" placeholder="请输入数字或者任意"></el-input>
             <p>设置选项</p>
             <el-tag
                 :key="tag"
-                v-for="tag in dynamicTags"
+                v-for="tag in voteTags"
                 closable
                 :disable-transitions="false"
                 @close="handleClose(tag)">
@@ -55,7 +55,7 @@
             <el-input
                 class="input-new-tag"
                 v-if="inputVisible"
-                v-model="inputValue"
+                v-model="addVote"
                 ref="saveTagInput"
                 size="small"
                 @keyup.enter.native="handleInputConfirm"
@@ -64,7 +64,7 @@
             <el-button v-else class="button-new-tag" size="small" @click="showInput"> + 新选项</el-button>
             <span slot="footer" class="dialog-footer">
                 <el-button @click="voteDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="voteDialogVisible = false">确 定</el-button>
+                <el-button type="primary" @click="pubVote">发起投票</el-button>
             </span>
         </el-dialog>
     </div>
@@ -80,9 +80,9 @@ export default {
             voteDialogVisible: false,
             voteText:'',
             resultNum:'',
-            dynamicTags: [],
+            voteTags: [],
             inputVisible: false,
-            inputValue: '',
+            addVote: '',
             articleDialogVisible:false
         }
     },
@@ -110,25 +110,26 @@ export default {
             console.log(this.fileList)
         },
         publish(){
-            $.post('/publish',{
-                pubText:this.publish,
-                fileList:this.fileList
-            }).then((res) => {
-                this.$emit('theLastest',res.data)
-            }).catch((err) =>{
-                console.log(err)
-            })
-        },
-        handleChange(){
-            if(isNaN(Number(this.resultNum)) || this.resultNum != '任意'){
+            if(!this.pubText){
                 this.$message({
-                    type:'warning',
-                    message:'只能输入数字或者任意'
+                    type:'info',
+                    message:'发表内容不能为空'
+                })
+            }else{
+                $.post('/publish',{
+                    pubText:this.publish,
+                    fileList:this.fileList
+                }).then((res) => {
+                    this.pubText = ''
+                    this.fileList = {}
+                    this.$emit('theLastest',res.data)
+                }).catch((err) =>{
+                    console.log(err)
                 })
             }
         },
         handleClose(tag) {
-            this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+            this.voteTags.splice(this.voteTags.indexOf(tag), 1);
         },
 
         showInput() {
@@ -139,12 +140,56 @@ export default {
         },
 
         handleInputConfirm() {
-            let inputValue = this.inputValue;
-            if (inputValue) {
-            this.dynamicTags.push(inputValue);
+            let addVote = this.addVote;
+            if (addVote) {
+                this.voteTags.push(addVote);
             }
             this.inputVisible = false;
-            this.inputValue = '';
+            this.addVote = '';
+        },
+        pubVote(){
+            if(!this.voteText){
+                this.$message({
+                    type:'info',
+                    message:'投票内容不能为空'
+                })
+            }else if(this.resultNum != '任意' && isNaN(Number(this.resultNum))){
+                this.$message({
+                    type:'info',
+                    message:'结果个数只能输入数字或者任意'
+                })
+            }else if(this.voteTags.length == 0){
+                this.$message({
+                    type:'info',
+                    message:'投票选项为空'
+                })
+            }else if(Number(this.resultNum) > this.voteTags.length){
+                this.$message({
+                    type:'info',
+                    message:'结果选项数不能大于选项数'
+                })
+            }else{
+                $.post('/pubVote',{
+                    voteText:this.voteText,
+                    resultNum:this.resultNum,
+                    voteTags:this.voteTags
+                }).then(res => {
+                    this.voteDialogVisible = false
+                    this.voteText = ''
+                    this.voteTags = []
+                    this.resultNum = ' '
+                    // this.$router.push({
+                    //     path:this.$route.fullPath, // 获取当前连接，重新跳转
+                    //     query:{
+                    //         _time:new Date().getTime()/1000 // 时间戳，刷新当前router
+                    //     }
+                    // })
+                    this.$emit('theLastest',res.data)
+                })
+            }
+        },
+        writeArticle(){
+            this.$router.push('/writeArticle')
         }
     }
 }
