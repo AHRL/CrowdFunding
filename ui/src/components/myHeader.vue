@@ -57,7 +57,6 @@ export default {
             this.$router.push(url)
         },
         loginOut(){
-            console.log('loginout')
             this.$store.commit('LOGIN_OUT')
         }
     }

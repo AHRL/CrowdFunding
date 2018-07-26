@@ -9,14 +9,10 @@
                 </el-row>
                 <el-row class="options">
                     <i class="fa fa-th-large"></i>
-                    <router-link to="">最新</router-link>
-                    <router-link to="">关注</router-link>
-                    <router-link to="">图片</router-link>
-                    <router-link to="">投票</router-link>
-                    <router-link to="">长文</router-link>
+                    <a href="javascript:;" v-for="(value,i) in nav" :key="i" :class="{navActive:value.active}" @click="getNavContent(value.name,i)">{{ value.name }}</a>
                 </el-row>
                 <div class="allActivity">
-                    <activity v-for="(item,i) in lastestAct" :key="i" :item="item"></activity>
+                    <activity v-for="(item,i) in lastestAct" :key="i" :item="item" @theLastest="getLastest"></activity>
                     <el-row class="more">
                         <el-button type="danger" plain>查看更多</el-button>
                     </el-row>

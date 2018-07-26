@@ -48,7 +48,7 @@ export default {
       }else{
         this.$axios.post('/pubArticle',{
           title:this.title,
-          content:editor.txt.text()
+          content:editor.txt.html()
         }).then((res) => {
           this.$router.push('/communityActivity')
         })
@@ -68,13 +68,4 @@ export default {
 .el-form{
   margin: 20px auto;
 }
-/* .wavy-line {
-    display: inline-block;
-    width: 20rem;
-    height: 7.5px;
-    background-size: 15px 15px;
-    background-repeat: repeat-x;
-    background-image: linear-gradient(135deg,transparent 45%,black 55%,transparent 60%),
-    linear-gradient(45deg,transparent 45%,black 55%,transparent 60%);
-} */
 </style>

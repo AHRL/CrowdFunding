@@ -157,7 +157,7 @@ export default {
                         type: 'success'
 					})
 					this.$store.commit('LOGIN_IN',res.data)
-                    this.$router.push('/findProject')
+                    this.$router.back(-1)
                 }else{
                     this.$message({
                         message: '密码错误',
