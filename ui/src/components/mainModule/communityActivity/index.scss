@@ -72,6 +72,7 @@ h2 {
             // border-bottom: $border;
             @include flex-style;
             span {
+                cursor: pointer;
                 position: absolute;
                 right: 0;
                 i {
@@ -101,6 +102,7 @@ h2 {
             span {
                 position: absolute;
                 right: 0;
+                cursor: pointer;
                 i {
                     margin-right: 5px;
                 }

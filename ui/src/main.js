@@ -60,7 +60,8 @@ import {
     Scrollbar,
     Loading,
     Select,
-    Option
+    Option,
+    CheckboxGroup
 } from 'element-ui'
 
 Vue.use(Vuex)
@@ -69,6 +70,7 @@ Vue.prototype.$axios = axios
 Vue.prototype.$notify = Notification
 Vue.prototype.$message = Message
 
+Vue.use(CheckboxGroup)
 Vue.use(Option)
 Vue.use(Select)
 Vue.use(Row)

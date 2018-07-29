@@ -41,11 +41,29 @@
                 {{ item.publishContent }}
             </p>
         </el-row>
+        <el-row v-if="item.publishType=='投票'" class="vote">
+            <p @click="goToProject(item.id)">
+                {{ item.publishContent }}
+            </p>
+            <el-checkbox-group v-model="item.voteRes">
+                <el-checkbox v-if="item.statu == '投票'" :label="option" name="type" v-for="(option,i) in item.options" :key="i"></el-checkbox>
+                <el-checkbox v-else :label="option" name="type" disabled v-for="(option,i) in item.options" :key="i"></el-checkbox>
+            </el-checkbox-group>
+            <div class="voteBox">
+                <span>可选数: {{ item.canSelectNum }}</span>
+                <span>当前选择数: {{ item.voteRes.length }}</span>
+                <el-button type="primary" @click="vote(item.id)">{{ item.statu }}</el-button>
+                <p>你的投票结果为：</p>
+                <ul>
+                <li v-for="(val,i) in item.voteRes" :key="i"> {{ val }}</li>
+                </ul>
+            </div>
+        </el-row>
         <el-row class="operations">
             <span><i class="fa fa-share"></i>分享</span>
             <span @click="goToProject(item.id)"><i class="fa fa-comment"></i>{{item.commentNum}}条评论</span>
             <span @click="addZan(item.id,'')"><i class="fa fa-thumbs-up" :class="{zanActive:item.zanActive}"></i>{{ item.supportNum }}赞</span>
-            <span @click="goToProject(item.id)"><i class="fa fa-eye" v-if="item.publishType=='长文'"></i>查看全文</span>
+            <span @click="goToProject(item.id)" v-if="item.publishType=='长文'"><i class="fa fa-eye"></i>查看全文</span>
         </el-row>
         <el-row class="comment">
             <el-row v-for="(val,i) in item.comments" :key="i">
@@ -67,7 +85,7 @@
                         <img class="headImg" :src="son.repImg" alt="" @click="goToPersonPage(son.repName)">
                     </el-col>
                     <el-col :span="16">
-                        <span class="commentName" @click="goToPersonPage(son.repName)">{{ son.repName }} ·</span>{{ timeFn(val.comTime) }}
+                        <span class="commentName" @click="goToPersonPage(son.repName)">{{ son.repName }} ·</span>{{ timeFn(son.repTime) }}
                         <span class="comContent">{{ son.repCont }}</span>
                     </el-col>
                 </el-row>
@@ -191,7 +209,9 @@ export default {
             }
         },
         pubCom(id,comId,text){
-            if(!text){
+            if(!this.$store.state.user.name){
+                this.$router.push('/login')
+            }else if(!text){
                 this.$message({
                     type:'info',
                     message:'评论不能为空'
@@ -208,6 +228,23 @@ export default {
         },
         comInputShow(id){
             this.item.comments[id].inputShow = !this.item.comments[id].inputShow
+        },
+        vote(id){
+            this.$axios.post('/vote',{
+                itemId:id,
+                voteRes:this.item.voteRes
+            }).then(res => {
+                this.$message({
+                    type:'success',
+                    message:'投票成功'
+                })
+                this.$emit('theLastest',res.data)
+            }).catch(err => {
+                this.$message({
+                    type:'warning',
+                    message:'投票失败，请重试'
+                })
+            })
         }
     },
     mounted () {
@@ -257,12 +294,32 @@ img{
         color: $black;
         cursor: pointer;
     }
+    ul{
+        font-size: 14px;
+        li{
+            margin-top: 5px;
+        }
+    }
     .photoWall {
         .el-col {
             padding: 5px;
             img {
                 width: 100%;
             }
+        }
+    }
+    .vote{
+        // position: relative;
+        .voteBox{
+            margin: 10px 0;
+            .el-button{
+                margin-left: 20px;
+            }
+        }
+        .el-checkbox{
+            display: block;
+            margin-left: 0;
+            margin: 10px 10px;
         }
     }
     .operations {
