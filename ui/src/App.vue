@@ -106,5 +106,10 @@ export default {
 .el-message{
   z-index: 30000!important;
 }
+.el-autocomplete-suggestion li{
+    float:left;
+    margin:10px;
+    padding: 0;
+}
 </style>
 

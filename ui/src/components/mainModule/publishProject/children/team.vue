@@ -77,15 +77,19 @@
                 </el-col>
             </el-row>
             <div class="btnBox">
-                <el-button>上一步</el-button>
-                <el-button class="next" type="danger">下一步</el-button>
+                <el-button @click="nextStep(-1)">上一步</el-button>
+                <el-button class="next" type="danger" @click="nextStep(1)">下一步</el-button>
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
-    
+    methods: {
+        nextStep(data){
+            this.$emit('nextStep',data)
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

@@ -241,11 +241,12 @@
         </div>
         <div>
             <el-row>
-                <el-checkbox v-model="agree">我已阅读以上协议</el-checkbox>
+                <el-checkbox v-model="isAgree">我已阅读以上协议</el-checkbox>
             </el-row>
             <el-row>
-                <el-button type="danger">下一步</el-button>
+                <el-button type="danger" @click="nextStep">下一步</el-button>
             </el-row>
+            {{ fnAgree }}
         </div>
     </div>
 </template>
@@ -253,7 +254,21 @@
 export default {
     data () {
         return {
-            agree:true
+            isAgree:Boolean(sessionStorage.getItem('isAgree')) || false
+        }
+    },
+    computed: {
+        fnAgree:function(){
+            console.log(this.isAgree)
+            sessionStorage.setItem('isAgree',this.isAgree)
+        }
+    },
+    methods: {
+        nextStep(){
+            this.isAgree?this.$emit('nextStep',1):this.$message({
+                type:'warning',
+                message:'同意《发起者协议》后，方能继续下一步'
+            })
         }
     }
 }

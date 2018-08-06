@@ -21,8 +21,8 @@
             </div>      
         </div>
         <div class="btnBox">
-            <el-button>上一步</el-button>
-            <el-button class="next" type="danger">下一步</el-button>
+            <el-button @click="nextStep(-1)">上一步</el-button>
+            <el-button class="next" type="danger" @click="nextStep(1)">下一步</el-button>
         </div>
     </div>
 </template>
@@ -34,6 +34,9 @@ export default {
       };
     },
     methods: {
+        nextStep(data){
+            this.$emit('nextStep',data)
+        },
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
       },

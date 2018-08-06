@@ -17,11 +17,11 @@
                 <el-step title="等待认证" icon="el-icon-success"></el-step>
             </el-steps>
             <div class="steps">
-                <contract v-if="activeIndex === 0"></contract>
-                <signMessage v-if="activeIndex === 1"></signMessage>
-                <editMore v-if="activeIndex === 2"></editMore>
-                <team v-if="activeIndex === 3"></team>
-                <wait v-if="activeIndex === 4"></wait>
+                <contract v-if="activeIndex === 0" @nextStep="step"></contract>
+                <signMessage v-if="activeIndex === 1" @nextStep="step" ref="signMessage"></signMessage>
+                <editMore v-if="activeIndex === 2" @nextStep="step"></editMore>
+                <team v-if="activeIndex === 3" @nextStep="step"></team>
+                <wait v-if="activeIndex === 4" @nextStep="step"></wait>
             </div>
         </div>
     </div>
@@ -36,12 +36,13 @@ export default {
     name: 'publishProject',
     data() {
         return {
-            activeIndex: 2
+            activeIndex: Number(sessionStorage.getItem('activeIndex'))||0
         }
     },
     methods: {
-        changeIndex: () => {
-
+        step(data){
+            this.activeIndex += data
+            sessionStorage.setItem('activeIndex',this.activeIndex)
         }
     },
     components: {
@@ -50,6 +51,10 @@ export default {
         editMore,
         wait,
         team
+    },
+    beforeRouteLeave (to, from, next) {
+        this.$refs.signMessage.saveData()
+        next()
     }
 }
 </script>
