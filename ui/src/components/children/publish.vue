@@ -21,7 +21,7 @@
                 <div>
                     <el-upload
                         class="upload-demo"
-                        action="/findProject"
+                        action=""
                         :auto-upload=false
                         :before-remove="beforeRemove"
                         multiple

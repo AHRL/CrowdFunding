@@ -145,8 +145,6 @@ export default {
     methods: {
         nextStep(data){
             if(data === 1){
-                console.log(this.interval)
-                console.log(this.interval[0] - this.interval[1])
                 if(this.imageUrl && this.title && this.shortTitle && this.intro 
                 && this.category && this.province && this.city 
                 && this.money){
@@ -181,7 +179,19 @@ export default {
             this.$emit('nextStep',data)
         },
         addFile(file) {
-            this.imageUrl = file.url
+            console.log(file)
+            const isImg = file.type === 'image/*'
+            const isLt2M = file.size / 1024 / 1024 < 2
+
+            if(!isImg){
+                this.$message.error('只能上传图片')
+            }
+            if(!isLt2M){
+                this.$message.error('上传图片大小不能超过2MB！')
+            }
+            if(isImg && isLt2M){
+                this.imageUrl = file.url
+            }
         },
         saveData(){
             sessionStorage.setItem('imageUrl',this.imageUrl)
