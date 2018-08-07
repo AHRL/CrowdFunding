@@ -7,7 +7,8 @@ const state = {
     //共用数据
     user: {
         name: '',
-        img: ''
+        img: '',
+        intro:''
     }
 }
 

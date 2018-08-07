@@ -5,10 +5,12 @@
             <div>
                 <el-upload
                     class="avatar-uploader"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess">
-                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    action=""
+                    :on-success="handleVideoSuccess"
+                    :before-upload="beforeUploadVideo"
+                    :on-progress="uploadVideoProcess"
+                    :show-file-list="false">
+                    <el-progress v-if="videoFlag == true" type="circle" :percentage="videoUploadPercent"></el-progress>
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
             </div>
@@ -16,7 +18,8 @@
         <div class="moreIntro">
             <h4>详情介绍</h4>
             <div>
-                <div id="editor"></div>
+                <div id="editor" v-html="getEditMore()">
+                </div>
             </div>      
         </div>
         <div class="btnBox">
@@ -26,35 +29,49 @@
     </div>
 </template>
 <script>
+var E = require('wangeditor')
+var editor = new E('#editor')
 export default {
     data() {
-      return {
-        imageUrl: ''
-      };
+        return {
+            videoUrl: '',
+            videoFlag:false,
+            videoUploadPercent:0
+        }
     },
     methods: {
+        saveData(){
+            sessionStorage.editMore = editor.txt.html()
+        },
         nextStep(data){
+            if(data === 1){
+                if(editor.txt.html() == '<p><br></p>'){
+                    this.$message.warning('详情介绍不可为空')
+                    return false
+                }
+            }
+            this.saveData()
             this.$emit('nextStep',data)
         },
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+        getEditMore(){
+            return sessionStorage.editMore || ''
+        },
+        beforeUploadVideo(file){
+            console.log(file.raw.type)
+            if (['video/mp4', 'video/ogg', 'video/flv','video/avi','video/wmv','video/rmvb'].indexOf(file.raw.type) == -1) {
+                this.$message.error('请上传正确的视频格式');
+                return false
+            }
+        },
+        uploadVideoProcess(event, file, fileList){
+            this.videoFlag = true;
+            this.videoUploadPercent = file.percentage.toFixed(0);
+        },
+        handleVideoSuccess(response, file, fileList){
+            this.videoUrl = response.data
         }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      }
     },
     mounted: function (){
-        var E = require('wangeditor')
-        var editor = new E('#editor')
         editor.create()
     }
 }

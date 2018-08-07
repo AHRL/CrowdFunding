@@ -8,70 +8,28 @@
                 <img :src="require('../../../../assets/head.jpeg')" alt="">
             </div>
             <div class="captainIntro">
-                <h4>tianyu</h4>
+                <h4>{{ this.$store.state.user.name }}</h4>
                 <span>职位：项目负责人</span>
-                <span>个人介绍：欢迎fork me on github</span>
+                <span>个人介绍：{{ this.$store.state.user.intro }}</span>
             </div>
         </div>
         <div class="addMember">
             <div class="addTopBar">
                 <h3>添加团队成员</h3>
-                <el-input type="text" placeholder="按电话号码搜索" suffix-icon="el-icon-search"></el-input>
+                <el-input type="text" v-model="searchResult" placeholder="按电话号码搜索,回车即可查询" @keyup.enter.native="searchMember" suffix-icon="el-icon-search"></el-input>
             </div>
             <el-row class="teamMem">
-                <el-col :span="6">
+                <el-col :span="6" v-for="(item,i) in teamMembers" :key="i">
                     <el-card shadow="hover">
                         <div class="headBox">
                             <div class="cover"></div>
-                            <img :src="require('../../../../assets/head.jpeg')">
+                            <img :src="item.imgUrl">
                         </div>
                         <div class="message">
-                            <span>昵称：大大</span>
-                            <span>职位：项目成员</span>
-                            <!-- <span>个人介绍：欢迎fork欢迎fork欢迎fork欢迎fork欢迎fork</span> -->
-                            <el-button type="danger" plain>删除</el-button>
-                        </div>
-                    </el-card>
-                </el-col>
-                <el-col :span="6">
-                    <el-card shadow="hover">
-                        <div class="headBox">
-                            <div class="cover"></div>
-                            <img :src="require('../../../../assets/head.jpeg')">
-                        </div>
-                        <div class="message">
-                            <span>昵称：大大</span>
-                            <span>职位：项目成员</span>
-                            <!-- <span>个人介绍：欢迎fork欢迎fork欢迎fork欢迎fork欢迎fork</span> -->
-                            <el-button type="danger" plain>删除</el-button>
-                        </div>
-                    </el-card>
-                </el-col>
-                <el-col :span="6">
-                    <el-card shadow="hover">
-                        <div class="headBox">
-                            <div class="cover"></div>
-                            <img :src="require('../../../../assets/head.jpeg')">
-                        </div>
-                        <div class="message">
-                            <span>昵称：大大</span>
-                            <span>职位：项目成员</span>
-                            <!-- <span>个人介绍：欢迎fork欢迎fork欢迎fork欢迎fork欢迎fork</span> -->
-                            <el-button type="danger" plain>删除</el-button>
-                        </div>
-                    </el-card>
-                </el-col>
-                <el-col :span="6">
-                    <el-card shadow="hover">
-                        <div class="headBox">
-                            <div class="cover"></div>
-                            <img :src="require('../../../../assets/head.jpeg')">
-                        </div>
-                        <div class="message">
-                            <span>昵称：大大</span>
-                            <span>职位：项目成员</span>
-                            <!-- <span>个人介绍：欢迎fork欢迎fork欢迎fork欢迎fork欢迎fork</span> -->
-                            <el-button type="danger" plain>删除</el-button>
+                            <span>昵称：{{ item.name }}</span>
+                            <span>职位：{{ item.job }}</span>
+                            <span>电话：{{ item.phone }}</span>
+                            <el-button type="danger" plain @click="deleteMem(item.phone)">删除</el-button>
                         </div>
                     </el-card>
                 </el-col>
@@ -85,9 +43,59 @@
 </template>
 <script>
 export default {
+    data(){
+        return {
+            teamMembers: sessionStorage.teamMembers && JSON.parse(sessionStorage.teamMembers) || [],
+            searchResult:''
+        }
+    },
     methods: {
         nextStep(data){
-            this.$emit('nextStep',data)
+            if(data === 1){
+                this.$axios.post('/pubMyPro',{
+                    imageUrl:sessionStorage.imageUrl,
+                    title:sessionStorage.title,
+                    shortTitle:sessionStorage.shortTitle,
+                    category:sessionStorage.category,
+                    province:sessionStorage.province,
+                    interval_0:sessionStorage.interval_0,
+                    interval_1:sessionStorage.interval_1,
+                    money:sessionStorage.money,
+                    teamMembers:sessionStorage.teamMembers,
+                }).then(res => {
+                    this.$emit('nextStep',data)
+                    sessionStorage.imageUrl = sessionStorage.title = sessionStorage.shortTitle = sessionStorage.intro = sessionStorage.category = sessionStorage.province = sessionStorage.city = sessionStorage.interval_0 = sessionStorage.interval_1 = sessionStorage.money = sessionStorage.editMore = sessionStorage.teamMembers = ''
+                    sessionStorage.isAgree = false
+                }).catch(err => {
+                    this.$message.error('发布申请失败，请重试')
+                })
+            }else{
+                this.saveData()
+                this.$emit('nextStep',data)
+            }
+        },
+        deleteMem(phone){
+            this.teamMembers.map(function(val,i){
+                if(val.phone == '14'){
+                    this.teamMembers.splice(i,1)
+                }
+            })
+        },
+        searchMember(){
+            this.$axios.post('/searchMember',{
+                memberPhone:this.searchResult
+            }).then(res => {
+                if(res.data.result == 'suc'){
+                    this.teamMembers.push(res.data.member)
+                }else{
+                    this.$message.error('未找到该用户')
+                }
+            }).catch(err => {
+                this.$message.error('查询失败')
+            })
+        },
+        saveData(){
+            sessionStorage.teamMembers = JSON.stringify(this.teamMembers)
         }
     }
 }
@@ -145,7 +153,7 @@ h4{
                 width: 100%;
                 height: 100%;
                 margin-bottom: $width/2+10;
-                background: url(/static/head.jpeg) no-repeat -20% 20%;
+                background: url(../../../../assets/blue.jpg) no-repeat -20% 20%;
                 background-size: cover;
                 -webkit-filter: blur(2px);
                 -moz-filter:blur(2px);

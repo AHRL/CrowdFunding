@@ -134,9 +134,9 @@ export default {
             category:sessionStorage.getItem('category') || '',
             categorys: ['游戏','动漫','出版','影视','音乐','活动','设计','科技','食品','其他','爱心通道','个人愿望','粉丝应援'],
             colorType:['','success','info','warning','danger'],
-            provinces:['四川省','广东省','北京市'],
+            provinces:['北京市','天津市','上海市','重庆市','河北省','山西省','辽宁省','吉林省','黑龙江省','江苏省','浙江省','安徽省','福建省','江西省','山东省','河南省','湖北省','湖南省','广东省','海南省','四川省','贵州省','云南省','陕西省','甘肃省','青海省','台湾省','内蒙古自治区','广西壮族自治区','西藏自治区','宁夏回族自治区','新疆维吾尔自治区','香港特别行政区','澳门特别行政区'],
             province:sessionStorage.getItem('province') || '省份或市',
-            cities:['四川省','广东省','北京市'],
+            cities:[],
             city:sessionStorage.getItem('city') || '城市',
             interval:[new Date(parseInt(sessionStorage.interval_0)),new Date(parseInt(sessionStorage.interval_1))],
             money:sessionStorage.money || '',
@@ -148,7 +148,10 @@ export default {
                 if(this.imageUrl && this.title && this.shortTitle && this.intro 
                 && this.category && this.province && this.city 
                 && this.money){
-                    if(isNaN(this.interval[0] - this.interval[1])){
+                    if(this.categorys.indexOf(this.category) == -1){
+                        this.$message.error('请选择有效分类')
+                        return false
+                    }else if(isNaN(this.interval[0] - this.interval[1])){
                         this.$message({
                             type:'warning',
                             message:'请正确选择众筹时长'
@@ -160,17 +163,21 @@ export default {
                             message:'众筹时长不能没有间隔'
                         })
                         return
-                    }else if(isNaN(Number(this.money))){
+                    }
+                    else if(Math.floor((this.interval[1] - this.interval[0])/86400000) > 60){
+                        this.$message.error('众筹时长不能超过60天')
+                        return false
+                    }else if(isNaN(Number(this.money)) || Number(this.money) <= 0){
                         this.$message({
                             type:'warning',
-                            message:'目标金额只能填入数字'
+                            message:'目标金额只能填入正数'
                         })
                         return
                     }
                 }else{
                     this.$message({
                         type:'warning',
-                        message:'所有内容都需填写完整，方能进行下一步'
+                        message:'所有内容都需填写完整,方能进行下一步'
                     })
                     return
                 }
@@ -180,18 +187,17 @@ export default {
         },
         addFile(file) {
             console.log(file)
-            const isImg = file.type === 'image/*'
-            const isLt2M = file.size / 1024 / 1024 < 2
+            const isLt3M = file.size / 1024 / 1024 < 3
 
-            if(!isImg){
+            if(['image/png', 'image/gif', 'image/jpg'].indexOf(file.raw.type) == -1){
                 this.$message.error('只能上传图片')
+                return false
             }
-            if(!isLt2M){
-                this.$message.error('上传图片大小不能超过2MB！')
+            if(!isLt3M){
+                this.$message.error('上传图片大小不能超过3MB！')
+                return false
             }
-            if(isImg && isLt2M){
-                this.imageUrl = file.url
-            }
+            this.imageUrl = file.url
         },
         saveData(){
             sessionStorage.setItem('imageUrl',this.imageUrl)
@@ -221,6 +227,13 @@ export default {
         },
         getProvince(command){
             this.province = command
+            this.$axios.post('/getCity',{
+                province:command
+            }).then(res => {
+                this.cities = res.data
+            }).catch(err => {
+                this.$message.error('获取城市失败')
+            })
         },
         getCity(command){
             this.city = command

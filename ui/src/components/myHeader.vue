@@ -8,14 +8,14 @@
                 </div>
             </el-col>
             <el-col :xs="18" :sm="20" :md="20" :lg="21" class="offcanvas-collapse">
-                <el-col :xs="23" :sm="23" :md="20" :lg="18">
+                <el-col :xs="23" :sm="19" :md="15" :lg="18">
                     <el-menu :default-active="this.$route.path.replace(/([/][^/]+)$/, '')" router mode="horizontal">
                         <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
                             {{ item.navItem }}
                         </el-menu-item>
                     </el-menu>
                 </el-col>
-                <el-col :xs="4" :sm="4" :md="4" :lg="4" class="rightNav">
+                <el-col :xs="6" :sm="6" :md="8" :lg="7" class="rightNav">
                     <div>
                         <el-input placeholder="search" suffix-icon="el-icon-search"></el-input>
                     </div>
@@ -137,7 +137,7 @@ header h1{
 }
 .el-dropdown .username{
     display: inline-block;
-    width: 80px;
+    width: 60px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

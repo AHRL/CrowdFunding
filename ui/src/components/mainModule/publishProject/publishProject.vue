@@ -17,11 +17,11 @@
                 <el-step title="等待认证" icon="el-icon-success"></el-step>
             </el-steps>
             <div class="steps">
-                <contract v-if="activeIndex === 0" @nextStep="step"></contract>
-                <signMessage v-if="activeIndex === 1" @nextStep="step" ref="signMessage"></signMessage>
-                <editMore v-if="activeIndex === 2" @nextStep="step"></editMore>
-                <team v-if="activeIndex === 3" @nextStep="step"></team>
-                <wait v-if="activeIndex === 4" @nextStep="step"></wait>
+                <contract v-show="activeIndex === 0" @nextStep="step"></contract>
+                <signMessage v-show="activeIndex === 1" @nextStep="step" ref="sign"></signMessage>
+                <editMore v-show="activeIndex === 2" @nextStep="step" ref="editMore"></editMore>
+                <team v-show="activeIndex === 3" @nextStep="step" ref="team"></team>
+                <wait v-show="activeIndex === 4" @nextStep="step"></wait>
             </div>
         </div>
     </div>
@@ -53,7 +53,9 @@ export default {
         team
     },
     beforeRouteLeave (to, from, next) {
-        this.$refs.signMessage.saveData()
+        this.$refs.sign.saveData()
+        this.$refs.editMore.saveData()
+        this.$refs.team.saveData()
         next()
     }
 }
