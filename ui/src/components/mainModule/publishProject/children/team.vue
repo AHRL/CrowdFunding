@@ -27,7 +27,7 @@
                         </div>
                         <div class="message">
                             <span>昵称：{{ item.name }}</span>
-                            <span>职位：{{ item.job }}</span>
+                            <span>职位：项目成员</span>
                             <span>电话：{{ item.phone }}</span>
                             <el-button type="danger" plain @click="deleteMem(item.phone)">删除</el-button>
                         </div>
@@ -75,24 +75,39 @@ export default {
             }
         },
         deleteMem(phone){
+            let flag
             this.teamMembers.map(function(val,i){
-                if(val.phone == '14'){
-                    this.teamMembers.splice(i,1)
+                if(val.phone == phone){
+                    flag = i
                 }
             })
+            this.teamMembers.splice(flag,1)
         },
         searchMember(){
-            this.$axios.post('/searchMember',{
-                memberPhone:this.searchResult
-            }).then(res => {
-                if(res.data.result == 'suc'){
-                    this.teamMembers.push(res.data.member)
-                }else{
-                    this.$message.error('未找到该用户')
+            let flag = true
+            if(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.searchResult)){
+                this.teamMembers.map((val,i) => {
+                    if(val.phone == this.searchResult){
+                        this.$message.warning('该用户已添加')
+                        flag = false
+                    }
+                })
+                if(flag){
+                    this.$axios.post('/searchMember',{
+                        memberPhone:this.searchResult
+                    }).then(res => {
+                        if(res.data.result == 'suc'){
+                            this.teamMembers.push(res.data.member)
+                        }else{
+                            this.$message.error('未找到该用户')
+                        }
+                    }).catch(err => {
+                        this.$message.error('查询失败')
+                    })
                 }
-            }).catch(err => {
-                this.$message.error('查询失败')
-            })
+            }else{
+                this.$message.error('请输入正确的电话号码')
+            }
         },
         saveData(){
             sessionStorage.teamMembers = JSON.stringify(this.teamMembers)

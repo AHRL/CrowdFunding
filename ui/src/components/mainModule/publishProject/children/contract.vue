@@ -259,16 +259,23 @@ export default {
     },
     computed: {
         fnAgree:function(){
-            console.log(this.isAgree)
             sessionStorage.setItem('isAgree',this.isAgree)
+            return
         }
     },
     methods: {
         nextStep(){
-            this.isAgree?this.$emit('nextStep',1):this.$message({
-                type:'warning',
-                message:'同意《发起者协议》后，方能继续下一步'
-            })
+            if(!this.$store.state.user.name){
+                this.$message.warning('登录后才能发布项目')
+                this.$router.push('/login')
+            }else if(!this.isAgree){
+                this.$message({
+                    type:'warning',
+                    message:'同意《发起者协议》后，方能继续下一步'
+                })
+            }else{
+                this.$emit('nextStep',1)
+            }
         }
     }
 }

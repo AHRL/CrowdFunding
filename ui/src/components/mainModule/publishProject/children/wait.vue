@@ -6,7 +6,7 @@
                 show-icon
                 title="申请成功"
                 type="success"
-                description="您的众筹项目XXX申请成功，我们将在五个工作日内给予回复，您可在个人中心查看项目申请状态。">
+                description="您的众筹项目申请成功，我们将在五个工作日内给予回复，您可在个人中心查看项目申请状态。">
             </el-alert>
         </div>
     </div>
