@@ -6,21 +6,30 @@ Vue.use(Vuex)
 const state = {
     //共用数据
     user: {
-        name: '',
-        img: '',
-        intro:''
     }
 }
 
 const mutations = {
     //方法 第一个参数为state
-    LOGIN_IN({ user }, data) {
-        user.name = data.name
-        user.img = data.img
+    LOGIN_IN(state, data) {
+        state.user = data
     },
-    LOGIN_OUT({ user }) {
-        user.name = ''
-        user.img = ''
+    LOGIN_OUT(state) {
+        state.user = {}
+    },
+    CHANGE_IMG({user},data){
+        user.img = data
+    },
+    CHANGE_FOCUSNUM({user},data){
+        user.focusNum = data
+    },
+    CHANGE_FOCUS({user},data){
+        user.focusNum = data.focusNum
+        user.focus = data.focus
+    },
+    CHANGE_FANS({user},data){
+        user.fansNum = data.focusNum
+        user.fans = data.focus
     }
 }
 

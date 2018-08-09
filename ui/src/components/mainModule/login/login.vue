@@ -19,6 +19,9 @@
         </el-tab-pane>
         <el-tab-pane label="注册">
             <el-form :model="registerForm" status-icon :rules="registerRules" ref="registerForm" label-width="100px">
+                <el-form-item label="昵称" prop="name">
+                    <el-input type="text" v-model="registerForm.name" auto-complete="off"></el-input>
+                </el-form-item>
                 <el-form-item label="手机号" prop="phone">
                     <el-input type="phone" v-model="registerForm.phone" auto-complete="off"></el-input>
                 </el-form-item>
@@ -48,7 +51,6 @@
     </el-tabs>
 </template>
 <script>
-// import { Message } from 'element-ui'
 import $ from '@/api/axios.init'
 export default {
     data() {
@@ -64,6 +66,24 @@ export default {
               callback()
           }
         }, 1000);
+      }
+      var checkName = (rule,value,callback) => {
+          if(!value){
+              callback(new Error('请输入昵称'));
+          }else{
+              setTimeout(() => {
+                this.$axios.post('/isRepeatName',{
+                    name:this.registerForm.name
+                }).then(res => {
+                    if(res.data == 'error'){
+                        callback(new Error('该昵称已被注册，请更改'))
+                    }
+                    else{
+                        callback(new Error('该昵称可用'))
+                    }
+                })
+            },1000)
+          }
       }
       var validatePass = (rule, value, callback) => {
         if (!value) {
@@ -122,12 +142,16 @@ export default {
         },
         rememberPass: true,
         registerForm: {
+            name:'',
             phone:'',
             password:'',
             repeatPass:'',
             identifyingCode:''
         },
         registerRules:{
+            name: [
+                { validator: checkName, trigger: 'blur' }
+            ],
             phone: [
                 { validator: checkPhone, trigger: 'blur' }
             ],
@@ -144,79 +168,79 @@ export default {
       };
     },
     methods: {
-      login() {
-        let myData = this.loginForm
-        this.$refs.loginForm.validate((valid) => {
-          if (valid) {
-            $.post('/login',{
-                data: myData
-            }).then(res => {
-                if(res.data.name){
+        login() {
+            let myData = this.loginForm
+            this.$refs.loginForm.validate((valid) => {
+            if (valid) {
+                $.post('/login',{
+                    data: myData
+                }).then(res => {
+                    if(res.data.name){
+                        this.$message({
+                            message: '登录成功！',
+                            type: 'success'
+                        })
+                        this.$store.commit('LOGIN_IN',res.data)
+                        this.$router.back(-1)
+                    }else{
+                        this.$message({
+                            message: '密码错误',
+                            type: 'warning'
+                        })
+                    }
+                }).catch(error => {
                     this.$message({
-                        message: '登录成功！',
-                        type: 'success'
-					})
-					this.$store.commit('LOGIN_IN',res.data)
-                    this.$router.back(-1)
-                }else{
-                    this.$message({
-                        message: '密码错误',
+                        message: '登录异常',
                         type: 'warning'
                     })
-                }
-            }).catch(error => {
-                this.$message({
-                    message: '登录异常',
-                    type: 'warning'
+                    console.log(error)
                 })
-                console.log(error)
-            })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      register(){
-          let myData = this.registerForm
-					this.$refs.registerForm.validate((valid) => {
-					if (valid) {
-                        $.post('/register',{
-                            data: myData
-                        }).then(res => {
-                            if(res.data.info === 'suc'){
-                                Message({
-                                    message: '注册成功,赶快去登录吧'
-                                })
-                            }else{
-                                Message({
-                                    message: '注册失败',
-                                    type: 'danger'
-                                })
-                            }
-                        }).catch(error => {
-                            Message({
-                                message: '注册异常',
-                                type: 'danger'
-                            })
-                            console.log(error)
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+            });
+        },
+        register(){
+            let myData = this.registerForm
+            this.$refs.registerForm.validate((valid) => {
+            if (valid) {
+                $.post('/register',{
+                    data: myData
+                }).then(res => {
+                    if(res.data.info === 'suc'){
+                        Message({
+                            message: '注册成功,赶快去登录吧'
                         })
-					} else {
-						console.log('error submit!!');
-						return false;
-					}
-				})
+                    }else{
+                        Message({
+                            message: '注册失败',
+                            type: 'danger'
+                        })
+                    }
+                }).catch(error => {
+                    Message({
+                        message: '注册异常',
+                        type: 'danger'
+                    })
+                    console.log(error)
+                })
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+        })
 			},
-      resetLoginForm(formName) {
-        this.$refs[formName].resetFields();
-      }
+        resetLoginForm(formName) {
+            this.$refs[formName].resetFields();
+        }
     }
 }
 </script>
 <style scoped>
 .el-tabs{
     font-size: 18px;
-    width: 40%;
+    width:500px;
     margin: 200px auto;
 }
 .el-tab-pane{

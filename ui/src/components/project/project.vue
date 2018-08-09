@@ -157,6 +157,7 @@ export default {
         color: #ccc;
     }
     .teamMember img{
+        width: 45px;
         border-radius: 50%;
     }
     .teamMember h3{

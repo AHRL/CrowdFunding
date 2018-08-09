@@ -4,7 +4,7 @@ import personalRoute from '../components/mainModule/personalCenter/router'
 
 Vue.use(Router)
 
-export default new Router({
+const vueRouter = new Router({
     // mode: 'hash',
     routes: [{
         path: '*',
@@ -48,3 +48,5 @@ export default new Router({
         component: resolve => require(['../components/writeArticle/writeArticle'], resolve)
     }]
 })
+
+export default vueRouter
