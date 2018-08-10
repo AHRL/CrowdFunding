@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <el-row>
-            <el-col class="wrap" :span="20" :offset="2">
+            <el-col class="wrap" :span="18" :offset="3">
                 <div class="sideBar">
                     <el-menu class="personMenu" router :default-active="this.$route.path.replace(/.*\/([^\/]+)$/, '$1')" background-color="#5eadc7" text-color="#fff" active-text-color="#ffd04b">
                         <el-radio-group>
@@ -24,6 +24,10 @@
                         <el-menu-item index="myProject">
                             <i class="el-icon-document"></i>
                             <span slot="title">项目信息</span>
+                        </el-menu-item>
+                        <el-menu-item index="myNews">
+                            <i class="el-icon-setting"></i>
+                            <span slot="title">我的消息</span>
                         </el-menu-item>
                         <el-menu-item index="mySetting">
                             <i class="el-icon-setting"></i>

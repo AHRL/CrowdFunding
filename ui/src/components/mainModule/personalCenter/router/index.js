@@ -22,6 +22,11 @@ const routers = [{
         path: 'mySetting',
         name: 'mySetting',
         component: resolve => require(['../children/mySetting'], resolve)
+    },
+    {
+        path: 'myNews',
+        name: 'myNews',
+        component: resolve => require(['../children/myNews'], resolve)
     }
 ]
 export default routers

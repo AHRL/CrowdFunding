@@ -6,6 +6,7 @@ Vue.use(Vuex)
 const state = {
     //共用数据
     user: {
+        img:require('../assets/默认头像.png')
     }
 }
 

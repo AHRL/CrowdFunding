@@ -101,7 +101,7 @@
             </el-row>
             <el-row class="myCom">
                 <el-col :span="23">
-                    <img class="headImg" :src="item.userImg" alt="">
+                    <img class="headImg" :src="this.$store.state.user.img" alt="">
                     <el-input :placeholder="placehodlder" @focus="isLogin" v-model="comCont"></el-input>
                     <i class="fa fa-arrow-right" @click="pubCom(item.id,'',comCont)"></i>
                 </el-col>

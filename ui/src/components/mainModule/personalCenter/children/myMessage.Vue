@@ -176,7 +176,8 @@ export default {
             focus.timer = setTimeout(() => {
                 this.$axios.post('/isFocus',{
                     user:this.$store.state.user.name,
-                    name:val
+                    name:val,
+                    ifFocus:focus[i].isFocus
                 }).then(res => {
                     this.$store.commit('CHANGE_FOCUS',res.data)
                 }).catch(err => {
