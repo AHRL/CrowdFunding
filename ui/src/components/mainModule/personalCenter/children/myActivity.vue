@@ -5,6 +5,9 @@
             <h2>我的动态</h2>
             <div class="nothing" v-if="myActivity==''"><span>暂时还没有发布动态</span></div>
             <activityItem v-else  v-for="(item,i) in myActivity" :key="i" :item="item"></activityItem>
+            <div class="watchMore">
+                <el-button type="danger">查看更多</el-button>
+            </div>
         </div>
     </el-col>
 </template>
@@ -165,6 +168,10 @@ export default {
                     left: 50%;
                     transform: translateX(-50%);
                 }
+            }
+            .watchMore{
+                margin:20px auto;
+                text-align: center;
             }
         }
     }

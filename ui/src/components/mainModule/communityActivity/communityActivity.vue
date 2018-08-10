@@ -12,7 +12,7 @@
                     <a href="javascript:;" v-for="(value,i) in nav" :key="i" :class="{navActive:value.active}" @click="getNavContent(value.name,i)">{{ value.name }}</a>
                 </el-row>
                 <div class="allActivity">
-                    <activity v-for="(item,i) in lastestAct" :key="i" :item="item" @theLastest="getLastest"></activity>
+                    <activity v-for="(item,i) in lastestAct" :key="i" :item="item" :page="'communityActivity'" @theLastest="getLastest"></activity>
                     <el-row class="more">
                         <el-button type="danger" plain @click="getMore()">查看更多</el-button>
                     </el-row>

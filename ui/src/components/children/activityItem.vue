@@ -10,9 +10,9 @@
             </el-col>
         </el-row>
         <el-row v-if="item.publishType=='动态'">
-            <p @click="goToProject(item.id)">
+            <span class="content" @click="goToProject(item.id)">
                 {{ item.publishContent }}
-            </p>
+            </span>
             <div v-if="item.img.length>0" class="photoWall">
                 <el-row v-if="item.img.length == 1">
                     <el-col :span="24">
@@ -37,14 +37,14 @@
             </div>
         </el-row>
         <el-row v-if="item.publishType=='长文'">
-            <p @click="goToProject(item.id)">
+            <span class="content" @click="goToProject(item.id)">
                 {{ item.publishContent }}
-            </p>
+            </span>
         </el-row>
         <el-row v-if="item.publishType=='投票'" class="vote">
-            <p @click="goToProject(item.id)">
+            <span class="content" @click="goToProject(item.id)">
                 {{ item.publishContent }}
-            </p>
+            </span>
             <el-checkbox-group v-model="item.voteRes">
                 <el-checkbox v-if="item.statu == '投票'" :label="option" name="type" v-for="(option,i) in item.options" :key="i"></el-checkbox>
                 <el-checkbox v-else :label="option" name="type" disabled v-for="(option,i) in item.options" :key="i"></el-checkbox>
@@ -52,7 +52,7 @@
             <div class="voteBox">
                 <span>可选数: {{ item.canSelectNum }}</span>
                 <span>当前选择数: {{ item.voteRes.length }}</span>
-                <el-button type="primary" @click="vote(item.id)">{{ item.statu }}</el-button>
+                <el-button type="primary" @click="vote(item.id,item.canSelectNum,item.voteRes)">{{ item.statu }}</el-button>
                 <p>你的投票结果为：</p>
                 <ul>
                 <li v-for="(val,i) in item.voteRes" :key="i"> {{ val }}</li>
@@ -96,7 +96,7 @@
                     </el-col>
                 </el-row>
             </el-row>
-            <el-row class="moreComment">
+            <el-row class="moreComment" v-if="page === 'communityActivity'">
                 <span @click="goToProject(item.id)">查看全部{{ item.commentNum }}条评论<i class="el-icon-caret-right"></i></span>
             </el-row>
             <el-row class="myCom">
@@ -112,12 +112,22 @@
 <script>
 export default {
     props: {
-        item:Object
+        item:Object,
+        page:String
     },
     data () {
         return {
             placehodlder:'',
             comCont:''
+        }
+    },
+    computed:{
+        _voteRes:{
+            get:() => {
+                if(!isNaN(this.item.canSelectNum)){
+                    return this.item.voteRes.splice(0,(this.item.canSelectNum - 1))
+                }
+            }
         }
     },
     methods: {
@@ -229,22 +239,26 @@ export default {
         comInputShow(id){
             this.item.comments[id].inputShow = !this.item.comments[id].inputShow
         },
-        vote(id){
-            this.$axios.post('/vote',{
-                itemId:id,
-                voteRes:this.item.voteRes
-            }).then(res => {
-                this.$message({
-                    type:'success',
-                    message:'投票成功'
+        vote(id,num,res){
+            if(res.length === num){
+                this.$axios.post('/vote',{
+                    itemId:id,
+                    voteRes:this.item.voteRes
+                }).then(res => {
+                    this.$message({
+                        type:'success',
+                        message:'投票成功'
+                    })
+                    this.$emit('theLastest',res.data)
+                }).catch(err => {
+                    this.$message({
+                        type:'warning',
+                        message:'投票失败，请重试'
+                    })
                 })
-                this.$emit('theLastest',res.data)
-            }).catch(err => {
-                this.$message({
-                    type:'warning',
-                    message:'投票失败，请重试'
-                })
-            })
+            }else{
+                this.$message.warning('请选择'+num+'个')
+            }
         }
     },
     mounted () {
@@ -290,9 +304,11 @@ img{
             }
         }
     }
-    p{
+    .content{
+        display: inline-block;
         color: $black;
         cursor: pointer;
+        margin:10px 0;
     }
     ul{
         font-size: 14px;
