@@ -76,29 +76,33 @@ export default {
     position: fixed;
     left: 0;
     top: 0;
-    z-index: 8888888;
-}
-.closeImg{
-	position: absolute;
-	right: 0;
-	top: 0;
-	color: white;
-	font-weight: 600;
-	font-size: 25px;
-	z-index: 8888888;
-	cursor: pointer;
-}
-.closeImg:hover{
-	-webkit-transform:rotate(360deg);
-    transform:rotate(360deg);
-    -webkit-transition:-webkit-transform 1s linear;
-    transition:transform 1s linear;
+    z-index: 10003;
+    display: none;
 }
 .enlargeImage{
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%,-50%);
+  max-height:100%;
+}
+.pre,.next{
+  width:60px;
+  height:60px;
+  font-size:3em;
+  line-height: 60px;
+  position:absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border-radius: 50%;
+  text-align: center;
+}
+.next{
+  right:10%;
+}
+.pre{
+  left:10%;
 }
 .el-tabs__item{
   font-size: 18px;
