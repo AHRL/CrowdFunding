@@ -66,33 +66,23 @@
             <span @click="goToProject(item.id)" v-if="item.publishType=='长文'"><i class="fa fa-eye"></i>查看全文</span>
         </el-row>
         <el-row class="comment">
-            <el-row v-for="(val,i) in item.comments" :key="i">
-                <el-row class="oneCom">
-                    <el-col :span="1">
-                        <img class="headImg" :src="val.comImg" alt="" @click="goToPersonPage(val.comName)">
+            <el-row  v-for="(val,i) in item.comments" :key="i">
+                <el-row class="com">
+                    <el-col :span="2">
+                        <img class="headImg" :src="val.comImg">
                     </el-col>
-                    <el-col :span="19">
-                        <span class="commentName" @click="goToPersonPage(val.comName)">{{ val.comName }} ·</span>{{ timeFn(val.comTime) }}
-                        <span class="comContent">{{ val.comCont }}</span>
-                    </el-col>
-                    <el-col :span="3" class="comAndsup">
-                        <i class="fa fa-comment" @click="comInputShow(val.comId)"></i>
-                        <span @click="addZan(item.id,val.comId)" ><i class="fa fa-thumbs-up" :class="{zanActive:val.zanActive}"></i>{{ val.supportNum }}</span>
-                    </el-col>
-                </el-row>
-                <el-row class="oneCom" v-for="(son,i) in val.reply" :key="i">
-                    <el-col :span="1" :offset="2">
-                        <img class="headImg" :src="son.repImg" alt="" @click="goToPersonPage(son.repName)">
-                    </el-col>
-                    <el-col :span="16">
-                        <span class="commentName" @click="goToPersonPage(son.repName)">{{ son.repName }} ·</span>{{ timeFn(son.repTime) }}
-                        <span class="comContent">{{ son.repCont }}</span>
-                    </el-col>
-                </el-row>
-                <el-row class="comInput" v-show="val.inputShow">
-                    <el-col :span="21" :offset="2">
-                        <el-input :placeholder="placehodlder" @focus="isLogin" v-model="val.replyText"></el-input>
-                        <i class="fa fa-arrow-right" @click="pubCom(item.id,val.comId,val.replyText)"></i>
+                    <el-col :span="22">
+                        <span>{{ val.comName }}</span>
+                        <span>{{ val.comTime }}</span>
+                        <p>{{ val.comCont }}</p>
+                        <div class="box">
+                            <div><img :src="require('../../assets/评论.png')"><sup>{{ val.reply.length }}</sup></div>
+                            <div @click="addZan(item.id,val.comId)">
+                                <img v-show="!val.zanActive" :src="require('../../assets/zan.png')">
+                                <img v-show="val.zanActive" :src="require('../../assets/赞.png')">
+                                <sup>{{ val.supportNum }}</sup>
+                            </div>
+                        </div>
                     </el-col>
                 </el-row>
             </el-row>
@@ -277,13 +267,13 @@ $black:black;
 }
 .zanActive{
     color: rgb(211, 61, 41)
-
 }
 img{
     cursor: pointer;
 }
 .one {
     margin-top: 30px;
+    color:$black;
     .authorBox {
         @include flex-style;
         >img {
@@ -339,6 +329,7 @@ img{
         }
     }
     .operations {
+        color:rgb(175, 174, 174);
         font-size: 14px;
         margin: 10px 0;
         >span {
@@ -350,34 +341,68 @@ img{
         }
     }
     .comment {
-        margin: 20px;
-        padding: 10px;
-        .oneCom{
-            margin-top: 10px;
-        }
-        .comAndsup{
-            text-align: right;
-            cursor: pointer;
-        }
-        .headImg {
-            cursor: pointer;
-            width: 30px;
-            border-radius: 50%;
-        }
-        & :first-child {
-            margin-right: 10px;
-        }
-        & :nth-child(2) {
-            padding-top: 5px;
-            font-size: 14px;
-            .comContent {
-                display: block;
-                color: $black;
+        margin: 30px 0;
+        padding: 20px;
+        background: rgba(241, 241, 241, 0.438);
+        .com{
+            position:relation;
+            .headImg{
+                width:30px;
+                margin: 0 auto;
+                border-radius:50%;
             }
-            .commentName {
-                font-size:15px;
-                color: #4d7da5;
-                cursor: pointer;
+            .el-col:nth-child(1){
+                text-align:center;
+            }
+            .el-col:nth-child(2){
+                &>span:first-child{
+                    font-weight: 600;
+                }
+                &>span:nth-child(2){
+                    margin-top:5px;
+                    font-size:0.9em;
+                    display: block;
+                    color:rgb(139, 136, 136);
+                }
+                .box{
+                    position:absolute;
+                    right:20px;
+                    top:20px;
+                    div{
+                        margin-right:20px;
+                        display:inline-block;
+                        img{
+                            width:20px;
+                            opacity:0.8;
+                            filter:opacity(80%);
+                            margin-right: 5px;
+                        }
+                    }
+                }
+                .addCom{
+                    color:rgb(139, 136, 136);
+                    font-size:0.9em;
+                    background:rgba(234, 237, 238, 0.616);
+                    padding:20px;
+                    p{
+                        margin-top:0;
+                        &>span{
+                            color:#000;
+                            font-weight:600;
+                        }
+                    }
+                    &>div{
+                        position:relative;
+                        img{
+                            position:absolute;
+                            right:0;
+                            top:0;
+                            width:20px;
+                            opacity:0.8;
+                            filter:opacity(80%);
+                        }
+                    }
+                }
             }
         }
         .moreComment {
@@ -385,12 +410,16 @@ img{
             text-align: center;
             margin: 20px 0;
             cursor: pointer;
-            a {
+            span{
                 color: #4d7da5;
                 text-decoration: none;
             }
         }
         .myCom {
+            .headImg{
+                width:30px;
+                margin-right: 5px;
+            }
             >.el-col {
                 @include flex-style;
                 i {

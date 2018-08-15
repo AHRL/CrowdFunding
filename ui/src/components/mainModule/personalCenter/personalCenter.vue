@@ -93,6 +93,7 @@ export default {
                         border-radius: 50%;
                         border: 2px solid #ffffff;
                         margin-top: 20px;
+                        background: rgb(238, 234, 234);
                     }
                     p{
                         overflow: hidden;

@@ -30,7 +30,7 @@
                     </el-col>
                 </el-row>
                 <el-row v-else-if="item.img.length > 9">
-                    <el-col :span="8" v-for="(item,i) in item.img" :key="i" v-if="i < 8">
+                    <el-col :span="8" v-for="(item,i) in item.img.slice(0,8)" :key="i">
                         <img :src="item" alt="" @click="imgPlay(i)" >
                     </el-col>
                     <el-col :span="8" v-if="item.img[9]">
@@ -67,6 +67,81 @@
                 </ul>
             </div>
         </el-row>
+        <div class="zan">
+          <div @click="zan">
+            <img v-show="!isZan" class="notZan" :src="require('../../assets/zan.png')">
+            <img v-show="isZan" :src="require('../../assets/赞.png')">
+          </div>
+        </div>
+        <div class="zanPersons">
+          <img v-for="(one,i) in zanPersons.slice(0,14)" :key="i" :src="one.img" alt="">
+          <span @click="zanDialog = !zanDialog">{{ zanPersons.length }}赞<i class="el-icon-caret-right"></i></span>
+        </div>
+        <el-dialog
+            class="teamMember"
+            title="关注"
+            :visible.sync="zanDialog"
+            width="500px">
+                <el-row v-for="(item,i) in zanPersons" :key="i">
+                    <el-col :span="3" :offset="1">
+                        <img :src="item.img" @click="goPersonPage(item.name)">
+                    </el-col>
+                    <el-col :span="15" :offset="1">
+                        <h3 @click="goPersonPage(item.name)">{{item.name}}</h3>
+                    </el-col>
+                    <el-col :span="4">
+                        <el-button @click="isFocus(item.name,i)" size="small" type="danger" round>{{ item.isFocus }}</el-button>
+                    </el-col>
+                </el-row>
+                <el-pagination
+                    layout="prev, pager, next"
+                    :page-size="15"
+                    @current-change="currentChange"
+                    :total="zanPersonsTotal">
+                </el-pagination>
+        </el-dialog>
+        <div class="comments">
+            <h2>{{item.comments.length}}条评论</h2>
+            <div>
+                <el-row>
+                    <el-col :span="2">
+                        <img class="headImg" :src="require('../../assets/user.png')">
+                    </el-col>
+                    <el-col :span="22">
+                        <el-input type="textarea" cols="3" :rows="5" resize="none" v-model="pubCom"></el-input>
+                    </el-col>
+                </el-row>
+                <div class="pub">
+                    <el-button type="primary">发表</el-button>
+                </div>
+            </div>
+            <div class="comment">
+                <el-row class="com" v-for="(obj,i) in item.comments" :key="i">
+                    <el-col :span="2">
+                        <img class="headImg" :src="obj.comImg">
+                    </el-col>
+                    <el-col :span="22">
+                        <span>{{ obj.comName }}</span>
+                        <span>{{ obj.comTime }}</span>
+                        <p>{{ obj.comCont }}</p>
+                        <div class="box">
+                            <div><img :src="require('../../assets/评论.png')"><sup>3</sup></div>
+                            <div><img :src="require('../../assets/zan.png')"><sup>3</sup></div>
+                        </div>
+                        <el-input class="replyInput" type="text" v-model="obj.replyTxt"></el-input>
+                        <div class="addCom">
+                            <p><span>海龙</span> 回复 <span>Tina_</span>: 而且没去参加高考，高中毕业就去签约唱片公司出道，所有音乐的知识全都靠自学。</p>
+                            <div>
+                                <span>今天16:54</span>
+                                <img :src="require('../../assets/评论.png')">
+                            </div>
+                            <el-input class="replyInput" type="text" v-model="obj.replyTxt"></el-input>
+                            <div v-show="obj.reply.length > 1" class="allComments">全部评论<i class="el-icon-caret-bottom"></i></div>
+                        </div>
+                    </el-col>
+                </el-row>
+            </div>
+        </div>
     </el-row>
 </template>
 <script>
@@ -98,6 +173,7 @@ export default {
                 commentNum:3,
                 supportNum:3,
                 comments:[{
+                    replyTxt:'',
                     timer:null,
                     comId:0,
                     comImg:'https://p.moimg.net/ico/2018/05/08/20180508_1525760164_9772.jpg?imageMogr2/auto-orient/strip',
@@ -139,9 +215,74 @@ export default {
                     ],
                 }]
             },
+            isZan:true,
             placehodlder:'',
             comCont:'',
-            curImg:0
+            curImg:0,
+            pubCom:'',
+            zanDialog:false,
+            zanPersons:[{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            },{
+              name:'ttt',
+              img:'https://p.moimg.net/ico/1281521_1487473673.jpg',
+              isFocus:'关注'
+            }],
+            zanPersonsTotal:60,
         }
     },
     methods: {
@@ -305,6 +446,45 @@ export default {
             }else{
                 this.$message.warning('请选择'+num+'个')
             }
+        },
+        goPersonPage(name){
+            this.$router.push('/user/'+name)
+        }, 
+        isFocus(val,i){
+            let focus = this.zanPersons       
+            focus[i].isFocus === '已关注' ? focus[i].isFocus = '+ 关注': focus[i].isFocus = '已关注'
+            if(focus[i].isFocus === '已关注'){
+                this.$store.commit('CHANGE_FOCUSNUM',this.$store.state.user.focusNum + 1)
+            }else{
+                this.$store.commit('CHANGE_FOCUSNUM',this.$store.state.user.focusNum - 1)
+            }
+            clearTimeout(focus.timer)
+            focus.timer = setTimeout(() => {
+                this.$axios.post('/isFocus',{
+                    user:this.$store.state.user.name,
+                    name:val,
+                    ifFocus:focus[i].isFocus
+                }).then(res => {
+                    this.$store.commit('CHANGE_FOCUS',res.data)
+                }).catch(err => {
+                    console.log(err)
+                })
+            },2000)
+        },
+        currentChange(curPage){
+            this.$axios.post('/getZanPersons',{
+                curPage:curPage
+            }).then(res => {
+                this.zanPersons = res.data
+            }).catch(err => {
+                this.$message.error('获取失败，请重试')
+            })
+        },
+        zan(){
+            this.isZan = !this.isZan
+            this.$axios.post('/isZan',{
+                isZan:isZan
+            }).then(res => this.isZan = res.data).catch(err => console.log(err))
         }
     },
     mounted () {
@@ -312,6 +492,7 @@ export default {
             this.placehodlder = '请登录后发表评论'
         }
         this.enlargeImg()
+        this.currentChange(1)
     }
 }
 </script>
@@ -332,6 +513,7 @@ img{
 .one {
     margin: 80px auto;
     width: 760px;
+    color:black;
     .authorBox {
         @include flex-style;
         >img {
@@ -406,6 +588,155 @@ img{
             display: block;
             margin-left: 0;
             margin: 10px 10px;
+        }
+    }
+    .zan{
+      margin: 50px 0;
+      &>div{
+        width: 30px;
+        height: 30px;
+        padding: 20px;
+        border-radius: 50%;
+        border:2px solid rgb(161, 159, 159);
+        margin: 0 auto;
+        &>img{
+            width: 100%;
+        }
+        &>.notZan{
+          opacity: .7;
+          filter: opacity(70%)
+        }
+      }
+    }
+    .zanPersons{
+        background: rgba(234, 237, 238, 0.616);
+        padding:20px;
+        position:relative;
+        img{
+          width:40px;
+          border-radius: 50%;
+          border:3px solid #fff;
+          @for $i from 1 through 999 {
+                &:nth-child(#{$i}){
+                    position:relative;
+                    left:$i*-10px;
+                    z-index: 999-$i;
+                }
+            }
+        }
+        span{
+            position:absolute;
+            right: 20px;
+            top: 33px;
+            cursor: pointer;
+        }
+      }
+      .teamMember{
+        text-align: left;
+        .el-row{
+            margin: 10px 0;
+        }
+        img{
+            width: 45px;
+            border-radius: 50%;
+            cursor:pointer;
+        }
+        h3{
+            line-height: 45px;
+            margin: 0;
+            cursor:pointer;
+        }
+        .el-button{
+            margin-top: 7px;
+        }
+        .el-pagination{
+            text-align: center;
+        }
+    }
+    .comments{
+        margin-top:100px;
+        h2{
+            color:#000;
+            margin-bottom: 40px;
+            padding:20px 0;
+            border-bottom: 1px solid #dcdfe6;
+        }
+        .headImg{
+            width:60%;
+            min-width:40px;
+            margin: 0 auto;
+            border-radius:50%;
+        }
+        .pub{
+            margin-top: 10px;
+            text-align: right;
+        }
+        .comment{
+            margin-top: 30px;
+            .com{
+                position:relation;
+                margin: 20px 0;
+                .el-col:nth-child(2){
+                    &>span:first-child{
+                        font-weight: 600;
+                    }
+                    &>span:nth-child(2){
+                        margin-top:5px;
+                        font-size:0.9em;
+                        display: block;
+                        color:rgb(139, 136, 136);
+                    }
+                    .box{
+                        position:absolute;
+                        right:20px;
+                        top:20px;
+                        div{
+                            margin-right:20px;
+                            display:inline-block;
+                            img{
+                                width:20px;
+                                opacity:0.8;
+                                filter:opacity(80%);
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                    .addCom{
+                        color:rgb(139, 136, 136);
+                        font-size:0.9em;
+                        background:rgba(234, 237, 238, 0.616);
+                        padding:20px;
+                        p{
+                            margin-top:0;
+                            &>span{
+                                color:#000;
+                                font-weight:600;
+                            }
+                        }
+                        &>div{
+                            position:relative;
+                            img{
+                                position:absolute;
+                                right:0;
+                                top:0;
+                                width:20px;
+                                opacity:0.8;
+                                filter:opacity(80%);
+                            }
+                        }
+                    }
+                    .replyInput{
+                        margin: 10px 0;
+                        display:none;
+                    }
+                    .allComments{
+                        font-size:1.1em;
+                        color:rgb(49, 87, 112);
+                        text-align:center;
+                        margin-top:10px;
+                    }
+                }
+            }
         }
     }
 }

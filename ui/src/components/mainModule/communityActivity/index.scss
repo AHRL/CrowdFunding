@@ -8,11 +8,13 @@ $border:1px solid rgb(210, 215, 216);
 }
 
 .container {
-    width: 85%;
+    width:60%;
+    max-width:1200px;
+    min-width: 960px;
     margin: 100px auto;
     >.el-row {
         &>.el-col {
-            background: rgb(245, 247, 248);
+            // background: rgb(245, 247, 248);
             padding: 10px 20px;
         }
     }
