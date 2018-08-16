@@ -108,11 +108,11 @@
                         <img class="headImg" :src="require('../../assets/user.png')">
                     </el-col>
                     <el-col :span="22">
-                        <el-input type="textarea" cols="3" :rows="5" resize="none" v-model="pubCom"></el-input>
+                        <el-input type="textarea" @focus="isLogin"  cols="3" :rows="5" resize="none" :placeholder="placeholder" v-model="pubCom"></el-input>
                     </el-col>
                 </el-row>
                 <div class="pub">
-                    <el-button type="primary">发表</el-button>
+                    <el-button type="primary" @click="sendCom(pubCom,item.id)">发表</el-button>
                 </div>
             </div>
             <div class="comment">
@@ -122,20 +122,25 @@
                     </el-col>
                     <el-col :span="22">
                         <span>{{ obj.comName }}</span>
-                        <span>{{ obj.comTime }}</span>
+                        <span>{{ timeFn(obj.comTime) }}</span>
                         <p>{{ obj.comCont }}</p>
                         <div class="box">
-                            <div><img :src="require('../../assets/评论.png')"><sup>3</sup></div>
-                            <div><img :src="require('../../assets/zan.png')"><sup>3</sup></div>
-                        </div>
-                        <el-input class="replyInput" type="text" v-model="obj.replyTxt"></el-input>
-                        <div class="addCom">
-                            <p><span>海龙</span> 回复 <span>Tina_</span>: 而且没去参加高考，高中毕业就去签约唱片公司出道，所有音乐的知识全都靠自学。</p>
-                            <div>
-                                <span>今天16:54</span>
-                                <img :src="require('../../assets/评论.png')">
+                            <div @click="isInputShow(true,i)"><img :src="require('../../assets/评论.png')"><sup>3</sup></div>
+                            <div @click="addZan(item.id,obj.comId)">
+                                <img v-show="!obj.zanActive" :src="require('../../assets/zan.png')">
+                                <img v-show="obj.zanActive" :src="require('../../assets/赞.png')">
+                                <sup>{{obj.supportNum}}</sup>
                             </div>
-                            <el-input class="replyInput" type="text" v-model="obj.replyTxt"></el-input>
+                        </div>
+                        <div class="addCom" v-show="obj.reply.length > 0 || _inputShow(i)">
+                            <div v-for="(rep,j) in obj.reply" :key="j">
+                                <p><span>{{ rep.from }}</span> 回复 <span>{{ rep.to }}</span>: {{ rep.repCont }}</p>
+                                <div>
+                                    <span>{{ timeFn(rep.repTime) }}</span>
+                                    <img @click="isInputShow(false,i,j)" :src="require('../../assets/评论.png')">
+                                </div>
+                            </div>
+                            <el-input @focus="isLogin" @keyup.enter.native="sendCom(obj.replyTxt,item.id,comId)" class="replyInput" type="text" v-show="_inputShow(i)" :placeholder="item.placeholder" v-model="obj.replyTxt"></el-input>
                             <div v-show="obj.reply.length > 1" class="allComments">全部评论<i class="el-icon-caret-bottom"></i></div>
                         </div>
                     </el-col>
@@ -157,6 +162,7 @@ export default {
                 publishContent: '地方撒范德萨发的说法是',
                 zanActive:true,
                 timer:null,
+                placeholder:'',
                 img: [
                     'http://p.moimg.net/project/project_20180605_1528140951_6031_crop.jpg?imageMogr2/auto-orient/strip',
                     'http://p.moimg.net/project/project_20180721_1532105817_6686_crop.jpg?imageMogr2/auto-orient/strip',
@@ -184,15 +190,7 @@ export default {
                     zanActive:false,
                     inputShow:false,
                     replyText:'',
-                    reply:[
-                        {
-                            repImg:'https://p.moimg.net/ico/2018/05/08/20180508_1525760164_9772.jpg?imageMogr2/auto-orient/strip',
-                            repName:'地方',
-                            repTime:'2018-07-21 19:20:24',
-                            repCont:'大法师打发是范德萨',
-                            supportNum:5,
-                        }
-                    ],
+                    reply:[],
                 },{
                     timer:null,
                     comId:1,
@@ -206,19 +204,20 @@ export default {
                     replyText:'',
                     reply:[
                         {
-                            repImg:'https://p.moimg.net/ico/2018/05/08/20180508_1525760164_9772.jpg?imageMogr2/auto-orient/strip',
-                            repName:'地方',
+                            from:'aa',
+                            to:'bb',
                             repTime:'2018-07-21 19:20:24',
                             repCont:'大法师打发是范德萨',
-                            supportNum:5,
+                            inputShow:false,
                         }
                     ],
                 }]
             },
             isZan:true,
-            placehodlder:'',
-            comCont:'',
+            placeholder:'',
             curImg:0,
+            to:'',
+            comId:'',
             pubCom:'',
             zanDialog:false,
             zanPersons:[{
@@ -306,7 +305,7 @@ export default {
             }else if(dayDiff === 2){
                 return '前天'
             }else{
-                return d1.slice(0,10)
+                return d1.slice(0,16)
             }
         },
         enlargeImg(){
@@ -405,7 +404,7 @@ export default {
                 },2000)
             }
         },
-        pubCom(id,comId,text){
+        sendCom(text,id,comId){
             if(!this.$store.state.user.name){
                 this.$router.push('/login')
             }else if(!text){
@@ -414,7 +413,10 @@ export default {
                     message:'评论不能为空'
                 })
             }else{
+                console.log(this.$store.state.user.name,this.to,id,comId,text)
                 this.$axios.post('/pubCom',{
+                    from:this.$store.state.user.name,
+                    to:this.to,
                     itemId:id,
                     comId:comId,
                     comCont:text
@@ -485,11 +487,48 @@ export default {
             this.$axios.post('/isZan',{
                 isZan:isZan
             }).then(res => this.isZan = res.data).catch(err => console.log(err))
+        },
+        isLogin(){
+            if(!this.$store.state.user.name){
+                this.$router.push('/login')
+            }
+        },
+        isInputShow(isFirstCom,i,j){
+            this.comId = this.item.comments[i].comId
+            if(isFirstCom){
+                this.to = this.item.comments[i].comName
+                this.item.placeholder = '@'+this.item.comments[i].comName
+                this.item.comments[i].inputShow = !this.item.comments[i].inputShow
+                this.item.comments.map(function(val,index){
+                    if(index != i){
+                        val.inputShow = false
+                        val.reply.map(function(val,index){
+                            val.inputShow = false
+                        })
+                    }
+                })
+            }else{
+                this.to = this.item.comments[i].reply[j].from
+                this.item.placeholder = '@'+this.item.comments[i].reply[j].from
+                this.item.comments[i].inputShow = false
+                this.item.comments[i].reply[j].inputShow = !this.item.comments[i].reply[j].inputShow
+                this.item.comments.map(function(val,index){
+                    val.inputShow = false
+                    val.reply.map(function(val,_index){
+                        if(index != i || _index != j){
+                            val.inputShow = false
+                        }
+                    })
+                })
+            }
+        },
+        _inputShow(i){
+            return this.item.comments[i].inputShow || (() => this.item.comments[i].reply.some((val,index) => val.inputShow))()
         }
     },
     mounted () {
         if(!this.$store.state.user.name){
-            this.placehodlder = '请登录后发表评论'
+            this.placeholder = '请先登录再发表评论'
         }
         this.enlargeImg()
         this.currentChange(1)
@@ -727,7 +766,6 @@ img{
                     }
                     .replyInput{
                         margin: 10px 0;
-                        display:none;
                     }
                     .allComments{
                         font-size:1.1em;
