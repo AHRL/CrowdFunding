@@ -6,7 +6,7 @@
             <div class="nothing" v-if="myActivity==''"><span>暂时还没有发布动态</span></div>
             <activityItem v-else  v-for="(item,i) in myActivity" :key="i" :item="item"></activityItem>
             <div class="watchMore">
-                <el-button type="danger">查看更多</el-button>
+                <el-button type="danger" @click="getMore">查看更多</el-button>
             </div>
         </div>
     </el-col>
@@ -138,11 +138,18 @@ export default {
                         }
                     ],
                 }]
-            }]
+            }],
+            page:1
         }
     },
     methods: {
-       
+        getMore(){
+            this.page ++
+            this.$axios.post('/getMore',{
+                page:this.page,
+                userName:this.$store.state.user.name
+            }).then(res => this.myActivity.push(...res.data)).catch(err => this.$message.error('获取失败，请重试'))
+        },
     },
     components: {
         publish,

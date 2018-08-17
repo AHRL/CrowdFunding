@@ -101,7 +101,7 @@
                 </el-pagination>
         </el-dialog>
         <div class="comments">
-            <h2>{{item.comments.length}}条评论</h2>
+            <h2>{{item.totalComments}}条评论</h2>
             <div>
                 <el-row>
                     <el-col :span="2">
@@ -141,11 +141,18 @@
                                 </div>
                             </div>
                             <el-input @focus="isLogin" @keyup.enter.native="sendCom(obj.replyTxt,item.id,comId)" class="replyInput" type="text" v-show="_inputShow(i)" :placeholder="item.placeholder" v-model="obj.replyTxt"></el-input>
-                            <div v-show="obj.reply.length > 1" class="allComments">全部评论<i class="el-icon-caret-bottom"></i></div>
+                            <div v-show="obj.reply.length > 3" @click="getMoreRep(item.id,obj.comId)" class="allComments">全部评论<i class="el-icon-caret-bottom"></i></div>
                         </div>
                     </el-col>
                 </el-row>
             </div>
+            <el-pagination
+                background
+                layout="prev, pager, next"
+                :page-size="10"
+                @current-change="nextPageCom"
+                :total="item.totalComments">
+            </el-pagination>
         </div>
     </el-row>
 </template>
@@ -155,6 +162,7 @@ export default {
         return {
             item:{
                 id:12,
+                totalComments:12,
                 userImg:'https://p.moimg.net/ico/2018/05/08/20180508_1525760164_9772.jpg?imageMogr2/auto-orient/strip',
                 userName: '艾米',
                 publishTime: '2018-07-21 19:20:24',
@@ -479,7 +487,16 @@ export default {
             }).then(res => {
                 this.zanPersons = res.data
             }).catch(err => {
-                this.$message.error('获取失败，请重试')
+                console.log(err)
+            })
+        },
+        nextPageCom(curPage){
+            this.$axios.post('/nextPageCom',{
+                curPage:curPage
+            }).then(res => {
+                this.item.comments = res.data
+            }).catch(err => {
+                console.log(err)
             })
         },
         zan(){
@@ -524,6 +541,17 @@ export default {
         },
         _inputShow(i){
             return this.item.comments[i].inputShow || (() => this.item.comments[i].reply.some((val,index) => val.inputShow))()
+        },
+        getMoreRep(itemId,comId){
+            let index = this.item.comments.map((val,i) => {
+                if(val.comId == comId) return i
+            })
+            this.item.comments[index].num ? this.item.comments[index].num ++ : this.item.comments[index].num = 0
+            this.$axios.post('/getMoreRep',{
+                itemId:itemId,
+                comId:comId,
+                num:this.item.comments[index].num
+            }).then(res => this.item.comments[index].reply.push(...res.data)).catch(err => console.log(err))
         }
     },
     mounted () {
@@ -688,9 +716,6 @@ img{
         .el-button{
             margin-top: 7px;
         }
-        .el-pagination{
-            text-align: center;
-        }
     }
     .comments{
         margin-top:100px;
@@ -776,6 +801,9 @@ img{
                 }
             }
         }
+    }
+    .el-pagination{
+        text-align: center;
     }
 }
 </style>

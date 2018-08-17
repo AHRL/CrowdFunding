@@ -87,7 +87,7 @@
                 </el-row>
             </el-row>
             <el-row class="moreComment" v-if="page === 'communityActivity'">
-                <span @click="goToProject(item.id)">查看全部{{ item.commentNum }}条评论<i class="el-icon-caret-right"></i></span>
+                <span v-show="item.comments.length > 3" @click="goToProject(item.id)">查看全部{{ item.commentNum }}条评论<i class="el-icon-caret-right"></i></span>
             </el-row>
             <el-row class="myCom">
                 <el-col :span="23">
@@ -419,6 +419,7 @@ img{
             .headImg{
                 width:30px;
                 margin-right: 5px;
+                border-radius: 50%;
             }
             >.el-col {
                 @include flex-style;
