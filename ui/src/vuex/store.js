@@ -31,6 +31,9 @@ const mutations = {
     CHANGE_FANS({user},data){
         user.fansNum = data.focusNum
         user.fans = data.focus
+    },
+    CHANGE_PHONE({user},data){
+        user.phone = data.phone
     }
 }
 

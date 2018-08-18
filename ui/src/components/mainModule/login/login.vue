@@ -55,16 +55,28 @@ import $ from '@/api/axios.init'
 export default {
     data() {
       var checkPhone = (rule, value, callback) => {
-          console.log(value+','+value.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/))
         if (!value) {
-          return callback(new Error('手机号不能为空'));
+            return callback(new Error('手机号码不能为空'));
         }
         setTimeout(() => {
-          if (!value.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)) {
-            callback(new Error('请输入正确的手机号'));
-          }else{
-              callback()
-          }
+            if (!value.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)) {
+                callback(new Error('请输入正确的手机号'))
+            } else if(value == this.$store.state.user.phone){
+                callback(new Error('该手机号与当前手机号相同'))
+            } else {
+                setTimeout(() => {
+                    this.$axios.post('/canUsePhone',{
+                        phone:value
+                    }).then(res => {
+                        if(res.data == 'error'){
+                            callback(new Error('该手机号已被注册，请更改'))
+                        }
+                        else{
+                            callback()
+                        }
+                    })
+                },1000)
+            }
         }, 1000);
       }
       var checkName = (rule,value,callback) => {
@@ -79,7 +91,7 @@ export default {
                         callback(new Error('该昵称已被注册，请更改'))
                     }
                     else{
-                        callback(new Error('该昵称可用'))
+                        callback('该昵称可用')
                     }
                 })
             },1000)
@@ -97,7 +109,7 @@ export default {
                 callback(new Error('请输入密码'))
             }
             setTimeout(() => {
-                if(!value.match(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/)){
+                if(!value.match(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/)){
                     callback(new Error('密码至少包含英文和数字两种字符'))
                 }else {
                     if(value.length < 8){

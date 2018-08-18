@@ -1,7 +1,7 @@
 <template>
     <div class="mySetting">
         <h2>我的设置</h2>
-        <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse v-model="activeNames">
             <el-collapse-item title="实名认证" name="1">
                 <div>
                     <el-alert
@@ -14,35 +14,35 @@
                         </div>
                         <el-button plain @click="dialogChangePhoneVisible = true">修改手机号</el-button>
                     </el-alert>
-                    <el-dialog title="修改手机号" :visible.sync="dialogChangePhoneVisible">
+                    <el-dialog title="修改手机号" :visible.sync="dialogChangePhoneVisible" width="600px">
                         <el-form :model="changePhone" status-icon :rules="changePhoneRules" ref="changePhone">
                             <el-form-item label="新手机号码" :label-width="formLabelWidth" prop="newPhone">
-                                <el-input :clearable=true v-model="changePhone.newPhone" auto-complete="off"></el-input>
+                                <el-input :clearable="true" v-model="changePhone.newPhone" auto-complete="off"></el-input>
                             </el-form-item>
-                            <el-form-item label="验证码" :label-width="formLabelWidth">
-                                <el-col :sm="13" :md="14" :lg="16" :xl="16">
-                                    <el-input :clearable=true v-model="changePhone.vertifyCode" auto-complete="off"></el-input>
+                            <el-form-item label="验证码" :label-width="formLabelWidth" prop="vertifyCode">
+                                <el-col :sm="13" :md="14" :lg="13" :xl="13">
+                                    <el-input :clearable="true" v-model="changePhone.vertifyCode" auto-complete="off"></el-input>
                                 </el-col>
                                 <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
                             </el-form-item>
                         </el-form>
                         <div slot="footer" class="dialog-footer">
                             <el-button @click="dialogChangePhoneVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="dialogChangePhoneVisible = false">修 改</el-button>
+                            <el-button type="primary" @click="changePhoneFn('changePhone')">修 改</el-button>
                         </div>
                     </el-dialog>
                     <el-alert
                         :closable="false"
                         title="邮箱绑定"
-                        type="warning"
+                        :type="baseSetting.isBindEmail=='修改邮箱'?'success':'warning'"
                         show-icon>
                         <div class="wordTip">绑定邮箱后，可获取最新消息推送，以及项目消息提醒。</div>
-                        <el-button plain @click="dialogEmailVisible = true">立即认证</el-button>
+                        <el-button plain @click="dialogEmailVisible = true">{{ baseSetting.isBindEmail }}</el-button>
                     </el-alert>
-                    <el-dialog title="邮箱绑定" :visible.sync="dialogEmailVisible" width="40%">
+                    <el-dialog title="邮箱绑定" :visible.sync="dialogEmailVisible" width="600px">
                         <el-form :model="addEmail">
                             <el-form-item label="请输入邮箱" :label-width="formLabelWidth">
-                                <el-input :clearable=true v-model="addEmail.email" auto-complete="off"></el-input>
+                                <el-input :clearable="true" v-model="addEmail.email" auto-complete="off"></el-input>
                             </el-form-item>
                             <el-form-item label="" :label-width="formLabelWidth">
                                 <el-switch
@@ -53,28 +53,28 @@
                         </el-form>
                         <div slot="footer" class="dialog-footer">
                             <el-button @click="dialogEmailVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="dialogEmailVisible = false">绑 定</el-button>
+                            <el-button type="primary" @click="bindEmail">绑 定</el-button>
                         </div>
                     </el-dialog>
                     <el-alert
                         :closable="false"
                         title="身份认证"
-                        type="warning"
+                        :type="baseSetting.isBindIdentity=='重新认证'?'success':'warning'"
                         show-icon>
                         <div class="wordTip">身份认证后，将立即增加您的信任度。</div>
-                        <el-button plain @click="dialogIdentityVisible=true">立即认证</el-button>
+                        <el-button plain @click="dialogIdentityVisible=true">{{ baseSetting.isBindIdentity }}</el-button>
                     </el-alert>
-                    <el-dialog title="身份认证" :visible.sync="dialogIdentityVisible">
+                    <el-dialog title="身份认证" :visible.sync="dialogIdentityVisible" width="600px">
                         <el-form class="upload">
                             <el-form-item label="">
                                 <span>请上传本人与身份证正面同框照</span>
                                 <el-upload
                                     class="avatar-uploader"
-                                    action="https://jsonplaceholder.typicode.com/posts/"
+                                    action=""
                                     :show-file-list="false"
-                                    :on-success="handleAvatarSuccess"
-                                    :before-upload="beforeAvatarUpload">
-                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    :on-change="addIDcardFace"
+                                    :auto-upload="false">
+                                    <img v-if="IDcard.IDcardFace" :src="IDcard.IDcardFace" class="avatar">
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 </el-upload>
                             </el-form-item>
@@ -82,21 +82,21 @@
                                 <span>请上传本人与身份证反面同框照</span>
                                 <el-upload
                                     class="avatar-uploader"
-                                    action="https://jsonplaceholder.typicode.com/posts/"
+                                    action=""
                                     :show-file-list="false"
-                                    :on-success="handleAvatarSuccess"
-                                    :before-upload="beforeAvatarUpload">
-                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    :auto-upload="false"
+                                    :on-change="addIDcardBack">
+                                    <img v-if="IDcard.IDcardBack" :src="IDcard.IDcardBack" class="avatar">
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 </el-upload>
                             </el-form-item>
                         </el-form>
                         <div slot="footer" class="dialog-footer">
                             <el-button @click="dialogIdentityVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="dialogwaitIdentityVisible = true">认 证</el-button>
+                            <el-button type="primary" @click="identityIDcard">认 证</el-button>
                         </div>
                     </el-dialog>
-                    <el-dialog title="上传成功" :visible.sync="dialogwaitIdentityVisible">
+                    <el-dialog title="上传成功" :visible.sync="dialogwaitIdentityVisible" width="600px">
                         <el-alert
                             title="上传成功，我们将在3-5个工作日给予回复，可在动态管理->最新消息处查看。"
                             type="success"
@@ -109,29 +109,29 @@
                     <el-alert
                         :closable="false"
                         title="企业认证"
-                        type="warning"
+                        :type="baseSetting.isBindCompany=='重新认证'?'success':'warning'"
                         show-icon>
                         <div class="wordTip">企业认证后，可发布带有企业标识的众筹项目。</div>
-                        <el-button plain @click="dialogCompanyIdentityVisible=true">立即认证</el-button>
+                        <el-button plain @click="dialogCompanyIdentityVisible=true">{{ baseSetting.isBindCompany }}</el-button>
                     </el-alert>
-                    <el-dialog title="企业认证" :visible.sync="dialogCompanyIdentityVisible">
+                    <el-dialog title="企业认证" :visible.sync="dialogCompanyIdentityVisible" width="600px">
                         <el-form class="upload">
                             <el-form-item label="">
                                 <span>请上传营业执照</span>
                                 <el-upload
                                     class="avatar-uploader"
-                                    action="https://jsonplaceholder.typicode.com/posts/"
-                                    :show-file-list="false"
-                                    :on-success="handleAvatarSuccess"
-                                    :before-upload="beforeAvatarUpload">
-                                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                    action=""
+                                    :auto-upload="false"
+                                    :on-change="addCompanyImg"
+                                    :show-file-list="false">
+                                    <img v-if="companyImg" :src="companyImg" class="avatar">
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 </el-upload>
                             </el-form-item>
                         </el-form>
                         <div slot="footer" class="dialog-footer">
                             <el-button @click="dialogIdentityVisible = false">取 消</el-button>
-                            <el-button type="primary" @click="dialogwaitIdentityVisible = true">认 证</el-button>
+                            <el-button type="primary" @click="identifyCompany">认 证</el-button>
                         </div>
                     </el-dialog>
                 </div>
@@ -145,30 +145,33 @@
                         <span>当前账号安全等级：</span>
                         <el-rate
                             disabled
-                            v-model="value2"
+                            v-model="baseSetting.passwordRank"
                             :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                         </el-rate>
                         <p class="password">密码：<span>*********</span></p>
                         <el-button type="danger" plain @click="dialogChangePWVisible=true">修改密码</el-button>
                     </div>
                 </el-alert>
-                <el-dialog title="修改密码" :visible.sync="dialogChangePWVisible">
-                    <el-form :model="changePassword">
-                        <el-form-item label="输入新密码" :label-width="formLabelWidth">
-                            <el-input :clearable=true v-model="changePassword.newPassword" auto-complete="off"></el-input>
-                        </el-form-item>
-                        <el-form-item label="验证码" :label-width="formLabelWidth">
-                            <el-col :sm="13" :md="14" :lg="16" :xl="16">
-                                <el-input :clearable=true v-model="changePassword.vertifyCode" auto-complete="off"></el-input>
-                            </el-col>
-                            <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
-                        </el-form-item>
-                    </el-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button @click="dialogChangePWVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="dialogChangePWVisible = true">认 证</el-button>
-                    </div>
-                </el-dialog>
+                <el-dialog title="修改密码" :visible.sync="dialogChangePWVisible" width="600px">
+                        <el-form :model="changePW" status-icon :rules="changePWRules" ref="changePW">
+                            <el-form-item label="旧密码" :label-width="formLabelWidth" prop="oldPassword">
+                                <el-input :clearable="true" type="password" v-model="changePW.oldPassword" auto-complete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="新密码" :label-width="formLabelWidth" prop="newPassword">
+                                <el-input :clearable="true" type="password" v-model="changePW.newPassword" auto-complete="off"></el-input>
+                            </el-form-item>
+                            <el-form-item label="验证码" :label-width="formLabelWidth" prop="vertifyCode">
+                                <el-col :sm="13" :md="14" :lg="13" :xl="13">
+                                    <el-input :clearable="true" v-model="changePhone.vertifyCode" auto-complete="off"></el-input>
+                                </el-col>
+                                <el-button type="danger" class="sendPhoneCode">发送手机验证码</el-button>
+                            </el-form-item>
+                        </el-form>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="dialogChangePWVisible = false">取 消</el-button>
+                            <el-button type="primary" @click="changePWFn('changePW')">修 改</el-button>
+                        </div>
+                    </el-dialog>
             </el-collapse-item>
             <el-collapse-item title="消息通知" name="3">
                 <el-alert
@@ -179,17 +182,17 @@
                     <div>
                         <i class="el-icon-info"></i>
                         <span>是否开启系统通知：</span>
-                        <el-switch v-model="phoneMsg"></el-switch>
+                        <el-switch v-model="baseSetting.isOpenNotice" @change="isOpenNoticeFn"></el-switch>
                     </div>
                     <div>
                         <i class="el-icon-info"></i>
                         <span>是否开启短信推送：</span>
-                        <el-switch v-model="phoneMsg"></el-switch>
+                        <el-switch v-model="baseSetting.isOpenMessage" @change="isOpenMessageFn"></el-switch>
                     </div>
                     <div>
                         <i class="el-icon-info"></i>
                         <span>是否开启邮件推送：</span>
-                        <el-switch v-model="phoneMsg"></el-switch>
+                        <el-switch v-model="baseSetting.isOpenEmail" @change="isOpenEmailFn"></el-switch>
                     </div>
                 </el-alert>
             </el-collapse-item>
@@ -240,16 +243,59 @@
                 return callback(new Error('手机号码不能为空'));
             }
             setTimeout(() => {
-                if (/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(value)) {
-                    callback(new Error('请输入正确的手机号'));
+                if (!value.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)) {
+                    callback(new Error('请输入正确的手机号'))
+                } else if(value == this.$store.state.user.phone){
+                    callback(new Error('该手机号与当前手机号相同'))
                 } else {
-                    callback();
+                    setTimeout(() => {
+                        this.$axios.post('/canUsePhone',{
+                            phone:value
+                        }).then(res => {
+                            if(res.data == 'error'){
+                                callback(new Error('该手机号已被注册，请更改'))
+                            }
+                            else{
+                                callback()
+                            }
+                        })
+                    },1000)
                 }
             }, 1000);
-        };
+        }
+        let checkVertifyCode = (rule,value,callback) => {
+            if (!value) {
+                return callback(new Error('验证码不能为空'));
+            }else{
+                callback()
+            }
+        }
+        let checkOldPW = (rule,value,callback) => {
+            if (!value) {
+                return callback(new Error('密码不能为空'));
+            }
+            setTimeout(() => {
+                this.$axios.post('/isPWTrue',{
+                    name:this.$store.state.user.name
+                }).then(res => !res.data && callback('密码不正确')).catch(err => console.log(err))
+            },1000)
+        }
+        let checkNewPW = (rule,value,callback) => {
+            if (!value) {
+                return callback(new Error('密码不能为空'));
+            }
+            setTimeout(() => {
+                if(!value.match(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/)){
+                    callback(new Error('密码至少8位且包含英文和数字两种字符'))
+                }else if(value == this.changePW.oldPassword){
+                    callback(new Error('新密码不能与旧密码相同'))
+                }else{
+                    callback()
+                }
+            },1000)
+        }
         return {
             activeNames: ['1','2','3','4'],
-            value2:3,
             phoneMsg:'',
             dialogChangePhoneVisible:false,
             changePhone:{
@@ -259,6 +305,9 @@
             changePhoneRules:{
                 newPhone:[
                     {validator:checkPhone,trigger:'blur'}
+                ],
+                vertifyCode:[
+                    {validator:checkVertifyCode,trigger:'blur'}
                 ]
             },
             dialogEmailVisible:false,
@@ -267,22 +316,27 @@
                 openNotice:''
             },
             dialogIdentityVisible:false,
-            imageUrl: '',
+            IDcard:{
+                IDcardFace:'',
+                IDcardBack:''
+            },
+            companyImg:'',
             dialogwaitIdentityVisible:false,
             dialogCompanyIdentityVisible:false,
             dialogChangePWVisible:false,
-            changePassword:{
+            changePW:{
+                oldPassword:'',
                 newPassword:'',
-                identifyCode:''
+                vertifyCode:''
+            },
+            changePWRules:{
+                oldPassword:[{validator:checkOldPW,trigger:'blur'}],
+                newPassword:[{validator:checkNewPW,trigger:'blur'}],
+                vertifyCode:[{validator:checkVertifyCode,trigger:'blur'}]
             },
             formLabelWidth:'100px',
             tableData:[{
                 option:'发布众筹',
-                everyCan:true,
-                personCan:true,
-                companyCan:true
-            },{
-                option:'私信粉丝',
                 everyCan:true,
                 personCan:true,
                 companyCan:true
@@ -293,36 +347,115 @@
                 companyCan:true
             },{
                 option:'众筹结算',
-                everyCan:true,
+                everyCan:false,
                 personCan:true,
                 companyCan:true
             },{
                 option:'认证标识',
-                everyCan:true,
+                everyCan:false,
                 personCan:true,
                 companyCan:true
-            }]
+            }],
+            baseSetting:{
+                isBindEmail:'修改邮箱',
+                isBindIdentity:'重新认证',
+                isBindCompany:'重新认证',
+                passwordRank:4,
+                isOpenNotice:false,
+                isOpenMessage:false,
+                isOpenEmail:false,
+            }
         }
     },
     methods: {
-        handleChange(){
-
+        changePhoneFn(formName){
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$axios.post('/changePhone',{
+                        newPhone:this.changePhone.newPhone,
+                        vertifyCode:this.changePhone.vertifyCode
+                    }).then(res => {
+                        this.$store.commit('CHANGE_PHONE',res.data)
+                        this.dialogChangePhoneVisible = false
+                    }).catch(err => console.log(err))
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            })
         },
-         handleAvatarSuccess(res, file) {
-            this.imageUrl = URL.createObjectURL(file.raw);
+        bindEmail(){
+            this.$axios.post('/changePhone',{
+                email:this.addEmail.email,
+                vertifyCode:this.addEmail.openNotice
+            }).then(res => console.log(res.data)).catch(err => console.log(err))
+            this.dialogEmailVisible = false
         },
-        beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 2;
+        addIDcardFace(file){
+            this.IDcard.IDcardFace = file.url
+        },
+        addIDcardBack(file){
+            this.IDcard.IDcardBack = file.url
+        },
+        identityIDcard(){
+            if(this.IDcard.IDcardFace && this.IDcard.IDcardBack){
+                this.$axios.post('/identityIDcard',{
+                    IDcard:this.IDcard
+                }).then(res => this.dialogwaitIdentityVisible = true).catch(err => console.log(err))
+            }else{
+                this.$message.warning('请上传照片')
+            }
+        },
+        addCompanyImg(file){
+            this.companyImg = file.url
+        },
+        identifyCompany(){
+            if(this.companyImg){
+                this.$axios.post('/identifyCompany',{
+                    IDcard:this.companyImg
+                }).then(res => this.dialogwaitIdentityVisible = true).catch(err => console.log(err))
+            }else{
+                this.$message.warning('请上传照片')
+            }
+        },
+        changePWFn(formName){
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    this.$axios.post('/changePW',{
+                        changePW:this.changePW
+                    }).then(res => {
 
-            if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
-            }
-            if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!');
-            }
-            return isJPG && isLt2M;
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            })
+        },
+        isOpenNoticeFn(res){
+            console.log(res)
+            this.$axios.post('/isOpenNotice',{
+                name:this.$store.state.user.name,
+                statu:res
+            }).then(res => '').catch(err => console.log(err))
+        },
+        isOpenMessageFn(res){
+            this.$axios.post('/isOpenMessage',{
+                name:this.$store.state.user.name,
+                statu:res
+            }).then(res => '').catch(err => console.log(err))
+        },
+        isOpenEmailFn(res){
+            this.$axios.post('/isOpenEmail',{
+                name:this.$store.state.user.name,
+                statu:res
+            }).then(res => '').catch(err => console.log(err))
         }
+    },
+    mounted () {
+        this.$axios.get('/getSetting').then(res => {
+            this.baseSetting = res.data
+        }).catch(err => console.log(err))
     }
   }
 </script>
