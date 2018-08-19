@@ -9,10 +9,10 @@
                     text-color="#5eadc7"
                     active-text-color="rgb(90, 87, 87)">
                     <el-row class="manager">
-                        <el-col :span="5">
+                        <el-col :span="4">
                             <img :src="require('../../../assets/head.jpeg')" alt="">
                         </el-col>
-                        <el-col class="username" :span="16" :offset="2">
+                        <el-col class="username" :span="16" :offset="3">
                             dfgfgfdgfsdgsgfsdytj
                         </el-col>
                     </el-row>
@@ -31,29 +31,14 @@
                 </el-menu>
             </el-col>
             <el-col class="leftContent" style="height:800px">
-                <!-- 网站浏览量 -->
-                <!-- 今日注册量 -->
-                <!-- 单个项目访问排行 -->
-                <!-- 获取金额总和 -->
-                <!-- 单个项目筹资金额排行 -->
-                <!-- 月成功筹资统计 -->
-                <!-- 各类项目筹资情况一览表 -->
-                <!-- 消息列表 -->
-                <!-- 我的设置 -->
                 <div class="topBar">
                     <el-input placeholder="请输入想要查看的项目名" prefix-icon="el-icon-search"></el-input>
                     <div class="topBarRight">
-                        <el-badge is-dot class="item"><i class="fa fa-envelope-o"></i></el-badge>
+                        <i v-show="!haveNotRead" class="fa fa-envelope-o"></i>
+                        <el-badge v-show="haveNotRead" is-dot class="item"><i class="fa fa-envelope-o"></i></el-badge>
                         <!-- <i class="fa fa-envelope-o"></i> -->
                         <!-- <i class="el-icon-setting"></i> -->
-                        <el-dropdown trigger="click">
-                            <span class="el-dropdown-link">
-                                welcome admin<i class="el-icon-arrow-down el-icon--right"></i>
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item>注销</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
+                        <span>welcome admin</span>
                     </div>
                 </div>
                 <survey v-if="activeIndex==='1'"></survey>
@@ -70,7 +55,8 @@ import messageList from './children/messageList'
 export default {
     data() {
         return {
-            activeIndex:'1'
+            activeIndex:'1',
+            haveNotRead:false
         }
     },
     methods: {
@@ -128,7 +114,7 @@ export default {
     align-items: center;
     margin-bottom: 60px;
     img {
-        width: 100%;
+        width: 45px;
         border-radius: 50%;
         border: 1px solid #fff;
     }

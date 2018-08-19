@@ -5,18 +5,18 @@
                 <h5 class="yearIncrease"><i class="el-icon-caret-top"></i>年增长率</h5>
                 <el-col class="circleProgress" :span="12">
                     <div>
-                        <el-progress :show-text="false" :stroke-width="15" type="circle" :percentage="80" color="#409EFF"></el-progress>
+                        <el-progress :show-text="false" :stroke-width="15" type="circle" :percentage="growthRate.fund.yearRate" color="#409EFF"></el-progress>
                         <div class="increaseMsg">
-                            <p>60%</p>
+                            <p>{{ growthRate.fund.yearRate }}}%</p>
                             <span>总资金</span>
                         </div>
                     </div>
                 </el-col>
                 <el-col class="circleProgress" :span="12">
                     <div>
-                        <el-progress :stroke-width="15" :show-text="false" type="circle" :percentage="80" color="#8e71c7"></el-progress>
+                        <el-progress :stroke-width="15" :show-text="false" type="circle" :percentage="growthRate.user.yearRate" color="#8e71c7"></el-progress>
                         <div class="increaseMsg">
-                            <p>60%</p>
+                            <p>{{ growthRate.user.yearRate }}%</p>
                             <span>注册量</span>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                             <span>资金日增长</span>
                         </el-col>
                         <el-col :span="18">
-                            <el-progress :percentage="40"></el-progress>
+                            <el-progress :percentage="growthRate.fund.dayRate"></el-progress>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -37,7 +37,7 @@
                             <span>资金月增长</span>
                         </el-col>
                         <el-col :span="18">
-                            <el-progress :percentage="100" color="#8e71c7"></el-progress>
+                            <el-progress :percentage="growthRate.fund.monthRate" color="#8e71c7"></el-progress>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -45,7 +45,7 @@
                             <span>用户日增长</span>
                         </el-col>
                         <el-col :span="18">
-                            <el-progress :percentage="60" color="#dc5771"></el-progress>
+                            <el-progress :percentage="growthRate.user.dayRate" color="#dc5771"></el-progress>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -53,7 +53,7 @@
                             <span>用户月增长</span>
                         </el-col>
                         <el-col :span="18">
-                            <el-progress :percentage="10" color="#da9c63"></el-progress>
+                            <el-progress :percentage="growthRate.user.monthRate" color="#da9c63"></el-progress>
                         </el-col>
                     </el-row>
                 </div>
@@ -64,12 +64,14 @@
                 <div class="head">
                     <h4>全部项目<span>共20个项目</span></h4>
                     <el-button-group>
-                        <i class="el-icon-arrow-left"></i>
-                        <i class="el-icon-arrow-right"></i>
+                        <i class="el-icon-arrow-left" @click="goToPage(-1)"></i>
+                        <i class="el-icon-arrow-right" @click="goToPage(1)"></i>
                     </el-button-group>
                 </div>
                 <el-table
                     :data="projects"
+                    :header-cell-style="{textAlign:'center'}"
+                    :cell-style="{textAlign:'center'}"
                     style="width: 100%">
                     <el-table-column
                         prop="date"
@@ -128,9 +130,19 @@
 export default {
     data(){
         return{
-            completedItems:[
-                {}
-            ],
+            pageNum:0,
+            growthRate:{
+                fund:{
+                    yearRate:50,
+                    monthRate:30,
+                    dayRate:60
+                },
+                user:{
+                    yearRate:50,
+                    monthRate:30,
+                    dayRate:15
+                }
+            },
             projects: [{
                     date: '2016-05-02',
                     publisher: '王小虎',
@@ -163,7 +175,8 @@ export default {
                     progress: '60%',
                     money: '434355',
                     statu: '已完成'
-                }]
+                }],
+            page:1
         }
     },
     methods: {
@@ -212,7 +225,26 @@ export default {
                 t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
             }
             return t.split("").reverse().join("") + "." + r;
+        },
+        goToPage(data){
+            if(data == -1 && this.page+data <= 0){
+                this.$message.warning('已经是第一页了')
+            }else if(data == 1 && this.page+data >= this.pageNum){
+                this.$message.warning('已经是最后一页了')
+            }else{
+                this.page = this.page+data
+                this.$axios.post('/survey_goToPage',{
+                    page:this.page
+                }).then(res => this.projects = res.data).catch(err => this.$message.error('获取失败'))
+            }
         }
+    },
+    mounted () {
+        this.$axios.get('/getSurvey').then(res => {
+            this.growthRate = res.data.growthRate
+            this.projects = res.data.projects
+            this.pageNum = res.data.pageNum
+        }).catch(err => this.$message.error('获取失败，请重试'))
     }
 }
 </script>
