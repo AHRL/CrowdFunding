@@ -71,7 +71,7 @@ export default {
 .w-e-text-container{
     min-height:400px;
 }
-.enlarge{
+.enlarge,.big{
     background: rgba(32,14,54,0.5);
     position: fixed;
     left: 0;

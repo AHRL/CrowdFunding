@@ -103,7 +103,7 @@
                             </el-form-item>
                             <el-form-item label="相关信息">
                                 <div class="imgList" v-for="(item,i) in props.row.img" :key="i">
-                                    <img @click="enlargeImg(item)" :src="item"/>
+                                    <img @click="imgPlay(item)" :src="item"/>
                                     <!-- {{item}} -->
                                 </div>
                             </el-form-item>
@@ -246,20 +246,24 @@ export default {
         handleDelete(index, row) {
             console.log(index, row);
         },
-        enlargeImg(url){
+        enlargeImg(){
             const body = document.getElementsByTagName('body')[0]
             const cover = document.createElement('div')
-            cover.className = "enlarge"
+            cover.className = "big"
             cover.style.width = document.body.clientWidth+'px'
             cover.style.height = document.body.clientHeight+'px'
             body.appendChild(cover)
             const img = document.createElement('img')
             img.className = 'enlargeImage'
-            img.src = url
             cover.appendChild(img)
             cover.onclick = () => {
-                body.removeChild(cover)
+                cover.style.display = "none"
             }
+        },
+        imgPlay(url){
+            document.querySelector('.big').style.display = "block"
+            let img = document.querySelector('.big .enlargeImage')
+            img.src = url
         },
         replyResult(id,result){
             this.$axios.post('/replyResult',{
@@ -297,6 +301,9 @@ export default {
                 }).then(res => this.identify = res.data).catch(err => this.$message.error('获取失败'))
             }
         }
+    },
+    mounted () {
+        this.enlargeImg()
     }
 }
 </script>

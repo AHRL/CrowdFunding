@@ -10,10 +10,10 @@
                     active-text-color="rgb(90, 87, 87)">
                     <el-row class="manager">
                         <el-col :span="4">
-                            <img :src="require('../../../assets/head.jpeg')" alt="">
+                            <img :src="this.$store.state.user.img" alt="">
                         </el-col>
                         <el-col class="username" :span="16" :offset="3">
-                            dfgfgfdgfsdgsgfsdytj
+                            {{ this.$store.state.user.name }}
                         </el-col>
                     </el-row>
                     <el-menu-item index="1">
@@ -32,7 +32,7 @@
             </el-col>
             <el-col class="leftContent" style="height:800px">
                 <div class="topBar">
-                    <el-input placeholder="请输入想要查看的项目名" prefix-icon="el-icon-search"></el-input>
+                    <el-input placeholder="请输入想要查看的项目名" v-model="searchCont" prefix-icon="el-icon-search" @keyup.enter.native="searchProject"></el-input>
                     <div class="topBarRight">
                         <i v-show="!haveNotRead" class="fa fa-envelope-o"></i>
                         <el-badge v-show="haveNotRead" is-dot class="item"><i class="fa fa-envelope-o"></i></el-badge>
@@ -46,6 +46,22 @@
                 <message-list v-if="activeIndex==='3'"></message-list>
             </el-col>
         </el-row>
+        <el-dialog
+            title="查询结果"
+            :visible.sync="searchDialogVisible"
+            width="600px">
+            <el-table :data="searchResult">
+                <el-table-column property="name">
+                    <template slot-scope="scope">
+                        <a href="javascript:;" @click="goToProject(scope.row.name)">{{ scope.row.name }}</a>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -56,26 +72,43 @@ export default {
     data() {
         return {
             activeIndex:'1',
-            haveNotRead:false
+            haveNotRead:false,
+            searchDialogVisible:false,
+            searchCont:'',
+            searchResult:[{
+                name:'抹茶大会'
+            },{
+                name:'互联网大赛'
+            }]
         }
     },
     methods: {
-        handleOpen(key, keyPath) {
-            console.log(key, keyPath);
-        },
-        handleClose(key, keyPath) {
-            console.log(key, keyPath);
-        },
         handleSelect(key,keyPath){
-            console.log(key,keyPath)
             this.activeIndex = key;
-            console.log(this.activeIndex)
+        },
+        searchProject(){
+            if(this.searchCont){
+                this.$axios.post('/searchProject',{
+                    projectName:this.searchCont
+                }).then(res => {
+                    this.searchResult = res.data
+                    this.searchDialogVisible = true
+                }).catch(err => this.$message.error('搜索失败'))
+            }else{
+                this.$message.warning('搜索项目名不能为空')
+            }
+        },
+        goToProject(name){
+            console.log('dd')
         }
     },
     components: {
         survey,
         top,
         messageList
+    },
+    mounted () {
+        this.$axios.get('/getIsNotRead').then(res => this.haveNotRead = res.data).catch(err => console.log(err))
     }
 }
 </script>
