@@ -1,5 +1,5 @@
 <template>
-  <el-col :span="6">
+  <el-col :xs="12" :sm="12" :md="8" :lg="6">
     <el-card shadow="hover">
         <div>
             <img class="itemImg" :src="project.imgUrl" />

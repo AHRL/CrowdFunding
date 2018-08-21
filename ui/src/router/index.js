@@ -44,7 +44,7 @@ const vueRouter = new Router({
         path: '/activity/:id',
         component: resolve => require(['../components/activity/activity'], resolve)
     }, {
-        path: '/search',
+        path: '/search/:id',
         component: resolve => require(['../components/search/search'], resolve)
     },{
         path: '/writeArticle',

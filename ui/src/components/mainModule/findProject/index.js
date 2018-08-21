@@ -132,7 +132,7 @@ export default {
             statusActive: '全部状态',
             order: ['最新上线','金额最高','评论最多'],
             orderActive: '最新上线',
-            activeName: '1',
+            activeName: 1,
             chartDate: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-7', '1-8', '1-9', '1-10', '1-11'],
             chartMoney: [12, 21, 10, 4, 12, 5, 6, 5, 25, 23, 70],
             categoryPercent: [

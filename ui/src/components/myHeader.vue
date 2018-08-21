@@ -1,7 +1,7 @@
 <template>
     <header class="header-nav">
         <el-row>
-            <el-col :xs="3" :sm="3" :md="3" :lg="2" :offset="1">
+            <el-col :xs="7" :sm="3" :md="3" :lg="2" :offset="1">
                 <div class="header">
                     <img src="../assets/icon.png" alt="">
                     <h1>众筹</h1>
@@ -9,7 +9,7 @@
             </el-col>
             <el-col :xs="18" :sm="20" :md="20" :lg="21" class="offcanvas-collapse">
                 <el-col :xs="23" :sm="19" :md="15" :lg="18">
-                    <el-menu :default-active="this.$route.path.replace(/([/][^/]+)$/, '')" router mode="horizontal">
+                    <el-menu :default-active="this.$router.path" router mode="horizontal">
                         <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
                             {{ item.navItem }}
                         </el-menu-item>
@@ -17,7 +17,7 @@
                 </el-col>
                 <el-col :xs="6" :sm="6" :md="8" :lg="7" class="rightNav">
                     <div>
-                        <el-input placeholder="search" suffix-icon="el-icon-search"></el-input>
+                        <el-input placeholder="search" v-model="searchCont"><i slot="suffix" class="el-input__icon el-icon-search" @click="search"></i></el-input>
                     </div>
                     <div class="lo-re-box">
                         <router-link to="/login" v-if="!this.$store.state.user.name">登录</router-link>
@@ -41,11 +41,29 @@
                 <span class="nav-on" @click="navUp"><i></i><i></i><i></i></span>
             </el-col>
                 <el-menu
-                :default-active="this.$route.path.replace(/([/][^/]+)$/, '')"
+                :default-active="this.$router.path"
                 router
                 :class="{'collaps-nav':true,'navActive':navActive}">
-                <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
+                <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name" @click="navActive = false">
                     <span slot="title">{{ item.navItem }}</span>
+                </el-menu-item>
+                <el-menu-item index="1">
+                    <div slot="title" class="mobileRightNav">
+                        <el-input placeholder="search" v-model="searchCont"><i slot="suffix" class="el-input__icon el-icon-search" @click="search"></i></el-input>
+                    </div>
+                </el-menu-item>
+                <el-menu-item index="2">
+                    <div class="lo-re-box-mobile" slot="title">
+                        <router-link to="/login" v-if="!this.$store.state.user.name" @click="navActive = false">登录</router-link>
+                        <div class="isLogin" v-else>
+                            <img :src="this.$store.state.user.img" >
+                            <el-dropdown trigger="click">
+                                <span class="el-dropdown-link">
+                                    <span class="username">{{ this.$store.state.user.name }}</span>
+                                </span>
+                            </el-dropdown>
+                        </div>
+                    </div>
                 </el-menu-item>
             </el-menu>
         </el-row>
@@ -63,7 +81,8 @@ export default {
             {name:'/personalCenter',navItem:'个人中心'},
             {name:'/manageCenter',navItem:'管理员中心'},
         ],
-        navActive:false
+        navActive:false,
+        searchCont:''
       };
     },
     methods: {
@@ -75,6 +94,15 @@ export default {
         },
         navUp(){
             this.navActive = !this.navActive
+        },
+        search(){
+            if(this.searchCont){
+                this.$axios.post('/search',{
+                    searchCont:this.searchCont
+                }).then(res => this.$router.push('/search/'+res.data)).catch(err => this.$message.error('搜索失败'))
+            }else{
+                this.$message.warning('搜索内容不能为空')
+            }
         }
     }
 }
@@ -96,7 +124,6 @@ header{
     width:40px;
 }
 header h1{
-    width: 60px;
     font-size: 22px;
     color: rgb(119, 111, 111);
 }
@@ -142,7 +169,9 @@ header h1{
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-
+}
+.lo-re-box-mobile .username{
+    width: 100%;
 }
 span.nav-on{
     display:none;
@@ -164,7 +193,7 @@ span.nav-on{
     margin-top: 60px;
     display: none;
 }
-@media (max-width: 767.98px) {
+@media screen and (max-width: 768px) {
     .offcanvas-collapse{
         display: none;
     }
@@ -173,6 +202,9 @@ span.nav-on{
     }
     span.nav-on{
         display: block;
+    }
+    .header h1{
+        width:60px;
     }
 }
 </style>

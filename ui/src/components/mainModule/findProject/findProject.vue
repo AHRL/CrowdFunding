@@ -8,75 +8,75 @@
           </el-carousel>
       </div>
       <div class="container">
-          <el-row class="hidden-sm-and-down top">
-              <el-col :span="24">
-                  <el-col :span="16">
-                    <h2>24小时金额榜</h2>
-                    <div class="moneyTop">
-                        <el-col :span="2">
-                            <ul class="moneyTopOrder">
-                                <li v-for="(item,i) in moneyTop" :key="i" :class="{'moneyTopActive':item.active}" @mouseover="moneyTopChange(i)">{{ i+1 }}</li>
-                            </ul>
-                        </el-col>
-                        <el-col :span="22">
-                            <div>
-                                <div v-for="(item,i) in moneyTop" :key="i" :class="{'hide':!item.active}">
-                                    <el-col class="moneyTopImg" :md="14" :lg="12">
-                                        <img :src="item.imgUrl" alt="">
-                                    </el-col>
-                                    <el-col :md="9" :lg="10" :offset="1" class="moneyTopContent">
-                                        <div>
-                                            <h3>{{ item.header }}</h3>
-                                            <p class="author">
-                                                <img :src="item.authorHeadUrl" alt="">
-                                                <span>{{ item.authorName }}</span>
-                                            </p>
-                                            <p class="moneyTopDescription">{{ item.description }}</p>
+          <el-row class="top">
+                <el-col :span="24">
+                    <el-col :xs="24" :sm="16" :md="16" :lg="16">
+                        <h2>24小时金额榜</h2>
+                        <div class="moneyTop">
+                            <el-col :span="2">
+                                <ul class="moneyTopOrder">
+                                    <li v-for="(item,i) in moneyTop" :key="i" :class="{'moneyTopActive':item.active}" @mouseover="moneyTopChange(i)">{{ i+1 }}</li>
+                                </ul>
+                            </el-col>
+                            <el-col :span="22">
+                                <div>
+                                    <div v-for="(item,i) in moneyTop" :key="i" :class="{'hide':!item.active}">
+                                        <el-col class="moneyTopImg" :xs="15" :sm="15" :md="14" :lg="12">
+                                            <img :src="item.imgUrl" alt="">
+                                        </el-col>
+                                        <el-col :xs="8" :sm="8" :md="9" :lg="10" :offset="1" class="moneyTopContent">
                                             <div>
-                                                <div class="moneyData">
-                                                    <span class="money">￥{{ item.money }}</span>
-                                                    <span>{{ item.progress }}%</span>
+                                                <h3>{{ item.header }}</h3>
+                                                <p class="author">
+                                                    <img :src="item.authorHeadUrl" alt="">
+                                                    <span>{{ item.authorName }}</span>
+                                                </p>
+                                                <p class="moneyTopDescription">{{ item.description }}</p>
+                                                <div>
+                                                    <div class="moneyData">
+                                                        <span class="money">￥{{ item.money }}</span>
+                                                        <span>{{ item.progress }}%</span>
+                                                    </div>
+                                                    <el-progress :percentage="item.progress" :show-text=false></el-progress>
                                                 </div>
-                                                <el-progress :percentage="item.progress" :show-text=false></el-progress>
+                                                <p class="moneyTopFol">{{ item.followerNum }} 支持者 · {{ item.commentNum }} 条评论</p>
                                             </div>
-                                            <p class="moneyTopFol">{{ item.followerNum }} 支持者 · {{ item.commentNum }} 条评论</p>
-                                        </div>
-                                    </el-col>
+                                        </el-col>
+                                    </div>
                                 </div>
-                            </div>
-                        </el-col>
-                    </div>
-              </el-col>
-              <el-col class="ideaTop" :md="7" :lg="7">
-                  <h2>24小时创意榜</h2>
-                  <el-collapse v-model="activeName" accordion>
-                    <el-collapse-item v-for="(item,i) in ideaTop" :key="i" :name="(i+1).toString()">
-                        <template slot="title">
-                            {{ i+1 }}. {{ item.title }}
-                        </template>
-                        <div class="ideaItem">
-                            <div>
-                                <img :src="require('../../../assets/heart.png')" alt="">
-                                <span>{{ item.supportNum }}人看好创意</span>
-                            </div>
-                            <img :src="item.img" alt="">
+                            </el-col>
                         </div>
-                    </el-collapse-item>
-                  </el-collapse>
-              </el-col>
-              </el-col>
+                    </el-col>
+                    <el-col class="ideaTop" :xs="24" :sm="7" :md="7" :lg="7">
+                        <h2>24小时创意榜</h2>
+                        <el-collapse v-model="activeName" accordion>
+                            <el-collapse-item v-for="(item,i) in ideaTop" :key="i" :name="i+1">
+                                <template slot="title">
+                                    {{ i+1 }}. {{ item.title }}
+                                </template>
+                                <div class="ideaItem">
+                                    <div>
+                                        <img :src="require('../../../assets/heart.png')" alt="">
+                                        <span>{{ item.supportNum }}人看好创意</span>
+                                    </div>
+                                    <img :src="item.img" alt="">
+                                </div>
+                            </el-collapse-item>
+                        </el-collapse>
+                    </el-col>
+                </el-col>
           </el-row>
           <div class="onlineProject">
                 <el-row>
                     <el-col :span="24">
                         <el-row class="classify">
-                            <el-col :sm="8" :span="5">
+                            <el-col :xs="6" :sm="6" :span="5">
                                 <h2>在线项目</h2>
                             </el-col>
-                            <el-col :sm="8" :span="7" :offset="2">
+                            <el-col :xs="5" :sm="5" :md="4" :lg="7" :offset="1">
                                 <span>共{{ projectsNum }}个项目</span>
                             </el-col>
-                            <el-col class="menus" :sm="19" :span="14" :offset="5">
+                            <el-col class="menus" :xs="19" :sm="19" :md="15" :lg="12">
                                 <el-dropdown trigger="click" @command="sendCategory">
                                     <span class="el-dropdown-link">
                                         {{ categoryActive }}<i class="el-icon-caret-bottom el-icon--right"></i>

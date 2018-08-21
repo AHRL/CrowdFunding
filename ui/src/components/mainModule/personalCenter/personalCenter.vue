@@ -53,8 +53,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .container {
-    padding: 60px 0;
-    min-width:1400px;
+    padding: 60px 10%;
     background: rgb(237, 241, 243);
     color: white;
     .wrap {

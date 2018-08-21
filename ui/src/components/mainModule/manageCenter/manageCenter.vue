@@ -115,9 +115,7 @@ export default {
 <style lang="scss" scoped>
 .manageCenter {
     background: rgb(245, 248, 252);
-    padding: 0 10%;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding: 100px 10%;
     .main {
         position: relative;
         background:rgb(252, 246, 246);
