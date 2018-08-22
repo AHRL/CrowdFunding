@@ -19,7 +19,7 @@
                         </div>
                     </el-upload>
                 </el-col>
-                <el-col :span="9">
+                <el-col :xs="24" :span="9">
                     <p>尺寸 800px*600px，格式jpg、png、gif，不大于3MB</p>
                 </el-col>
             </el-row>
@@ -72,7 +72,7 @@
         <div class="address">
             <h4>发起城市</h4>
             <el-row>
-                <el-col :span="4">
+                <el-col :xs="10" :sm="8" :span="6">
                     <el-dropdown split-button @command="getProvince">
                         {{ province }}
                         <el-dropdown-menu slot="dropdown">
@@ -80,7 +80,7 @@
                         </el-dropdown-menu>
                     </el-dropdown>
                 </el-col>
-                <el-col :span="4" :offset="1">
+                <el-col :xs="11"  :span="6" :offset="1">
                     <el-dropdown split-button  @command="getCity">
                         {{ city }}
                         <el-dropdown-menu slot="dropdown">
@@ -112,7 +112,7 @@
             </div>
             <div class="small-font tips">制定金额目标，众筹结束后，如达到或超出将由摩点网在扣除相应费率后结算给你，如未达到将全额退款给支持者。</div>
         </div>
-         <div class="next">
+         <div class="nextStep">
              <el-alert
                 title="请再次核查项目信息，确认后进行下一步"
                 type="warning"
@@ -189,7 +189,7 @@ export default {
             console.log(file)
             const isLt3M = file.size / 1024 / 1024 < 3
 
-            if(['image/png', 'image/gif', 'image/jpg'].indexOf(file.raw.type) == -1){
+            if(['image/png', 'image/gif', 'image/jpg','image/jpeg'].indexOf(file.raw.type) == -1){
                 this.$message.error('只能上传图片')
                 return false
             }
@@ -252,7 +252,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .signMessage{
-    margin: 50px 0;
+    margin: 50px 10px;
     position: relative;
     h4{
         color:black;
@@ -292,14 +292,22 @@ export default {
             width: 100%;
         }
     }
-    .next{
+    .nextStep{
         margin-top: 20px;
+        // position:absolute;
+        // bottom:0;
+        // left:0;
         .el-button{
             position: absolute;
             margin-top: 20px;
         }
         .nextBtn{
             right:0;
+        }
+    }
+    @media screen and (max-width: 800px) {
+        .el-range-editor.el-input__inner{
+            width:100%;
         }
     }
 }

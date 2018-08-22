@@ -18,6 +18,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .wait{
+    @media screen and (max-width: 800px) {
+        padding:0 10px;
+    }
     .el-alert{
         padding-top: 20px;
         padding-bottom: 20px;

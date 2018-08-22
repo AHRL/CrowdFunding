@@ -9,7 +9,7 @@
         </header>
         <div class="container">
             <h2>发起众筹</h2>
-            <el-steps :active="activeIndex" simple>
+            <el-steps class="hidden-xs-only" :active="activeIndex" simple>
                 <el-step title="注意事项" icon="el-icon-success"></el-step>
                 <el-step title="填写信息" icon="el-icon-success"></el-step>
                 <el-step title="详情编辑" icon="el-icon-success"></el-step>
@@ -74,8 +74,17 @@ export default {
             left: 10%;
             color: white;
             .el-button {
-                font-size: 16px;
+                font-size: 1em;
                 padding: 15px 30px;
+            }
+            @media screen and (max-width: 800px) {
+                h1{
+                    font-size:1.2em;
+                }
+                .el-button {
+                    font-size: 0.8em;
+                    padding: 8px 15px;
+                }
             }
         }
     }
@@ -84,12 +93,18 @@ export default {
 .container {
     width: 70%;
     margin: 50px auto;
+    @media screen and (max-width: 800px) {
+        width: 100%;
+    }
     h2 {
         color: black;
     }
     .steps {
         margin: 0 auto;
         width: 80%;
+        @media screen and (max-width: 800px) {
+            width: 100%;
+        }
     }
 }
 </style>

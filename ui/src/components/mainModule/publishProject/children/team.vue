@@ -19,7 +19,7 @@
                 <el-input type="text" v-model="searchResult" placeholder="按电话号码搜索,回车即可查询" @keyup.enter.native="searchMember" suffix-icon="el-icon-search"></el-input>
             </div>
             <el-row class="teamMem">
-                <el-col :span="6" v-for="(item,i) in teamMembers" :key="i">
+                <el-col :xs="12" :sm="12" :md="8" :lg="6" v-for="(item,i) in teamMembers" :key="i">
                     <el-card shadow="hover">
                         <div class="headBox">
                             <div class="cover"></div>
@@ -36,7 +36,7 @@
             </el-row>
             <div class="btnBox">
                 <el-button @click="nextStep(-1)">上一步</el-button>
-                <el-button class="next" type="danger" @click="nextStep(1)">下一步</el-button>
+                <el-button class="nextStep" type="danger" @click="nextStep(1)">下一步</el-button>
             </div>
         </div>
     </div>
@@ -122,6 +122,9 @@ h4{
     padding: 0;
 }
 .main{
+    @media screen and (max-width: 800px) {
+        padding:0 10px;
+    }
     >div{
         margin-bottom: 30px;
     }
@@ -203,7 +206,7 @@ h4{
     .btnBox{
         margin-top: 20px;
         position: relative;
-        .next{
+        .nextStep{
             position: absolute;
             right: 0;
         }
