@@ -209,6 +209,9 @@ h2{
     >p {
         position: absolute;
         right: 0;
+        @media screen and (max-width: 667px) {
+            display:none;
+        }
     }
 }
 

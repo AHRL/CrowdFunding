@@ -1,7 +1,7 @@
 <template>
 <div class="container">
     <el-row>
-        <el-col :span="16">
+        <el-col :xs="24" :span="16">
             <publish @theLastest="getLastest"></publish>
             <div class="activity">
                 <el-row>
@@ -19,7 +19,7 @@
                 </div>
             </div>
         </el-col>
-        <el-col class="asideBar" :span="7" :offset="1">
+        <el-col class="asideBar hidden-xs-only" :span="7" :offset="1">
             <!-- <div class="idCard">
                 <el-row>
                     <el-col :span="8">

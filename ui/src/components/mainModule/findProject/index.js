@@ -153,7 +153,7 @@ export default {
           }else{
               return '200px'
           }
-      }  
+      }
     },
     beforeCreate () {
         $.get('/findProject').then(res => {

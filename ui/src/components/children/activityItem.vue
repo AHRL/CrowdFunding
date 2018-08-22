@@ -346,6 +346,7 @@ img{
         background: rgba(241, 241, 241, 0.438);
         .com{
             position:relation;
+            font-size: 0.9em;
             .headImg{
                 width:30px;
                 margin: 0 auto;
@@ -357,52 +358,64 @@ img{
             .el-col:nth-child(2){
                 &>span:first-child{
                     font-weight: 600;
+                    @media screen and (max-width: 667px) {
+                        margin-left: 8px;
+                    }
                 }
                 &>span:nth-child(2){
                     margin-top:5px;
-                    font-size:0.9em;
+                    font-size:0.8em;
                     display: block;
                     color:rgb(139, 136, 136);
+                    @media screen and (max-width: 667px) {
+                        margin-left: 8px;
+                    }
                 }
                 .box{
                     position:absolute;
-                    right:20px;
-                    top:20px;
+                    right:0;
+                    top:0;
                     div{
                         margin-right:20px;
                         display:inline-block;
+                        @media screen and (max-width: 667px) {
+                            margin-right:10px;
+                        }
                         img{
                             width:20px;
                             opacity:0.8;
                             filter:opacity(80%);
-                            margin-right: 5px;
+                            margin-right: 2px;
+                            @media screen and (max-width: 667px) {
+                                width:15px;
+                            }
                         }
                     }
                 }
-                .addCom{
-                    color:rgb(139, 136, 136);
-                    font-size:0.9em;
-                    background:rgba(234, 237, 238, 0.616);
-                    padding:20px;
-                    p{
-                        margin-top:0;
-                        &>span{
-                            color:#000;
-                            font-weight:600;
-                        }
-                    }
-                    &>div{
-                        position:relative;
-                        img{
-                            position:absolute;
-                            right:0;
-                            top:0;
-                            width:20px;
-                            opacity:0.8;
-                            filter:opacity(80%);
-                        }
-                    }
-                }
+                // .addCom{
+                //     color:rgb(139, 136, 136);
+                //     font-size:0.9em;
+                //     background:rgba(234, 237, 238, 0.616);
+                //     padding:20px;
+                //     p{
+                //         margin-top:0;
+                //         &>span{
+                //             color:#000;
+                //             font-weight:600;
+                //         }
+                //     }
+                //     &>div{
+                //         position:relative;
+                //         img{
+                //             position:absolute;
+                //             right:0;
+                //             top:0;
+                //             width:20px;
+                //             opacity:0.8;
+                //             filter:opacity(80%);
+                //         }
+                //     }
+                // }
             }
         }
         .moreComment {

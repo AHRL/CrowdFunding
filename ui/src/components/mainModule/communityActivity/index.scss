@@ -8,7 +8,7 @@ $border:1px solid rgb(210, 215, 216);
 }
 
 .container {
-    width:60%;
+    width:80%;
     margin: 100px auto;
     >.el-row {
         &>.el-col {
@@ -16,6 +16,9 @@ $border:1px solid rgb(210, 215, 216);
             padding: 10px 20px;
         }
     }
+    @media screen and (max-width: 960px) {
+        width: 100%;
+     }
 }
 
 h2 {
