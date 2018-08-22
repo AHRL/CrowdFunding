@@ -1,7 +1,7 @@
 <template>
   <div class="findMain">
       <div class="carousel">
-          <el-carousel :interval="5000" trigger="click" type="card" height="300px">
+          <el-carousel :interval="5000" trigger="click" type="card" :height="_height">
             <el-carousel-item v-for="(item,i) in carouselImgUrl" :key="i">
             <router-link to=""><img :src="item" alt=""></router-link>
             </el-carousel-item>
@@ -70,13 +70,13 @@
                 <el-row>
                     <el-col :span="24">
                         <el-row class="classify">
-                            <el-col :xs="6" :sm="6" :span="5">
+                            <el-col :xs="8" :sm="6" :span="5">
                                 <h2>在线项目</h2>
                             </el-col>
-                            <el-col :xs="5" :sm="5" :md="4" :lg="7" :offset="1">
+                            <el-col class="hidden-xs-only" :xs="24" :sm="5" :md="4" :lg="7" :offset="1">
                                 <span>共{{ projectsNum }}个项目</span>
                             </el-col>
-                            <el-col class="menus" :xs="19" :sm="19" :md="15" :lg="12">
+                            <el-col class="menus" :xs="16" :sm="19" :md="15" :lg="12">
                                 <el-dropdown trigger="click" @command="sendCategory">
                                     <span class="el-dropdown-link">
                                         {{ categoryActive }}<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -107,7 +107,8 @@
                             <item v-for="(item,i) in projects" :key="i" v-bind:project="item"></item>
                         </el-row>
                         <el-row class="pages">
-                            <el-pagination @current-change="currentChange" background layout="total,prev, pager, next,jumper" :page-size="12" :total="100"></el-pagination>
+                            <el-pagination class="hidden-md-and-down" @current-change="currentChange" background layout="prev, pager, next" :page-size="12" :total="100"></el-pagination>
+                            <el-pagination class="hidden-md-and-up" @current-change="currentChange" small layout="prev, pager, next" :page-size="12" :total="100"></el-pagination>
                         </el-row>
                     </el-col>
                 </el-row>
@@ -115,10 +116,10 @@
           <div class="projectCharts">
                 <h2>项目实况统计</h2>
                 <el-row>
-                    <el-col :span="15" :offset="1">
+                    <el-col :xs="24" :span="15" :offset="1">
                         <div id="myChart" :style="{width:'100%',height:'400px'}"></div>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :xs="24" :span="8">
                         <div id="myChartPie" :style="{width:'100%',height:'400px'}"></div>
                     </el-col>
                 </el-row>

@@ -146,6 +146,15 @@ export default {
             myChartPie: {},
         };
     },
+    computed: {
+      _height:function(){
+          if(document.body.clientWidth <= 667){
+            return '100px'
+          }else{
+              return '200px'
+          }
+      }  
+    },
     beforeCreate () {
         $.get('/findProject').then(res => {
             console.log(res.data)
